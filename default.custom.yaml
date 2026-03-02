@@ -1,0 +1,13 @@
+patch:
+  "switcher/save_options/+":
+    - ascii_mode
+  schema_list:
+    - schema: cangjie5
+    - schema: double_pinyin_flypy
+    - schema: bopomofo
+    - schema: bopomofo_tw
+    - schema: luna_pinyin
+    - schema: luna_pinyin_simp
+    - schema: luna_pinyin_fluency
+    - schema: terra_pinyin
+    - schema: stroke
