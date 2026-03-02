@@ -1,6 +1,4 @@
 patch:
-  "switcher/save_options/+":
-    - ascii_mode
   schema_list:
     - schema: cangjie5
     - schema: double_pinyin_flypy
