@@ -1,2 +1,7 @@
 patch:
   "switches/@0/reset": 1
+  "reverse_lookup/dictionary": cangjie5
+  "reverse_lookup/tips": "〔倉頡五代〕"
+  "reverse_lookup/preedit_format": []
+  "reverse_lookup/comment_format":
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
