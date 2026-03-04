@@ -1,5 +1,6 @@
 patch:
   "switches/@0/reset": 1
+  "switches/@0/states": ["ㄓ", "En"]
   "reverse_lookup/dictionary": cangjie5
   "reverse_lookup/tips": "〔倉頡五代〕"
   "reverse_lookup/preedit_format": []
