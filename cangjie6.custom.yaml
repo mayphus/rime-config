@@ -1,7 +1,7 @@
 patch:
-  # 1. Branding and Reset
-  "switches/@0/reset": 1
-  "switches/@0/states": ["蒼", "A"]
+  # 1. Branding and Reset (Cangjie 6 uses index 2 for ascii_mode)
+  "switches/@2/reset": 1
+  "switches/@2/states": ["蒼", "A"]
 
   # 2. Clean the Engine (Remove Pinyin/Jyutping affix logic)
   "engine/segmentors":
@@ -22,7 +22,7 @@ patch:
     tips: "〔小鶴雙拼〕"
     preedit_format: [] # Keep it clean
     comment_format:
-      - "xform/([nl])v/$1ü/"
+      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|"
 
   # 4. Enable direct Flypy typing (No prefix needed)
   "abc_segmentor/extra_tags": [ reverse_lookup ]
