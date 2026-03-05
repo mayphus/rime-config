@@ -1,6 +1,35 @@
 patch:
+  # 1. Branding and Reset
   "switches/@0/reset": 1
   "switches/@0/states": ["倉", "A"]
-  "reverse_lookup/dictionary": luna_pinyin
-  "reverse_lookup/prism": double_pinyin_flypy
-  "reverse_lookup/tips": "〔小鶴雙拼〕"
+
+  # 2. Clean the Engine (Remove Pinyin/Jyutping affix logic)
+  "engine/segmentors":
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  "engine/translators":
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator
+
+  # 3. Setup Flypy Reverse Lookup
+  "reverse_lookup":
+    dictionary: luna_pinyin
+    prism: double_pinyin_flypy
+    tips: "〔小鶴雙拼〕"
+    preedit_format: [] # Keep it clean
+    comment_format:
+      - "xform/([nl])v/$1ü/"
+
+  # 4. Enable direct Flypy typing (No prefix needed)
+  "abc_segmentor/extra_tags": [ reverse_lookup ]
+
+  # 5. Clean the Recognizer (Remove P/J triggers)
+  "recognizer/patterns/reverse_lookup": "`[a-z]*'?$"
+  "recognizer/patterns/pinyin":
+  "recognizer/patterns/jyutping":
+  "recognizer/patterns/pinyin_lookup":
+  "recognizer/patterns/jyutping_lookup":
