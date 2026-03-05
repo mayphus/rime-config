@@ -6,3 +6,15 @@ patch:
   "reverse_lookup/preedit_format": []
   "reverse_lookup/comment_format":
     - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+  
+  # SUGGESTION 1: Teacher Mode (Auto-Annotations)
+  # This adds Cangjie 6 radicals to every Flypy candidate
+  "engine/filters/@next": "reverse_lookup_filter@cangjie6_teacher"
+  "cangjie6_teacher":
+    tags: [ abc ] # Only apply to regular typing (abc)
+    dictionary: cangjie6.extended
+    overwrite_comment: true
+    comment_format:
+      - "xform/$/〕/"
+      - "xform/^/〔/"
+      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|"
