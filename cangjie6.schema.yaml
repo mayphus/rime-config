@@ -46,7 +46,6 @@ engine:
     - abc_segmentor
     - affix_segmentor@flypy
     - affix_segmentor@jyutping
-    - affix_segmentor@flypy_lookup
     - affix_segmentor@reverse_lookup
     - punct_segmentor
     - fallback_segmentor
@@ -55,7 +54,7 @@ engine:
     - table_translator
     - script_translator@flypy
     - script_translator@jyutping
-    - script_translator@flypy_lookup
+    - script_translator@reverse_lookup
   filters:
     - simplifier@simplify
     - charset_filter@extended_char
@@ -157,26 +156,14 @@ reverse_lookup:
   prefix: "`"
 # 反查引導鍵「`」
   suffix: ;
-  tips: 【反查】
-  closing_tips: 【蒼頡】
-  extra_tags:
-    - flypy_lookup
-# 若不想在【反查】時加入小鶴雙拼反查，請在上條中刪去「flypy_lookup」
-
-flypy_lookup:
-  tag: flypy_lookup
-  prefix: "`P"
-# 獨用小鶴雙拼反查在反查鍵「`」之後再鍵入〔大寫〕「P」
-  suffix: ;
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
   preedit_format: *flypy
   tips: 【小鶴雙拼反查】
   closing_tips: 【蒼頡】
-  initial_quality: 1	# 調整該編譯器出字優先度
 
 flypy_reverse_lookup:
-  tags: [ flypy_lookup ]
+  tags: [ reverse_lookup ]
   dictionary: *dict
   overwrite_comment: true  # 覆蓋其他提示
   comment_format: &comment
@@ -198,8 +185,6 @@ recognizer:
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     reverse_lookup: "`[a-z]*;?$"
 # 反查引導鍵
-    flypy_lookup: "`P[a-z]*;?$"
-# 小鶴雙拼反查引導鍵
     flypy: (?<!`)P[a-z']*;?$
 # 小鶴雙拼輸入引導鍵
     jyutping: (?<!`)J[a-z']*;?$
