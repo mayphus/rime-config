@@ -13,7 +13,6 @@ schema:
     碼表由雪齋、惜緣和crazy4u整理
   dependencies:
     - double_pinyin_flypy
-    - jyutping
 
 switches:
   - name: extended_charset
@@ -45,7 +44,6 @@ engine:
     - matcher
     - abc_segmentor
     - affix_segmentor@flypy
-    - affix_segmentor@jyutping
     - affix_segmentor@reverse_lookup
     - punct_segmentor
     - fallback_segmentor
@@ -53,7 +51,6 @@ engine:
     - punct_translator
     - table_translator
     - script_translator@flypy
-    - script_translator@jyutping
     - script_translator@reverse_lookup
   filters:
     - simplifier@simplify
@@ -64,7 +61,7 @@ engine:
 simplify:
   option_name: simplification
   tips: all
-  tags: [ abc, flypy, jyutping ]
+  tags: [ abc, flypy ]
 
 extended_char:
   option_name: extended_charset
@@ -137,16 +134,6 @@ flypy:
   closing_tips: 【蒼頡】
   initial_quality: 0.2	# 調整該編譯器出字優先度
 
-jyutping:
-  tag: jyutping
-  dictionary: jyutping
-  prefix: J
-# 粵拼輸入以〔大寫〕「J」引導
-  suffix: ;
-  tips: 【粵拼】
-  closing_tips: 【蒼頡】
-  initial_quality: 0.1	# 調整該編譯器出字優先度
-
 abc_segmentor:
   extra_tags: [ flypy ]
 # 若想蒼頡、小鶴雙拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
@@ -187,7 +174,5 @@ recognizer:
 # 反查引導鍵
     flypy: (?<!`)P[a-z']*;?$
 # 小鶴雙拼輸入引導鍵
-    jyutping: (?<!`)J[a-z']*;?$
-# 粵拼輸入引導鍵
     punct: ^/[0-9]?[a-z]*$
 # 以「/」引導特殊符號

@@ -3,4 +3,4 @@ patch:
     - schema: cangjie6
     - schema: double_pinyin_flypy
     - schema: bopomofo_tw
-    - schema: jyutping
+    - schema: jyut6ping3
