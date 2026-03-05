@@ -151,9 +151,9 @@ jyutping:
   closing_tips: 【蒼頡】
   initial_quality: 0.1	# 調整該編譯器出字優先度
 
-#abc_segmentor:
-#  extra_tags: [pinyin, jyutping ]
-# 若想蒼頡、漢語拼音、粵拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
+abc_segmentor:
+  extra_tags: [ pinyin ]
+# 若想蒼頡、鶴氏雙拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
 
 reverse_lookup:
   tag: reverse_lookup
