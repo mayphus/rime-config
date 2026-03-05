@@ -18,7 +18,6 @@ switches:
   - name: extended_charset
     states: [ 通用, 增廣 ]
     reset: 1
-# 默認開啓Unihan全字集
   - name: simplification
     states: [ 漢字, 汉字 ]
     reset: 0
@@ -74,14 +73,10 @@ speller:
 translator:
   dictionary: &dict
     cangjie6.extended
-# 若不需鍵詞，請刪去上條中之「.extended」
-# 若需簡體詞，请將上條中之「.extended」改爲「.extsimp」
   enable_user_dict: true
-# 不想自動調頻的話，將上條中「true」改爲「false」
   enable_sentence: true
   sentence_over_completion: true
   enable_encoder: true
-# 不想自動組詞〔記錄輸入過的詞，然後變成五碼固定詞〕的話可以把上條中「true」改爲「false」
   encode_commit_history: true
   max_phrase_length: 5
   preedit_format:
@@ -95,7 +90,6 @@ flypy:
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
   prefix: P
-# 小鶴雙拼輸入以〔大寫〕「P」引導
   suffix: ;
   preedit_format: &flypy
     - xform/([bpmfdtnljqx])n/$1iao/
@@ -136,12 +130,10 @@ flypy:
 
 abc_segmentor:
   extra_tags: [ flypy ]
-# 若想蒼頡、小鶴雙拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
 
 reverse_lookup:
   tag: reverse_lookup
   prefix: "`"
-# 反查引導鍵「`」
   suffix: ;
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
@@ -160,7 +152,6 @@ flypy_reverse_lookup:
 
 punctuator:
   import_preset: symbols
-# 請在這裏更改標點設置，具體範例參照symbols.yaml本節
 
 key_binder:
   import_preset: default
@@ -171,8 +162,5 @@ recognizer:
     email: ^[a-z][-_.0-9a-z]*@.*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     reverse_lookup: "`[a-z]*;?$"
-# 反查引導鍵
     flypy: (?<!`)P[a-z']*;?$
-# 小鶴雙拼輸入引導鍵
     punct: ^/[0-9]?[a-z]*$
-# 以「/」引導特殊符號
