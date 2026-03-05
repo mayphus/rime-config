@@ -102,7 +102,7 @@ pinyin:
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
   prefix: P
-# 鶴氏雙拼輸入以〔大寫〕「P」引導
+# 小鶴雙拼輸入以〔大寫〕「P」引導
   suffix: ;
   preedit_format: &flypy
     - xform/([bpmfdtnljqx])n/$1iao/
@@ -137,7 +137,7 @@ pinyin:
     - "xform/(^|[ '])u/$1sh/"
     - xform/([jqxy])v/$1u/
     - xform/([nl])v/$1ü/
-  tips: 【鶴氏雙拼】
+  tips: 【小鶴雙拼】
   closing_tips: 【蒼頡】
   initial_quality: 0.2	# 調整該編譯器出字優先度
 
@@ -153,7 +153,7 @@ jyutping:
 
 abc_segmentor:
   extra_tags: [ pinyin ]
-# 若想蒼頡、鶴氏雙拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
+# 若想蒼頡、小鶴雙拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
 
 reverse_lookup:
   tag: reverse_lookup
@@ -165,17 +165,17 @@ reverse_lookup:
   extra_tags:
     - pinyin_lookup
     - jyutping_lookup
-# 若不想在【反查】時加入漢語拼音或粵拼反查，請在上兩條中刪去相應「pinyin_lookup」或「jyutping_lookup」
+# 若不想在【反查】時加入漢語拼音 or 粵拼反查，請在上兩條中刪去相應「pinyin_lookup」或「jyutping_lookup」
 
 pinyin_lookup:
   tag: pinyin_lookup
   prefix: "`P"
-# 獨用鶴氏雙拼反查在反查鍵「`」之後再鍵入〔大寫〕「P」
+# 獨用小鶴雙拼反查在反查鍵「`」之後再鍵入〔大寫〕「P」
   suffix: ;
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
   preedit_format: *flypy
-  tips: 【鶴雙反查】
+  tips: 【小鶴雙拼反查】
   closing_tips: 【蒼頡】
   initial_quality: 1	# 調整該編譯器出字優先度
 
@@ -219,11 +219,11 @@ recognizer:
     reverse_lookup: "`[a-z]*;?$"
 # 反查引導鍵
     pinyin_lookup: "`P[a-z]*;?$"
-# 漢語拼音反查引導鍵
+# 小鶴雙拼反查引導鍵
     jyutping_lookup: "`J[a-z]*;?$"
 # 粵拼反查引導鍵
     pinyin: (?<!`)P[a-z']*;?$
-# 漢語拼音輸入引導鍵
+# 小鶴雙拼輸入引導鍵
     jyutping: (?<!`)J[a-z']*;?$
 # 粵拼輸入引導鍵
     punct: ^/[0-9]?[a-z]*$
