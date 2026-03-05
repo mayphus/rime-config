@@ -1,0 +1,6 @@
+patch:
+  "switches/@0/reset": 1
+  "switches/@0/states": ["倉", "A"]
+  "reverse_lookup/dictionary": luna_pinyin
+  "reverse_lookup/prism": double_pinyin_flypy
+  "reverse_lookup/tips": "〔小鶴雙拼〕"
