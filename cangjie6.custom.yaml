@@ -1,7 +1,7 @@
 patch:
   # 1. Branding and Reset
   "switches/@0/reset": 1
-  "switches/@0/states": ["倉", "A"]
+  "switches/@0/states": ["蒼", "A"]
 
   # 2. Clean the Engine (Remove Pinyin/Jyutping affix logic)
   "engine/segmentors":

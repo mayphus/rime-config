@@ -1,11 +1,11 @@
 patch:
   "switches/@0/reset": 1
   "switches/@0/states": ["鶴", "A"]
-  "reverse_lookup/dictionary": cangjie5
-  "reverse_lookup/tips": "〔倉頡五代〕"
+  "reverse_lookup/dictionary": cangjie6.extended
+  "reverse_lookup/tips": "〔蒼頡檢字法〕"
   "reverse_lookup/preedit_format": []
   "reverse_lookup/comment_format":
-    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符|"
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|"
   
   # SUGGESTION 1: Teacher Mode (Auto-Annotations)
   # This adds Cangjie 6 radicals to every Flypy candidate
