@@ -12,7 +12,7 @@ schema:
     第六代倉頡輸入法
     碼表由雪齋、惜緣和crazy4u整理
   dependencies:
-    - luna_pinyin
+    - double_pinyin_flypy
     - jyutping
 
 switches:
@@ -24,6 +24,7 @@ switches:
     states: [ 漢字, 汉字 ]
     reset: 0
   - name: ascii_mode
+    states: [ 蒼, A ]
     reset: 1
   - name: full_shape
     states: [ 半角, 全角 ]
@@ -99,14 +100,44 @@ translator:
 pinyin:
   tag: pinyin
   dictionary: luna_pinyin
+  prism: double_pinyin_flypy
   prefix: P
-# 漢語拼音輸入以〔大寫〕「P」引導
+# 鶴氏雙拼輸入以〔大寫〕「P」引導
   suffix: ;
-  preedit_format: &pinyin
-    - xform/([nl])v/$1ü/
-    - xform/([nl])ue/$1üe/
+  preedit_format: &flypy
+    - xform/([bpmfdtnljqx])n/$1iao/
+    - xform/(\w)g/$1eng/
+    - xform/(\w)q/$1iu/
+    - xform/(\w)w/$1ei/
+    - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
+    - xform/(\w)t/$1ve/
+    - xform/(\w)y/$1un/
+    - xform/([dtnlgkhvuirzcs])o/$1uo/
+    - xform/(\w)p/$1ie/
+    - xform/([jqx])s/$1iong/
+    - xform/(\w)s/$1ong/
+    - xform/(\w)d/$1ai/
+    - xform/(\w)f/$1en/
+    - xform/(\w)h/$1ang/
+    - xform/(\w)j/$1an/
+    - xform/([gkhvuirzcs])k/$1uai/
+    - xform/(\w)k/$1ing/
+    - xform/([jqxnl])l/$1iang/
+    - xform/(\w)l/$1uang/
+    - xform/(\w)z/$1ou/
+    - xform/([gkhvuirzcs])x/$1ua/
+    - xform/(\w)x/$1ia/
+    - xform/(\w)c/$1ao/
+    - xform/([dtgkhvuirzcs])v/$1ui/
+    - xform/(\w)b/$1in/
+    - xform/(\w)m/$1ian/
+    - xform/([aoe])\1(\w)/$1$2/
+    - "xform/(^|[ '])v/$1zh/"
+    - "xform/(^|[ '])i/$1ch/"
+    - "xform/(^|[ '])u/$1sh/"
     - xform/([jqxy])v/$1u/
-  tips: 【漢拼】
+    - xform/([nl])v/$1ü/
+  tips: 【鶴氏雙拼】
   closing_tips: 【蒼頡】
   initial_quality: 0.2	# 調整該編譯器出字優先度
 
@@ -139,11 +170,12 @@ reverse_lookup:
 pinyin_lookup:
   tag: pinyin_lookup
   prefix: "`P"
-# 獨用漢語拼音反查在反查鍵「`」之後再鍵入〔大寫〕「P」
+# 獨用鶴氏雙拼反查在反查鍵「`」之後再鍵入〔大寫〕「P」
   suffix: ;
   dictionary: luna_pinyin
-  preedit_format: *pinyin
-  tips: 【漢拼反查】
+  prism: double_pinyin_flypy
+  preedit_format: *flypy
+  tips: 【鶴雙反查】
   closing_tips: 【蒼頡】
   initial_quality: 1	# 調整該編譯器出字優先度
 
