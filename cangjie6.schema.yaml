@@ -47,7 +47,6 @@ engine:
     - affix_segmentor@flypy
     - affix_segmentor@jyutping
     - affix_segmentor@flypy_lookup
-    - affix_segmentor@jyutping_lookup
     - affix_segmentor@reverse_lookup
     - punct_segmentor
     - fallback_segmentor
@@ -57,13 +56,11 @@ engine:
     - script_translator@flypy
     - script_translator@jyutping
     - script_translator@flypy_lookup
-    - script_translator@jyutping_lookup
   filters:
     - simplifier@simplify
     - charset_filter@extended_char
     - uniquifier
     - reverse_lookup_filter@flypy_reverse_lookup
-    - reverse_lookup_filter@jyutping_reverse_lookup
 
 simplify:
   option_name: simplification
@@ -164,8 +161,7 @@ reverse_lookup:
   closing_tips: 【蒼頡】
   extra_tags:
     - flypy_lookup
-#    - jyutping_lookup
-# 若不想在【反查】時加入小鶴雙拼 or 粵拼反查，請在上兩條中刪去相應「flypy_lookup」或「jyutping_lookup」
+# 若不想在【反查】時加入小鶴雙拼反查，請在上條中刪去「flypy_lookup」
 
 flypy_lookup:
   tag: flypy_lookup
@@ -179,16 +175,6 @@ flypy_lookup:
   closing_tips: 【蒼頡】
   initial_quality: 1	# 調整該編譯器出字優先度
 
-jyutping_lookup:
-  tag: jyutping_lookup
-  prefix: "`J"
-# 獨用粵拼反查在反查鍵「`」之後再鍵入〔大寫〕「J」
-  suffix: ;
-  dictionary: jyutping
-  tips: 【粵拼反查】
-  closing_tips: 【蒼頡】
-  initial_quality: 0.5	# 調整該編譯器出字優先度
-
 flypy_reverse_lookup:
   tags: [ flypy_lookup ]
   dictionary: *dict
@@ -197,12 +183,6 @@ flypy_reverse_lookup:
     - xform/$/〕/
     - xform/^/〔/
     - xlit|abcdefghijklmnopqrstuvwxyz |日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片、|
-
-jyutping_reverse_lookup:
-  tags: [ jyutping_lookup ]
-  dictionary: *dict
-  overwrite_comment: true  # 覆蓋hearted其他提示
-  comment_format: *comment
 
 punctuator:
   import_preset: symbols
@@ -220,8 +200,6 @@ recognizer:
 # 反查引導鍵
     flypy_lookup: "`P[a-z]*;?$"
 # 小鶴雙拼反查引導鍵
-    jyutping_lookup: "`J[a-z]*;?$"
-# 粵拼反查引導鍵
     flypy: (?<!`)P[a-z']*;?$
 # 小鶴雙拼輸入引導鍵
     jyutping: (?<!`)J[a-z']*;?$
