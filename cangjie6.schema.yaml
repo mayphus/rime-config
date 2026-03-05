@@ -44,9 +44,9 @@ engine:
     - ascii_segmentor
     - matcher
     - abc_segmentor
-    - affix_segmentor@pinyin
+    - affix_segmentor@flypy
     - affix_segmentor@jyutping
-    - affix_segmentor@pinyin_lookup
+    - affix_segmentor@flypy_lookup
     - affix_segmentor@jyutping_lookup
     - affix_segmentor@reverse_lookup
     - punct_segmentor
@@ -54,21 +54,21 @@ engine:
   translators:
     - punct_translator
     - table_translator
-    - script_translator@pinyin
+    - script_translator@flypy
     - script_translator@jyutping
-    - script_translator@pinyin_lookup
+    - script_translator@flypy_lookup
     - script_translator@jyutping_lookup
   filters:
     - simplifier@simplify
     - charset_filter@extended_char
     - uniquifier
-    - reverse_lookup_filter@pinyin_reverse_lookup
+    - reverse_lookup_filter@flypy_reverse_lookup
     - reverse_lookup_filter@jyutping_reverse_lookup
 
 simplify:
   option_name: simplification
   tips: all
-  tags: [ abc, pinyin, jyutping ]
+  tags: [ abc, flypy, jyutping ]
 
 extended_char:
   option_name: extended_charset
@@ -97,8 +97,8 @@ translator:
     - xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片・|
   initial_quality: 0.75	# 調整該編譯器出字優先度
 
-pinyin:
-  tag: pinyin
+flypy:
+  tag: flypy
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
   prefix: P
@@ -152,7 +152,7 @@ jyutping:
   initial_quality: 0.1	# 調整該編譯器出字優先度
 
 abc_segmentor:
-  extra_tags: [ pinyin ]
+  extra_tags: [ flypy ]
 # 若想蒼頡、小鶴雙拼混用，請啓用以上兩條〔刪去以上兩條爲首之「#」〕
 
 reverse_lookup:
@@ -163,12 +163,12 @@ reverse_lookup:
   tips: 【反查】
   closing_tips: 【蒼頡】
   extra_tags:
-    - pinyin_lookup
+    - flypy_lookup
     - jyutping_lookup
-# 若不想在【反查】時加入漢語拼音 or 粵拼反查，請在上兩條中刪去相應「pinyin_lookup」或「jyutping_lookup」
+# 若不想在【反查】時加入小鶴雙拼 or 粵拼反查，請在上兩條中刪去相應「flypy_lookup」或「jyutping_lookup」
 
-pinyin_lookup:
-  tag: pinyin_lookup
+flypy_lookup:
+  tag: flypy_lookup
   prefix: "`P"
 # 獨用小鶴雙拼反查在反查鍵「`」之後再鍵入〔大寫〕「P」
   suffix: ;
@@ -189,8 +189,8 @@ jyutping_lookup:
   closing_tips: 【蒼頡】
   initial_quality: 0.5	# 調整該編譯器出字優先度
 
-pinyin_reverse_lookup:
-  tags: [ pinyin_lookup ]
+flypy_reverse_lookup:
+  tags: [ flypy_lookup ]
   dictionary: *dict
   overwrite_comment: true  # 覆蓋其他提示
   comment_format: &comment
@@ -201,7 +201,7 @@ pinyin_reverse_lookup:
 jyutping_reverse_lookup:
   tags: [ jyutping_lookup ]
   dictionary: *dict
-  overwrite_comment: true  # 覆蓋其他提示
+  overwrite_comment: true  # 覆蓋hearted其他提示
   comment_format: *comment
 
 punctuator:
@@ -218,11 +218,11 @@ recognizer:
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     reverse_lookup: "`[a-z]*;?$"
 # 反查引導鍵
-    pinyin_lookup: "`P[a-z]*;?$"
+    flypy_lookup: "`P[a-z]*;?$"
 # 小鶴雙拼反查引導鍵
     jyutping_lookup: "`J[a-z]*;?$"
 # 粵拼反查引導鍵
-    pinyin: (?<!`)P[a-z']*;?$
+    flypy: (?<!`)P[a-z']*;?$
 # 小鶴雙拼輸入引導鍵
     jyutping: (?<!`)J[a-z']*;?$
 # 粵拼輸入引導鍵
