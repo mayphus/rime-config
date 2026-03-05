@@ -1,5 +1,6 @@
 patch:
-  # 1. Branding and Reset (Cangjie 6 uses index 2 for ascii_mode)
+  # 1. Branding and Reset (Cangjie 6 uses index 2 for ascii_mode, 0 for extended_charset)
+  "switches/@0/reset": 0
   "switches/@2/reset": 1
   "switches/@2/states": ["蒼", "A"]
 
