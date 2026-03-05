@@ -5,7 +5,7 @@ patch:
   "reverse_lookup/tips": "〔蒼頡檢字法〕"
   "reverse_lookup/preedit_format": []
   "reverse_lookup/comment_format":
-    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|"
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
   
   # SUGGESTION 1: Teacher Mode (Auto-Annotations)
   # This adds Cangjie 6 radicals to every Flypy candidate
@@ -15,4 +15,4 @@ patch:
     dictionary: cangjie6.extended
     overwrite_comment: true
     comment_format:
-      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|"
+      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"

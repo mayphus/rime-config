@@ -23,7 +23,7 @@ patch:
     tips: "〔小鶴雙拼〕"
     preedit_format: [] # Keep it clean
     comment_format:
-      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|"
+      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
 
   # 4. Enable direct Flypy typing (No prefix needed)
   "abc_segmentor/extra_tags": [ reverse_lookup ]
@@ -34,3 +34,9 @@ patch:
   "recognizer/patterns/jyutping":
   "recognizer/patterns/pinyin_lookup":
   "recognizer/patterns/jyutping_lookup":
+
+  # 6. Correct Radicals for Cangjie 6 (h=的, x=止, z=片)
+  "translator/preedit_format":
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
+  "translator/comment_format":
+    - "xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片・|"
