@@ -164,7 +164,7 @@ reverse_lookup:
   closing_tips: 【蒼頡】
   extra_tags:
     - flypy_lookup
-    - jyutping_lookup
+#    - jyutping_lookup
 # 若不想在【反查】時加入小鶴雙拼 or 粵拼反查，請在上兩條中刪去相應「flypy_lookup」或「jyutping_lookup」
 
 flypy_lookup:
