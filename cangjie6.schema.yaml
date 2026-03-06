@@ -73,11 +73,11 @@ speller:
 translator:
   dictionary: &dict
     cangjie6.extended
-  enable_user_dict: true
-  enable_sentence: true
-  sentence_over_completion: true
-  enable_encoder: true
-  encode_commit_history: true
+  enable_user_dict: false
+  enable_sentence: false
+  sentence_over_completion: false
+  enable_encoder: false
+  encode_commit_history: false
   max_phrase_length: 5
   preedit_format:
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|
