@@ -128,8 +128,8 @@ flypy:
   closing_tips: 【蒼頡】
   initial_quality: 0.2	# 調整該編譯器出字優先度
 
-abc_segmentor:
-  extra_tags: [ flypy ]
+# abc_segmentor:
+#  extra_tags: [ flypy ]
 
 reverse_lookup:
   tag: reverse_lookup
