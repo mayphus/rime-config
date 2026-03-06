@@ -64,7 +64,7 @@ engine:
     - simplifier@variants_hk
     - simplifier@trad_tw
     - uniquifier
-    - reverse_lookup_filter@cangjie6_teacher
+
 
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba
@@ -114,12 +114,6 @@ cangjie6:
   comment_format:
     - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
 
-cangjie6_teacher:
-  tags: [ abc ]
-  dictionary: cangjie6.extended
-  overwrite_comment: true
-  comment_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
 
 variants_hk:
   option_name: variants_hk

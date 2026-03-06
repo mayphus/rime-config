@@ -8,12 +8,4 @@ patch:
   "reverse_lookup/comment_format":
     - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
   "recognizer/patterns/reverse_lookup": "`[a-z]*'?$"
-  
-  # Teacher Mode (Auto-Annotations)
-  "engine/filters/@next": "reverse_lookup_filter@cangjie6_teacher"
-  "cangjie6_teacher":
-    tags: [ abc ]
-    dictionary: cangjie6.extended
-    overwrite_comment: true
-    comment_format:
-      - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
+
