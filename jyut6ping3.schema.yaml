@@ -107,7 +107,7 @@ cangjie6:
   enable_user_dict: false
   prefix: "`"
   suffix: ";"
-  tips: 〔蒼頡六代〕
+  tips: "〔蒼頡檢字法〕"
   preedit_format:
     - 'xform/^([a-z]*)$/$1\t（\U$1\E）/'
     - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
