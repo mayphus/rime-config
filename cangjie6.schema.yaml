@@ -1,6 +1,3 @@
-# Rime schema
-# encoding: utf-8
-
 schema:
   name: 蒼頡檢字法
   schema_id: cangjie6
@@ -83,7 +80,7 @@ translator:
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|
   comment_format:
     - xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片・|
-  initial_quality: 0.75	# 調整該編譯器出字優先度
+  initial_quality: 0.75
 
 flypy:
   tag: flypy
@@ -91,45 +88,11 @@ flypy:
   prism: double_pinyin_flypy
   prefix: P
   suffix: ;
-  preedit_format: &flypy
-    - xform/([bpmfdtnljqx])n/$1iao/
-    - xform/(\w)g/$1eng/
-    - xform/(\w)q/$1iu/
-    - xform/(\w)w/$1ei/
-    - xform/([dtnlgkhjqxyvuirzcs])r/$1uan/
-    - xform/(\w)t/$1ve/
-    - xform/(\w)y/$1un/
-    - xform/([dtnlgkhvuirzcs])o/$1uo/
-    - xform/(\w)p/$1ie/
-    - xform/([jqx])s/$1iong/
-    - xform/(\w)s/$1ong/
-    - xform/(\w)d/$1ai/
-    - xform/(\w)f/$1en/
-    - xform/(\w)h/$1ang/
-    - xform/(\w)j/$1an/
-    - xform/([gkhvuirzcs])k/$1uai/
-    - xform/(\w)k/$1ing/
-    - xform/([jqxnl])l/$1iang/
-    - xform/(\w)l/$1uang/
-    - xform/(\w)z/$1ou/
-    - xform/([gkhvuirzcs])x/$1ua/
-    - xform/(\w)x/$1ia/
-    - xform/(\w)c/$1ao/
-    - xform/([dtgkhvuirzcs])v/$1ui/
-    - xform/(\w)b/$1in/
-    - xform/(\w)m/$1ian/
-    - xform/([aoe])\1(\w)/$1$2/
-    - "xform/(^|[ '])v/$1zh/"
-    - "xform/(^|[ '])i/$1ch/"
-    - "xform/(^|[ '])u/$1sh/"
-    - xform/([jqxy])v/$1u/
-    - xform/([nl])v/$1ü/
+  preedit_format:
+    __include: flypy_preedit:/flypy_preedit
   tips: 【小鶴雙拼】
   closing_tips: 【蒼頡】
-  initial_quality: 0.2	# 調整該編譯器出字優先度
-
-# abc_segmentor:
-#  extra_tags: [ flypy ]
+  initial_quality: 0.2
 
 reverse_lookup:
   tag: reverse_lookup
@@ -137,14 +100,15 @@ reverse_lookup:
   suffix: ;
   dictionary: luna_pinyin
   prism: double_pinyin_flypy
-  preedit_format: *flypy
+  preedit_format:
+    __include: flypy_preedit:/flypy_preedit
   tips: 【小鶴雙拼反查】
   closing_tips: 【蒼頡】
 
 flypy_reverse_lookup:
   tags: [ reverse_lookup ]
   dictionary: *dict
-  overwrite_comment: true  # 覆蓋其他提示
+  overwrite_comment: true
   comment_format: &comment
     - xform/$/〕/
     - xform/^/〔/
