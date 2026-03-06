@@ -4,19 +4,20 @@
 schema:
   schema_id: double_pinyin_flypy
   name: 小鶴雙拼
-  version: "0.18"
+  version: "0.18.custom"
   author:
     - double pinyin layout by 鶴
     - Rime schema by 佛振 <chen.sst@gmail.com>
   description: |
     朙月拼音＋小鶴雙拼方案。
+    已整合蒼頡六代反查及教師模式。
   dependencies:
-    - stroke
+    - cangjie6
 
 switches:
   - name: ascii_mode
-    reset: 0
-    states: [ 中文, 西文 ]
+    reset: 1
+    states: ["鶴", "A"]
   - name: full_shape
     states: [ 半角, 全角 ]
   - name: simplification
@@ -47,6 +48,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
+    - reverse_lookup_filter@cangjie6_teacher
 
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba
@@ -82,7 +84,6 @@ speller:
     - xform/ui$/V/
     - xform/in$/B/
     - xlit/QWRTYUIOPSDFGHJKLZXCVBNM/qwrtyuiopsdfghjklzxcvbnm/
-    #- abbrev/^(.).+$/$1/
 
 translator:
   dictionary: luna_pinyin
@@ -122,15 +123,21 @@ translator:
     - xform/([nl])v/$1ü/
 
 reverse_lookup:
-  dictionary: stroke
+  dictionary: cangjie6.extended
   enable_completion: true
   prefix: "`"
   suffix: "'"
-  tips: 〔筆畫〕
-  preedit_format:
-    - xlit/hspnz/一丨丿丶乙/
+  tips: "〔蒼頡檢字法〕"
+  preedit_format: []
   comment_format:
-    - xform/([nl])v/$1ü/
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
+
+cangjie6_teacher:
+  tags: [ abc ]
+  dictionary: cangjie6.extended
+  overwrite_comment: true
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
 
 punctuator:
   import_preset: default
