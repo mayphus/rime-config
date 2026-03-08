@@ -1,16 +1,17 @@
-# Rime schema
+# Rime schema settings
 # encoding: utf-8
 
 schema:
-  name: 蒼頡檢字法
-  schema_id: cangjie6
-  version: "0.2"
+  name: 蒼頡·快打模式
+  schema_id: cangjie6_express
+  version: "0.1"
   author:
     - 朱邦復先生
     - 沈紅蓮女士
   description: |
-    第六代倉頡輸入法
-    碼表由雪齋、惜緣和crazy4u整理
+    第六代蒼頡檢字法
+    碼表源自風易辭，雪齋、惜緣和crazy4u整理
+    快打模式：單字自動上屏無連打
   dependencies:
     - double_pinyin_flypy
 
@@ -51,37 +52,32 @@ engine:
     - script_translator@reverse_lookup
   filters:
     - simplifier@simplify
-    - charset_filter@extended_char
     - uniquifier
     - reverse_lookup_filter@flypy_reverse_lookup
 
 simplify:
   option_name: simplification
   tips: all
-  tags: [ abc, reverse_lookup ]
-
-extended_char:
-  option_name: extended_charset
   tags: [ abc ]
 
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba
-  delimiter: " '"
+  delimiter: " "
+  auto_select: true
 
 translator:
   dictionary: &dict
-    cangjie6.extended
+    cangjie6
+  prism: cangjie6_express
   enable_user_dict: true
-  enable_sentence: true
+  user_dict: cangjie6_express
+  enable_charset_filter: true
+  enable_sentence: false
   sentence_over_completion: true
-  enable_encoder: true
-  encode_commit_history: true
-  max_phrase_length: 5
   preedit_format:
     - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|
   comment_format:
     - xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片・|
-  initial_quality: 0.75
 
 reverse_lookup:
   tag: reverse_lookup
@@ -93,7 +89,6 @@ reverse_lookup:
     __include: flypy_preedit:/flypy_preedit
   tips: 【小鶴雙拼反查】
   closing_tips: 【蒼頡】
-  initial_quality: 1
 
 flypy_reverse_lookup:
   tags: [ reverse_lookup ]
@@ -109,6 +104,9 @@ punctuator:
 
 key_binder:
   import_preset: default
+  bindings:
+    - { when: has_menu, accept: comma, send: comma }
+    - { when: has_menu, accept: period, send: period }
 
 recognizer:
   import_preset: default
