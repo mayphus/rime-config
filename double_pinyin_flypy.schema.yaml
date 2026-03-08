@@ -92,7 +92,7 @@ translator:
     __include: flypy_preedit:/flypy_preedit
 
 reverse_lookup:
-  dictionary: cangjie6.extended
+  dictionary: cangjie6
   enable_completion: true
   prefix: "`"
   suffix: "'"

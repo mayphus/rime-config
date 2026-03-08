@@ -1,6 +1,6 @@
 patch:
   schema_list:
-    - schema: cangjie6_express
+    - schema: cangjie6
     - schema: double_pinyin_flypy
     - schema: bopomofo_tw
     - schema: jyut6ping3

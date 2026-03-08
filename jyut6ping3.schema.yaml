@@ -103,7 +103,7 @@ translator:
 
 cangjie6:
   tag: cangjie6
-  dictionary: cangjie6.extended
+  dictionary: cangjie6
   enable_user_dict: false
   prefix: "`"
   suffix: ";"
