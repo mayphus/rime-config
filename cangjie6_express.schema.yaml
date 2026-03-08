@@ -75,9 +75,9 @@ translator:
   enable_sentence: false
   sentence_over_completion: true
   preedit_format:
-    - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片|
+    - xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|
   comment_format:
-    - xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片・|
+    - xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片・|
 
 reverse_lookup:
   tag: reverse_lookup
@@ -97,7 +97,7 @@ flypy_reverse_lookup:
   comment_format: &comment
     - xform/$/〕/
     - xform/^/〔/
-    - xlit|abcdefghijklmnopqrstuvwxyz |日月金木水火土竹戈十大中一弓人心手口尸廿山女田止卜片、|
+    - xlit|abcdefghijklmnopqrstuvwxyz |日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片、|
 
 punctuator:
   import_preset: symbols
