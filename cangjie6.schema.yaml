@@ -66,6 +66,7 @@ extended_char:
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba
   delimiter: " '"
+  auto_select: true
 
 translator:
   dictionary: &dict
