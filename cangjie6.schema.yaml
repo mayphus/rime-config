@@ -13,7 +13,7 @@ schema:
     碼表源自風易辭，雪齋、惜緣和crazy4u整理
     快打模式：單字自動上屏無連打
   dependencies:
-    - double_pinyin_flypy
+    - flypy
 
 switches:
   - name: extended_charset
@@ -83,7 +83,7 @@ reverse_lookup:
   prefix: "`"
   suffix: ;
   dictionary: luna_pinyin
-  prism: double_pinyin_flypy
+  prism: flypy
   preedit_format:
     __include: flypy_preedit:/flypy_preedit
   tips: 【小鶴雙拼反查】

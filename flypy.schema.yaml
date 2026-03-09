@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 schema:
-  schema_id: double_pinyin_flypy
+  schema_id: flypy
   name: 小鶴雙拼
   version: "0.18.custom"
   author:
@@ -87,7 +87,7 @@ speller:
 
 translator:
   dictionary: luna_pinyin
-  prism: double_pinyin_flypy
+  prism: flypy
   preedit_format:
     __include: flypy_preedit:/flypy_preedit
 
