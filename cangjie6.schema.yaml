@@ -24,7 +24,7 @@ switches:
     reset: 0
   - name: ascii_mode
     states: [ 蒼, A ]
-    reset: 1
+    reset: 0
   - name: full_shape
     states: [ 半角, 全角 ]
     reset: 0
