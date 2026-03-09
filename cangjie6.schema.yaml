@@ -69,8 +69,7 @@ translator:
   dictionary: &dict
     cangjie6
   prism: cangjie6
-  enable_user_dict: true
-  user_dict: cangjie6
+  enable_user_dict: false
   enable_charset_filter: true
   enable_sentence: false
   sentence_over_completion: true
