@@ -86,8 +86,8 @@ reverse_lookup:
   prism: flypy
   preedit_format:
     __include: flypy:/flypy
-  tips: 【小鶴雙拼反查】
-  closing_tips: 【蒼頡】
+  tips: 〔雙拼〕
+  closing_tips: 〔蒼頡〕
 
 flypy_reverse_lookup:
   tags: [ reverse_lookup ]

@@ -96,7 +96,7 @@ reverse_lookup:
   enable_completion: true
   prefix: "`"
   suffix: "'"
-  tips: "〔蒼頡檢字法〕"
+  tips: "〔蒼頡〕"
   preedit_format:
     - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
   comment_format:
