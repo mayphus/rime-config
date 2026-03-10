@@ -1,4 +1,4 @@
-flypy_preedit:
+flypy:
   - xform/([bpmfdtnljqx])n/$1iao/
   - xform/(\w)g/$1eng/
   - xform/(\w)q/$1iu/

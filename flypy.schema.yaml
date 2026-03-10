@@ -89,7 +89,7 @@ translator:
   dictionary: luna_pinyin
   prism: flypy
   preedit_format:
-    __include: flypy_preedit:/flypy_preedit
+    __include: flypy:/flypy
 
 reverse_lookup:
   dictionary: cangjie6
