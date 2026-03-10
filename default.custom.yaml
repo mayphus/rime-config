@@ -1,5 +1,5 @@
 patch:
   schema_list:
     - schema: cangjie6
-    - schema: bopomofo_tw
+    - schema: bopomofo
     - schema: flypy
