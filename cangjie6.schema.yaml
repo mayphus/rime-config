@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 schema:
-  name: 蒼頡檢字法
+  name: 蒼頡
   schema_id: cangjie6
   version: "0.1"
   author:

@@ -3,7 +3,7 @@
 
 schema:
   schema_id: flypy
-  name: 小鶴雙拼
+  name: 雙拼
   version: "0.18.custom"
   author:
     - double pinyin layout by 鶴
