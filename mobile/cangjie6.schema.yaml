@@ -48,7 +48,6 @@ engine:
   translators:
     - punct_translator
     - table_translator
-    - script_translator@flypy
     - script_translator@reverse_lookup
   filters:
     - simplifier@zh_hans
@@ -101,10 +100,6 @@ reverse_lookup:
   prism: flypy
   tips: 〔雙拼〕
   closing_tips: 〔蒼頡〕
-
-flypy:
-  dictionary: luna_pinyin
-  prism: flypy
 
 zh_hans:
   option_name: zh_hans
