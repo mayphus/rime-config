@@ -16,7 +16,7 @@ schema:
 
 switches:
   - name: ascii_mode
-    states: [ 中, A ]
+    states: [ 蒼, A ]
     reset: 0
   - options:
       - zh_none
@@ -82,7 +82,7 @@ speller:
   auto_select: true
 
 translator:
-  dictionary: cangjie6
+  dictionary: cangjie6.extended
   prism: cangjie6
   enable_user_dict: false
   enable_sentence: false
