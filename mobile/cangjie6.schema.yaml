@@ -18,6 +18,12 @@ switches:
   - name: ascii_mode
     states: [ 中, A ]
     reset: 0
+  - options:
+      - zh_none
+      - zh_hans
+      - zh_hant
+    reset: 0
+    states: [ 混合, 简体, 繁體 ]
   - name: full_shape
     states: [ 半角, 全角 ]
     reset: 0
@@ -45,6 +51,8 @@ engine:
     - script_translator@flypy
     - script_translator@reverse_lookup
   filters:
+    - simplifier@zh_hans
+    - simplifier@zh_hant
     - uniquifier
 
 punctuator:
@@ -97,3 +105,13 @@ reverse_lookup:
 flypy:
   dictionary: luna_pinyin
   prism: flypy
+
+zh_hans:
+  option_name: zh_hans
+  opencc_config: t2s.json
+  tips: all
+
+zh_hant:
+  option_name: zh_hant
+  opencc_config: s2t.json
+  tips: all
