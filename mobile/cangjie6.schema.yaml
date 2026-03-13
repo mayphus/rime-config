@@ -115,8 +115,10 @@ zh_hans:
   option_name: zh_hans
   opencc_config: t2s.json
   tips: all
+  tags: [ abc ]
 
 zh_hant:
   option_name: zh_hant
   opencc_config: s2t.json
   tips: all
+  tags: [ abc ]
