@@ -52,6 +52,7 @@ engine:
   filters:
     - simplifier@zh_hans
     - simplifier@zh_hant
+    - reverse_lookup_filter@flypy_reverse_lookup
     - uniquifier
 
 punctuator:
@@ -100,6 +101,15 @@ reverse_lookup:
   prism: flypy
   tips: 〔雙拼〕
   closing_tips: 〔蒼頡〕
+
+flypy_reverse_lookup:
+  tags: [ reverse_lookup ]
+  dictionary: cangjie6.extended
+  overwrite_comment: true
+  comment_format:
+    - xform/$/〕/
+    - xform/^/〔/
+    - xlit|abcdefghijklmnopqrstuvwxyz |日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片、|
 
 zh_hans:
   option_name: zh_hans
