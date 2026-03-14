@@ -183,21 +183,21 @@ local newLetterButton(name, letter, extraParams={}) = {
     // 按键定义
     qButton: newLetterButton('qButton', 'q'),
     wButton: newLetterButton('wButton', 'w'),
-    eButton: newLetterButton('eButton', 'e', { swipeUpAction: { keyboardType: 'emojis' } }),
+    eButton: newLetterButton('eButton', 'e', { swipeDownAction: { keyboardType: 'emojis' } }),
     rButton: newLetterButton('rButton', 'r'),
     tButton: newLetterButton('tButton', 't'),
     yButton: newLetterButton('yButton', 'y'),
     uButton: newLetterButton('uButton', 'u'),
     iButton: newLetterButton('iButton', 'i'),
     oButton: newLetterButton('oButton', 'o'),
-    pButton: newLetterButton('pButton', 'p', { swipeUpAction: { shortcut: '#showPasteboardView' } }),
+    pButton: newLetterButton('pButton', 'p', { swipeDownAction: { shortcut: '#showPasteboardView' } }),
 
     // 第二行字母键 (ASDF)
     aButton: newLetterButton('aButton', 'a', {
       // swipeUpAction: { shortcut: '#selectText' },
-      swipeUpAction: { shortcut: '#中英切换' },
+      swipeDownAction: { shortcut: '#中英切换' },
     }),
-    sButton: newLetterButton('sButton', 's', { swipeUpAction: { shortcut: '#toggleScriptView' } }),
+    sButton: newLetterButton('sButton', 's', { swipeDownAction: { shortcut: '#toggleScriptView' } }),
     dButton: newLetterButton('dButton', 'd', {
       // swipeUpAction: { shortcut: '#deleteText' },
     }),

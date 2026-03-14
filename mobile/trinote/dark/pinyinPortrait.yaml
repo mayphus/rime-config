@@ -22,7 +22,7 @@
       "size": {
          "width": "168.75/1125"
       },
-      "swipeUpAction": {
+      "swipeDownAction": {
          "shortcut": "#中英切换"
       },
       "uppercasedStateAction": {
@@ -465,7 +465,7 @@
       "size": {
          "width": "112.5/1125"
       },
-      "swipeUpAction": {
+      "swipeDownAction": {
          "keyboardType": "emojis"
       },
       "uppercasedStateAction": {
@@ -1765,7 +1765,7 @@
       "size": {
          "width": "112.5/1125"
       },
-      "swipeUpAction": {
+      "swipeDownAction": {
          "shortcut": "#showPasteboardView"
       },
       "uppercasedStateAction": {
@@ -2131,7 +2131,7 @@
       "size": {
          "width": "112.5/1125"
       },
-      "swipeUpAction": {
+      "swipeDownAction": {
          "shortcut": "#toggleScriptView"
       },
       "uppercasedStateAction": {
