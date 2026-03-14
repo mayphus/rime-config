@@ -16,14 +16,14 @@ schema:
     - flypy
 
 switches:
+  - name: ascii_mode
+    states: [ 蒼, A ]
+    reset: 0
   - name: extended_charset
     states: [ 通用, 增廣 ]
     reset: 0
   - name: simplification
     states: [ 漢字, 汉字 ]
-    reset: 0
-  - name: ascii_mode
-    states: [ 蒼, A ]
     reset: 0
   - name: full_shape
     states: [ 半角, 全角 ]
