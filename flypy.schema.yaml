@@ -86,7 +86,7 @@ speller:
     - xlit/QWRTYUIOPSDFGHJKLZXCVBNM/qwrtyuiopsdfghjklzxcvbnm/
 
 translator:
-  dictionary: luna_pinyin.extended
+  dictionary: luna_pinyin
   prism: flypy
   preedit_format:
     __include: flypy:/flypy
