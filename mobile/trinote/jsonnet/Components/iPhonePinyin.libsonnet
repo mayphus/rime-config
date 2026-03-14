@@ -23,6 +23,7 @@ local visualQuadrantCenter = {
 local abcLegendParams = {
   center: visualQuadrantCenter.upperLeft,
   fontSize: 14,
+  fontWeight: 'bold',
 };
 
 local cangjieLegendParams = {
