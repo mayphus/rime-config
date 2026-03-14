@@ -3,15 +3,13 @@
       "buttonStyleType": "geometry",
       "cornerRadius": 8.5,
       "highlightColor": "#E6E6E6",
-      "highlightLowerEdgeColor": "#898A8D",
       "insets": {
          "bottom": 3,
          "left": 3,
          "right": 3,
          "top": 3
       },
-      "normalColor": "#FFFFFF",
-      "normalLowerEdgeColor": "#898A8D"
+      "normalColor": "#FFFFFF"
    },
    "alphabeticHintBackgroundStyle": {
       "borderSize": 0.5,
@@ -141,15 +139,13 @@
       "buttonStyleType": "geometry",
       "cornerRadius": 8.5,
       "highlightColor": "#FFFFFF",
-      "highlightLowerEdgeColor": "#898A8D",
       "insets": {
          "bottom": 3,
          "left": 3,
          "right": 3,
          "top": 3
       },
-      "normalColor": "#007AFF",
-      "normalLowerEdgeColor": "#898A8D"
+      "normalColor": "#007AFF"
    },
    "blueButtonForegroundStyle": {
       "buttonStyleType": "text",
@@ -1296,15 +1292,13 @@
       "buttonStyleType": "geometry",
       "cornerRadius": 8.5,
       "highlightColor": "#FFFFFF",
-      "highlightLowerEdgeColor": "#898A8D",
       "insets": {
          "bottom": 3,
          "left": 3,
          "right": 3,
          "top": 3
       },
-      "normalColor": "#E6E6E6",
-      "normalLowerEdgeColor": "#898A8D"
+      "normalColor": "#E6E6E6"
    },
    "tildeButton": {
       "action": {

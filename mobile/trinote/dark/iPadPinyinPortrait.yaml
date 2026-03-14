@@ -97,15 +97,13 @@
       "buttonStyleType": "geometry",
       "cornerRadius": 8.5,
       "highlightColor": "#4C4C4C",
-      "highlightLowerEdgeColor": "#000000",
       "insets": {
          "bottom": 3,
          "left": 3,
          "right": 3,
          "top": 3
       },
-      "normalColor": "#707070",
-      "normalLowerEdgeColor": "#000000"
+      "normalColor": "#707070"
    },
    "alphabeticHintBackgroundStyle": {
       "borderSize": 0.5,
@@ -277,15 +275,13 @@
       "buttonStyleType": "geometry",
       "cornerRadius": 8.5,
       "highlightColor": "#707070",
-      "highlightLowerEdgeColor": "#000000",
       "insets": {
          "bottom": 4,
          "left": 3,
          "right": 3,
          "top": 4
       },
-      "normalColor": "#0A84FF",
-      "normalLowerEdgeColor": "#000000"
+      "normalColor": "#0A84FF"
    },
    "blueButtonForegroundStyle": {
       "buttonStyleType": "text",
@@ -3235,15 +3231,13 @@
       "buttonStyleType": "geometry",
       "cornerRadius": 8.5,
       "highlightColor": "#707070",
-      "highlightLowerEdgeColor": "#000000",
       "insets": {
          "bottom": 3,
          "left": 3,
          "right": 3,
          "top": 3
       },
-      "normalColor": "#4C4C4C",
-      "normalLowerEdgeColor": "#000000"
+      "normalColor": "#4C4C4C"
    },
    "tButton": {
       "action": {
