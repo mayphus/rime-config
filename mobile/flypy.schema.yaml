@@ -16,12 +16,13 @@ switches:
   - name: ascii_mode
     reset: 0
     states: ["鶴", "A"]
-  - options:
-      - zh_none
-      - zh_hans
-      - zh_hant
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: simplification
+    states: [ 漢字, 汉字 ]
     reset: 0
-    states: [ 混合, 简体, 繁體 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
 
 engine:
   processors:
@@ -43,9 +44,13 @@ engine:
     - punct_translator
     - script_translator
   filters:
-    - simplifier@zh_hans
-    - simplifier@zh_hant
+    - simplifier@simplify
     - uniquifier
+
+simplify:
+  option_name: simplification
+  opencc_config: t2s.json
+  tips: all
 
 punctuator:
   __include: default:/punctuator
@@ -105,13 +110,3 @@ speller:
 translator:
   dictionary: luna_pinyin
   prism: flypy
-
-zh_hans:
-  option_name: zh_hans
-  opencc_config: t2s.json
-  tips: all
-
-zh_hant:
-  option_name: zh_hant
-  opencc_config: s2t.json
-  tips: all

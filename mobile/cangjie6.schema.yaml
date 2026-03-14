@@ -15,15 +15,15 @@ schema:
     - flypy
 
 switches:
+  - name: extended_charset
+    states: [ 通用, 增廣 ]
+    reset: 0
   - name: ascii_mode
     states: [ 蒼, A ]
     reset: 0
-  - options:
-      - zh_none
-      - zh_hans
-      - zh_hant
+  - name: simplification
+    states: [ 漢字, 汉字 ]
     reset: 0
-    states: [ 混合, 简体, 繁體 ]
   - name: full_shape
     states: [ 半角, 全角 ]
     reset: 0
@@ -50,10 +50,15 @@ engine:
     - table_translator
     - script_translator@reverse_lookup
   filters:
-    - simplifier@zh_hans
-    - simplifier@zh_hant
+    - simplifier@simplify
     - reverse_lookup_filter@flypy_reverse_lookup
     - uniquifier
+
+simplify:
+  option_name: simplification
+  opencc_config: t2s.json
+  tips: all
+  tags: [ abc ]
 
 punctuator:
   __include: default:/punctuator
@@ -83,9 +88,10 @@ speller:
   auto_select: true
 
 translator:
-  dictionary: cangjie6.extended
+  dictionary: cangjie6
   prism: cangjie6
   enable_user_dict: false
+  enable_charset_filter: true
   enable_sentence: false
   sentence_over_completion: true
   preedit_format:
@@ -104,21 +110,9 @@ reverse_lookup:
 
 flypy_reverse_lookup:
   tags: [ reverse_lookup ]
-  dictionary: cangjie6.extended
+  dictionary: cangjie6
   overwrite_comment: true
   comment_format:
     - xform/$/〕/
     - xform/^/〔/
     - xlit|abcdefghijklmnopqrstuvwxyz |日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片、|
-
-zh_hans:
-  option_name: zh_hans
-  opencc_config: t2s.json
-  tips: all
-  tags: [ abc ]
-
-zh_hant:
-  option_name: zh_hant
-  opencc_config: s2t.json
-  tips: all
-  tags: [ abc ]
