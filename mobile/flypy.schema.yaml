@@ -110,3 +110,5 @@ speller:
 translator:
   dictionary: luna_pinyin
   prism: flypy
+  preedit_format:
+    __include: flypy:/flypy
