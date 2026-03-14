@@ -5,12 +5,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "aButtonUppercaseForegroundStyle",
+         "aButtonAbcUppercaseForegroundStyle",
          "aButtonCangjieForegroundStyle",
          "aButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "aButtonForegroundStyle",
+         "aButtonAbcForegroundStyle",
          "aButtonCangjieForegroundStyle",
          "aButtonFlypyForegroundStyle"
       ],
@@ -25,18 +25,40 @@
          "character": "A"
       },
       "uppercasedStateForegroundStyle": [
-         "aButtonUppercaseForegroundStyle",
+         "aButtonAbcUppercaseForegroundStyle",
          "aButtonCangjieForegroundStyle",
          "aButtonFlypyForegroundStyle"
       ]
    },
+   "aButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "a"
+   },
+   "aButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "A"
+   },
    "aButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "日"
@@ -44,19 +66,12 @@
    "aButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
-      "text": "a"
-   },
-   "aButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
       "text": "a"
    },
    "aButtonHintForegroundStyle": {
@@ -150,12 +165,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "bButtonUppercaseForegroundStyle",
+         "bButtonAbcUppercaseForegroundStyle",
          "bButtonCangjieForegroundStyle",
          "bButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "bButtonForegroundStyle",
+         "bButtonAbcForegroundStyle",
          "bButtonCangjieForegroundStyle",
          "bButtonFlypyForegroundStyle"
       ],
@@ -167,18 +182,40 @@
          "character": "B"
       },
       "uppercasedStateForegroundStyle": [
-         "bButtonUppercaseForegroundStyle",
+         "bButtonAbcUppercaseForegroundStyle",
          "bButtonCangjieForegroundStyle",
          "bButtonFlypyForegroundStyle"
       ]
    },
+   "bButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "b"
+   },
+   "bButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "B"
+   },
    "bButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "月"
@@ -186,20 +223,13 @@
    "bButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "in"
-   },
-   "bButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "b"
    },
    "bButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -267,12 +297,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "cButtonUppercaseForegroundStyle",
+         "cButtonAbcUppercaseForegroundStyle",
          "cButtonCangjieForegroundStyle",
          "cButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "cButtonForegroundStyle",
+         "cButtonAbcForegroundStyle",
          "cButtonCangjieForegroundStyle",
          "cButtonFlypyForegroundStyle"
       ],
@@ -284,18 +314,40 @@
          "character": "C"
       },
       "uppercasedStateForegroundStyle": [
-         "cButtonUppercaseForegroundStyle",
+         "cButtonAbcUppercaseForegroundStyle",
          "cButtonCangjieForegroundStyle",
          "cButtonFlypyForegroundStyle"
       ]
    },
+   "cButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "c"
+   },
+   "cButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "C"
+   },
    "cButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "金"
@@ -303,20 +355,13 @@
    "cButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ao"
-   },
-   "cButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "c"
    },
    "cButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -480,12 +525,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "dButtonUppercaseForegroundStyle",
+         "dButtonAbcUppercaseForegroundStyle",
          "dButtonCangjieForegroundStyle",
          "dButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "dButtonForegroundStyle",
+         "dButtonAbcForegroundStyle",
          "dButtonCangjieForegroundStyle",
          "dButtonFlypyForegroundStyle"
       ],
@@ -497,18 +542,40 @@
          "character": "D"
       },
       "uppercasedStateForegroundStyle": [
-         "dButtonUppercaseForegroundStyle",
+         "dButtonAbcUppercaseForegroundStyle",
          "dButtonCangjieForegroundStyle",
          "dButtonFlypyForegroundStyle"
       ]
    },
+   "dButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "d"
+   },
+   "dButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "D"
+   },
    "dButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "木"
@@ -516,20 +583,13 @@
    "dButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ai"
-   },
-   "dButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "d"
    },
    "dButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -579,12 +639,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "eButtonUppercaseForegroundStyle",
+         "eButtonAbcUppercaseForegroundStyle",
          "eButtonCangjieForegroundStyle",
          "eButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "eButtonForegroundStyle",
+         "eButtonAbcForegroundStyle",
          "eButtonCangjieForegroundStyle",
          "eButtonFlypyForegroundStyle"
       ],
@@ -599,18 +659,40 @@
          "character": "E"
       },
       "uppercasedStateForegroundStyle": [
-         "eButtonUppercaseForegroundStyle",
+         "eButtonAbcUppercaseForegroundStyle",
          "eButtonCangjieForegroundStyle",
          "eButtonFlypyForegroundStyle"
       ]
    },
+   "eButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "e"
+   },
+   "eButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "E"
+   },
    "eButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "水"
@@ -618,19 +700,12 @@
    "eButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
-      "text": "e"
-   },
-   "eButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
       "text": "e"
    },
    "eButtonHintForegroundStyle": {
@@ -835,12 +910,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "fButtonUppercaseForegroundStyle",
+         "fButtonAbcUppercaseForegroundStyle",
          "fButtonCangjieForegroundStyle",
          "fButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "fButtonForegroundStyle",
+         "fButtonAbcForegroundStyle",
          "fButtonCangjieForegroundStyle",
          "fButtonFlypyForegroundStyle"
       ],
@@ -852,18 +927,40 @@
          "character": "F"
       },
       "uppercasedStateForegroundStyle": [
-         "fButtonUppercaseForegroundStyle",
+         "fButtonAbcUppercaseForegroundStyle",
          "fButtonCangjieForegroundStyle",
          "fButtonFlypyForegroundStyle"
       ]
    },
+   "fButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "f"
+   },
+   "fButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "F"
+   },
    "fButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "火"
@@ -871,20 +968,13 @@
    "fButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "en"
-   },
-   "fButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "f"
    },
    "fButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1026,12 +1116,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "gButtonUppercaseForegroundStyle",
+         "gButtonAbcUppercaseForegroundStyle",
          "gButtonCangjieForegroundStyle",
          "gButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "gButtonForegroundStyle",
+         "gButtonAbcForegroundStyle",
          "gButtonCangjieForegroundStyle",
          "gButtonFlypyForegroundStyle"
       ],
@@ -1043,18 +1133,40 @@
          "character": "G"
       },
       "uppercasedStateForegroundStyle": [
-         "gButtonUppercaseForegroundStyle",
+         "gButtonAbcUppercaseForegroundStyle",
          "gButtonCangjieForegroundStyle",
          "gButtonFlypyForegroundStyle"
       ]
    },
+   "gButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "g"
+   },
+   "gButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "G"
+   },
    "gButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "土"
@@ -1062,20 +1174,13 @@
    "gButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "eng"
-   },
-   "gButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "g"
    },
    "gButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1137,12 +1242,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "hButtonUppercaseForegroundStyle",
+         "hButtonAbcUppercaseForegroundStyle",
          "hButtonCangjieForegroundStyle",
          "hButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "hButtonForegroundStyle",
+         "hButtonAbcForegroundStyle",
          "hButtonCangjieForegroundStyle",
          "hButtonFlypyForegroundStyle"
       ],
@@ -1154,18 +1259,40 @@
          "character": "H"
       },
       "uppercasedStateForegroundStyle": [
-         "hButtonUppercaseForegroundStyle",
+         "hButtonAbcUppercaseForegroundStyle",
          "hButtonCangjieForegroundStyle",
          "hButtonFlypyForegroundStyle"
       ]
    },
+   "hButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "h"
+   },
+   "hButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "H"
+   },
    "hButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "的"
@@ -1173,20 +1300,13 @@
    "hButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ang"
-   },
-   "hButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "h"
    },
    "hButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1298,12 +1418,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "iButtonUppercaseForegroundStyle",
+         "iButtonAbcUppercaseForegroundStyle",
          "iButtonCangjieForegroundStyle",
          "iButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "iButtonForegroundStyle",
+         "iButtonAbcForegroundStyle",
          "iButtonCangjieForegroundStyle",
          "iButtonFlypyForegroundStyle"
       ],
@@ -1315,18 +1435,40 @@
          "character": "I"
       },
       "uppercasedStateForegroundStyle": [
-         "iButtonUppercaseForegroundStyle",
+         "iButtonAbcUppercaseForegroundStyle",
          "iButtonCangjieForegroundStyle",
          "iButtonFlypyForegroundStyle"
       ]
    },
+   "iButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "i"
+   },
+   "iButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "I"
+   },
    "iButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "戈"
@@ -1334,20 +1476,13 @@
    "iButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ch"
-   },
-   "iButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "i"
    },
    "iButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1409,12 +1544,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "jButtonUppercaseForegroundStyle",
+         "jButtonAbcUppercaseForegroundStyle",
          "jButtonCangjieForegroundStyle",
          "jButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "jButtonForegroundStyle",
+         "jButtonAbcForegroundStyle",
          "jButtonCangjieForegroundStyle",
          "jButtonFlypyForegroundStyle"
       ],
@@ -1426,18 +1561,40 @@
          "character": "J"
       },
       "uppercasedStateForegroundStyle": [
-         "jButtonUppercaseForegroundStyle",
+         "jButtonAbcUppercaseForegroundStyle",
          "jButtonCangjieForegroundStyle",
          "jButtonFlypyForegroundStyle"
       ]
    },
+   "jButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "j"
+   },
+   "jButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "J"
+   },
    "jButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "十"
@@ -1445,20 +1602,13 @@
    "jButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "an"
-   },
-   "jButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "j"
    },
    "jButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1483,12 +1633,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "kButtonUppercaseForegroundStyle",
+         "kButtonAbcUppercaseForegroundStyle",
          "kButtonCangjieForegroundStyle",
          "kButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "kButtonForegroundStyle",
+         "kButtonAbcForegroundStyle",
          "kButtonCangjieForegroundStyle",
          "kButtonFlypyForegroundStyle"
       ],
@@ -1500,18 +1650,40 @@
          "character": "K"
       },
       "uppercasedStateForegroundStyle": [
-         "kButtonUppercaseForegroundStyle",
+         "kButtonAbcUppercaseForegroundStyle",
          "kButtonCangjieForegroundStyle",
          "kButtonFlypyForegroundStyle"
       ]
    },
+   "kButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "k"
+   },
+   "kButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "K"
+   },
    "kButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "大"
@@ -1519,20 +1691,13 @@
    "kButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ing\nuai"
-   },
-   "kButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "k"
    },
    "kButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1772,12 +1937,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "lButtonUppercaseForegroundStyle",
+         "lButtonAbcUppercaseForegroundStyle",
          "lButtonCangjieForegroundStyle",
          "lButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "lButtonForegroundStyle",
+         "lButtonAbcForegroundStyle",
          "lButtonCangjieForegroundStyle",
          "lButtonFlypyForegroundStyle"
       ],
@@ -1789,18 +1954,40 @@
          "character": "L"
       },
       "uppercasedStateForegroundStyle": [
-         "lButtonUppercaseForegroundStyle",
+         "lButtonAbcUppercaseForegroundStyle",
          "lButtonCangjieForegroundStyle",
          "lButtonFlypyForegroundStyle"
       ]
    },
+   "lButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "l"
+   },
+   "lButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "L"
+   },
    "lButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "中"
@@ -1808,20 +1995,13 @@
    "lButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "iang\nuang"
-   },
-   "lButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "l"
    },
    "lButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -1957,12 +2137,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "mButtonUppercaseForegroundStyle",
+         "mButtonAbcUppercaseForegroundStyle",
          "mButtonCangjieForegroundStyle",
          "mButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "mButtonForegroundStyle",
+         "mButtonAbcForegroundStyle",
          "mButtonCangjieForegroundStyle",
          "mButtonFlypyForegroundStyle"
       ],
@@ -1974,18 +2154,40 @@
          "character": "M"
       },
       "uppercasedStateForegroundStyle": [
-         "mButtonUppercaseForegroundStyle",
+         "mButtonAbcUppercaseForegroundStyle",
          "mButtonCangjieForegroundStyle",
          "mButtonFlypyForegroundStyle"
       ]
    },
+   "mButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "m"
+   },
+   "mButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "M"
+   },
    "mButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "一"
@@ -1993,20 +2195,13 @@
    "mButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ian"
-   },
-   "mButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "m"
    },
    "mButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2031,12 +2226,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "nButtonUppercaseForegroundStyle",
+         "nButtonAbcUppercaseForegroundStyle",
          "nButtonCangjieForegroundStyle",
          "nButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "nButtonForegroundStyle",
+         "nButtonAbcForegroundStyle",
          "nButtonCangjieForegroundStyle",
          "nButtonFlypyForegroundStyle"
       ],
@@ -2048,18 +2243,40 @@
          "character": "N"
       },
       "uppercasedStateForegroundStyle": [
-         "nButtonUppercaseForegroundStyle",
+         "nButtonAbcUppercaseForegroundStyle",
          "nButtonCangjieForegroundStyle",
          "nButtonFlypyForegroundStyle"
       ]
    },
+   "nButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "n"
+   },
+   "nButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "N"
+   },
    "nButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "弓"
@@ -2067,20 +2284,13 @@
    "nButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "iao"
-   },
-   "nButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "n"
    },
    "nButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2160,12 +2370,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "oButtonUppercaseForegroundStyle",
+         "oButtonAbcUppercaseForegroundStyle",
          "oButtonCangjieForegroundStyle",
          "oButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "oButtonForegroundStyle",
+         "oButtonAbcForegroundStyle",
          "oButtonCangjieForegroundStyle",
          "oButtonFlypyForegroundStyle"
       ],
@@ -2177,18 +2387,40 @@
          "character": "O"
       },
       "uppercasedStateForegroundStyle": [
-         "oButtonUppercaseForegroundStyle",
+         "oButtonAbcUppercaseForegroundStyle",
          "oButtonCangjieForegroundStyle",
          "oButtonFlypyForegroundStyle"
       ]
    },
+   "oButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "o"
+   },
+   "oButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "O"
+   },
    "oButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "人"
@@ -2196,20 +2428,13 @@
    "oButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "uo"
-   },
-   "oButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "o"
    },
    "oButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2286,12 +2511,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "pButtonUppercaseForegroundStyle",
+         "pButtonAbcUppercaseForegroundStyle",
          "pButtonCangjieForegroundStyle",
          "pButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "pButtonForegroundStyle",
+         "pButtonAbcForegroundStyle",
          "pButtonCangjieForegroundStyle",
          "pButtonFlypyForegroundStyle"
       ],
@@ -2306,18 +2531,40 @@
          "character": "P"
       },
       "uppercasedStateForegroundStyle": [
-         "pButtonUppercaseForegroundStyle",
+         "pButtonAbcUppercaseForegroundStyle",
          "pButtonCangjieForegroundStyle",
          "pButtonFlypyForegroundStyle"
       ]
    },
+   "pButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "p"
+   },
+   "pButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "P"
+   },
    "pButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "心"
@@ -2325,20 +2572,13 @@
    "pButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ie"
-   },
-   "pButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "p"
    },
    "pButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2459,12 +2699,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "qButtonUppercaseForegroundStyle",
+         "qButtonAbcUppercaseForegroundStyle",
          "qButtonCangjieForegroundStyle",
          "qButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "qButtonForegroundStyle",
+         "qButtonAbcForegroundStyle",
          "qButtonCangjieForegroundStyle",
          "qButtonFlypyForegroundStyle"
       ],
@@ -2476,18 +2716,40 @@
          "character": "Q"
       },
       "uppercasedStateForegroundStyle": [
-         "qButtonUppercaseForegroundStyle",
+         "qButtonAbcUppercaseForegroundStyle",
          "qButtonCangjieForegroundStyle",
          "qButtonFlypyForegroundStyle"
       ]
    },
+   "qButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "q"
+   },
+   "qButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "Q"
+   },
    "qButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "手"
@@ -2495,20 +2757,13 @@
    "qButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "iu"
-   },
-   "qButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "q"
    },
    "qButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2543,12 +2798,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "rButtonUppercaseForegroundStyle",
+         "rButtonAbcUppercaseForegroundStyle",
          "rButtonCangjieForegroundStyle",
          "rButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "rButtonForegroundStyle",
+         "rButtonAbcForegroundStyle",
          "rButtonCangjieForegroundStyle",
          "rButtonFlypyForegroundStyle"
       ],
@@ -2560,18 +2815,40 @@
          "character": "R"
       },
       "uppercasedStateForegroundStyle": [
-         "rButtonUppercaseForegroundStyle",
+         "rButtonAbcUppercaseForegroundStyle",
          "rButtonCangjieForegroundStyle",
          "rButtonFlypyForegroundStyle"
       ]
    },
+   "rButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "r"
+   },
+   "rButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "R"
+   },
    "rButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "口"
@@ -2579,20 +2856,13 @@
    "rButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "uan"
-   },
-   "rButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "r"
    },
    "rButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2731,12 +3001,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "sButtonUppercaseForegroundStyle",
+         "sButtonAbcUppercaseForegroundStyle",
          "sButtonCangjieForegroundStyle",
          "sButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "sButtonForegroundStyle",
+         "sButtonAbcForegroundStyle",
          "sButtonCangjieForegroundStyle",
          "sButtonFlypyForegroundStyle"
       ],
@@ -2751,18 +3021,40 @@
          "character": "S"
       },
       "uppercasedStateForegroundStyle": [
-         "sButtonUppercaseForegroundStyle",
+         "sButtonAbcUppercaseForegroundStyle",
          "sButtonCangjieForegroundStyle",
          "sButtonFlypyForegroundStyle"
       ]
    },
+   "sButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "s"
+   },
+   "sButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "S"
+   },
    "sButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "尸"
@@ -2770,20 +3062,13 @@
    "sButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ong\niong"
-   },
-   "sButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "s"
    },
    "sButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -2928,12 +3213,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "tButtonUppercaseForegroundStyle",
+         "tButtonAbcUppercaseForegroundStyle",
          "tButtonCangjieForegroundStyle",
          "tButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "tButtonForegroundStyle",
+         "tButtonAbcForegroundStyle",
          "tButtonCangjieForegroundStyle",
          "tButtonFlypyForegroundStyle"
       ],
@@ -2945,18 +3230,40 @@
          "character": "T"
       },
       "uppercasedStateForegroundStyle": [
-         "tButtonUppercaseForegroundStyle",
+         "tButtonAbcUppercaseForegroundStyle",
          "tButtonCangjieForegroundStyle",
          "tButtonFlypyForegroundStyle"
       ]
    },
+   "tButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "t"
+   },
+   "tButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "T"
+   },
    "tButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "廿"
@@ -2964,20 +3271,13 @@
    "tButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ue\nve"
-   },
-   "tButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "t"
    },
    "tButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -3110,12 +3410,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "uButtonUppercaseForegroundStyle",
+         "uButtonAbcUppercaseForegroundStyle",
          "uButtonCangjieForegroundStyle",
          "uButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "uButtonForegroundStyle",
+         "uButtonAbcForegroundStyle",
          "uButtonCangjieForegroundStyle",
          "uButtonFlypyForegroundStyle"
       ],
@@ -3127,18 +3427,40 @@
          "character": "U"
       },
       "uppercasedStateForegroundStyle": [
-         "uButtonUppercaseForegroundStyle",
+         "uButtonAbcUppercaseForegroundStyle",
          "uButtonCangjieForegroundStyle",
          "uButtonFlypyForegroundStyle"
       ]
    },
+   "uButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "u"
+   },
+   "uButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "U"
+   },
    "uButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "山"
@@ -3146,20 +3468,13 @@
    "uButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "sh"
-   },
-   "uButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "u"
    },
    "uButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -3184,12 +3499,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "vButtonUppercaseForegroundStyle",
+         "vButtonAbcUppercaseForegroundStyle",
          "vButtonCangjieForegroundStyle",
          "vButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "vButtonForegroundStyle",
+         "vButtonAbcForegroundStyle",
          "vButtonCangjieForegroundStyle",
          "vButtonFlypyForegroundStyle"
       ],
@@ -3201,18 +3516,40 @@
          "character": "V"
       },
       "uppercasedStateForegroundStyle": [
-         "vButtonUppercaseForegroundStyle",
+         "vButtonAbcUppercaseForegroundStyle",
          "vButtonCangjieForegroundStyle",
          "vButtonFlypyForegroundStyle"
       ]
    },
+   "vButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "v"
+   },
+   "vButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "V"
+   },
    "vButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "女"
@@ -3220,20 +3557,13 @@
    "vButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "zh\nui"
-   },
-   "vButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "v"
    },
    "vButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -3398,12 +3728,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "wButtonUppercaseForegroundStyle",
+         "wButtonAbcUppercaseForegroundStyle",
          "wButtonCangjieForegroundStyle",
          "wButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "wButtonForegroundStyle",
+         "wButtonAbcForegroundStyle",
          "wButtonCangjieForegroundStyle",
          "wButtonFlypyForegroundStyle"
       ],
@@ -3415,18 +3745,40 @@
          "character": "W"
       },
       "uppercasedStateForegroundStyle": [
-         "wButtonUppercaseForegroundStyle",
+         "wButtonAbcUppercaseForegroundStyle",
          "wButtonCangjieForegroundStyle",
          "wButtonFlypyForegroundStyle"
       ]
    },
+   "wButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "w"
+   },
+   "wButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "W"
+   },
    "wButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "田"
@@ -3434,20 +3786,13 @@
    "wButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ei"
-   },
-   "wButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "w"
    },
    "wButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -3472,12 +3817,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "xButtonUppercaseForegroundStyle",
+         "xButtonAbcUppercaseForegroundStyle",
          "xButtonCangjieForegroundStyle",
          "xButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "xButtonForegroundStyle",
+         "xButtonAbcForegroundStyle",
          "xButtonCangjieForegroundStyle",
          "xButtonFlypyForegroundStyle"
       ],
@@ -3489,18 +3834,40 @@
          "character": "X"
       },
       "uppercasedStateForegroundStyle": [
-         "xButtonUppercaseForegroundStyle",
+         "xButtonAbcUppercaseForegroundStyle",
          "xButtonCangjieForegroundStyle",
          "xButtonFlypyForegroundStyle"
       ]
    },
+   "xButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "x"
+   },
+   "xButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "X"
+   },
    "xButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "止"
@@ -3508,20 +3875,13 @@
    "xButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ia\nua"
-   },
-   "xButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "x"
    },
    "xButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -3546,12 +3906,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "yButtonUppercaseForegroundStyle",
+         "yButtonAbcUppercaseForegroundStyle",
          "yButtonCangjieForegroundStyle",
          "yButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "yButtonForegroundStyle",
+         "yButtonAbcForegroundStyle",
          "yButtonCangjieForegroundStyle",
          "yButtonFlypyForegroundStyle"
       ],
@@ -3563,18 +3923,40 @@
          "character": "Y"
       },
       "uppercasedStateForegroundStyle": [
-         "yButtonUppercaseForegroundStyle",
+         "yButtonAbcUppercaseForegroundStyle",
          "yButtonCangjieForegroundStyle",
          "yButtonFlypyForegroundStyle"
       ]
    },
+   "yButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "y"
+   },
+   "yButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "Y"
+   },
    "yButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "卜"
@@ -3582,20 +3964,13 @@
    "yButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "un"
-   },
-   "yButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "y"
    },
    "yButtonHintForegroundStyle": {
       "buttonStyleType": "text",
@@ -3620,12 +3995,12 @@
       },
       "backgroundStyle": "alphabeticButtonBackgroundStyle",
       "capsLockedStateForegroundStyle": [
-         "zButtonUppercaseForegroundStyle",
+         "zButtonAbcUppercaseForegroundStyle",
          "zButtonCangjieForegroundStyle",
          "zButtonFlypyForegroundStyle"
       ],
       "foregroundStyle": [
-         "zButtonForegroundStyle",
+         "zButtonAbcForegroundStyle",
          "zButtonCangjieForegroundStyle",
          "zButtonFlypyForegroundStyle"
       ],
@@ -3637,18 +4012,40 @@
          "character": "Z"
       },
       "uppercasedStateForegroundStyle": [
-         "zButtonUppercaseForegroundStyle",
+         "zButtonAbcUppercaseForegroundStyle",
          "zButtonCangjieForegroundStyle",
          "zButtonFlypyForegroundStyle"
       ]
    },
+   "zButtonAbcForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "z"
+   },
+   "zButtonAbcUppercaseForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.31,
+         "y": 0.29999999999999999
+      },
+      "fontSize": 18,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "Z"
+   },
    "zButtonCangjieForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.23999999999999999,
-         "y": 0.27000000000000002
+         "x": 0.31,
+         "y": 0.69999999999999996
       },
-      "fontSize": 11,
+      "fontSize": 14,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "片"
@@ -3656,20 +4053,13 @@
    "zButtonFlypyForegroundStyle": {
       "buttonStyleType": "text",
       "center": {
-         "x": 0.76000000000000001,
-         "y": 0.27000000000000002
+         "x": 0.68999999999999995,
+         "y": 0.29999999999999999
       },
-      "fontSize": 8,
+      "fontSize": 10,
       "highlightColor": "#3c3c4399",
       "normalColor": "#3c3c4399",
       "text": "ou"
-   },
-   "zButtonForegroundStyle": {
-      "buttonStyleType": "text",
-      "fontSize": 22.5,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
-      "text": "z"
    },
    "zButtonHintForegroundStyle": {
       "buttonStyleType": "text",

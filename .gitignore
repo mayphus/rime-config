@@ -4,3 +4,5 @@ build/
 .DS_Store
 user.yaml
 installation.yaml
+mobile/trinote.cskin
+mobile/trinote_preview.png

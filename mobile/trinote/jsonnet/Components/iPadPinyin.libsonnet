@@ -47,20 +47,25 @@ local candidateInsets = {
   insets: { top: 0, bottom: 0, left: 200, right: 200 },
 };
 
+local visualQuadrantCenter = {
+  upperLeft: { x: 0.31, y: 0.30 },
+  lowerLeft: { x: 0.31, y: 0.70 },
+  upperRight: { x: 0.69, y: 0.30 },
+};
+
+local abcLegendParams = {
+  center: visualQuadrantCenter.upperLeft,
+  fontSize: 18,
+};
+
 local cangjieLegendParams = {
-  center: {
-    x: 0.24,
-    y: 0.27,
-  },
-  fontSize: 11,
+  center: visualQuadrantCenter.lowerLeft,
+  fontSize: 14,
 };
 
 local flypyLegendParams = {
-  center: {
-    x: 0.76,
-    y: 0.27,
-  },
-  fontSize: 8,
+  center: visualQuadrantCenter.upperRight,
+  fontSize: 10,
 };
 
 local newMarkedAlphabeticButton(button, isDark=false, params={}) =
@@ -71,23 +76,26 @@ local newMarkedAlphabeticButton(button, isDark=false, params={}) =
     + button.params
     + {
       foregroundStyleName: [
-        button.name + 'ForegroundStyle',
+        button.name + 'AbcForegroundStyle',
         button.name + 'CangjieForegroundStyle',
         button.name + 'FlypyForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
-        button.name + 'UppercaseForegroundStyle',
+        button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
         button.name + 'FlypyForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
-        button.name + 'UppercaseForegroundStyle',
+        button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
         button.name + 'FlypyForegroundStyle',
       ],
       foregroundStyle: {
-        [button.name + 'ForegroundStyle']:
-          basicStyle.newAlphabeticButtonForegroundStyle(isDark, button.params),
+        [button.name + 'AbcForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, abcLegendParams + button.params),
+        [button.name + 'AbcUppercaseForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, abcLegendParams + button.params)
+          + basicStyle.getKeyboardActionText(button.params, 'uppercasedStateAction'),
         [button.name + 'CangjieForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, cangjieLegendParams + { text: button.legend.cangjie }),
         [button.name + 'FlypyForegroundStyle']:
