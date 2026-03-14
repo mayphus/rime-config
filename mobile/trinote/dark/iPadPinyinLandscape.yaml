@@ -1825,7 +1825,7 @@
          "width": "1.1/16"
       },
       "swipeUpAction": {
-         "character": "'"
+         "character": "@"
       },
       "uppercasedStateAction": {
          "character": "K"
@@ -1901,7 +1901,7 @@
       "fontSize": 11,
       "highlightColor": "#ebebf599",
       "normalColor": "#ebebf599",
-      "text": "'"
+      "text": "@"
    },
    "kButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
@@ -4455,7 +4455,7 @@
          "width": "1.1/16"
       },
       "swipeUpAction": {
-         "character": "@"
+         "character": ","
       },
       "uppercasedStateAction": {
          "character": "Z"
@@ -4531,7 +4531,7 @@
       "fontSize": 11,
       "highlightColor": "#ebebf599",
       "normalColor": "#ebebf599",
-      "text": "@"
+      "text": ","
    },
    "zButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",

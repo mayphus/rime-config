@@ -77,9 +77,9 @@ local symbolLegends = {
   g: '(',
   h: '[',
   j: '~',
-  k: "'",
+  k: '@',
   l: '"',
-  z: '@',
+  z: ',',
   x: '.',
   c: '#',
   v: '\\',
@@ -245,12 +245,12 @@ local newLetterButton(name, letter, extraParams={}) = {
     gButton: newLetterButton('gButton', 'g', { swipeUpAction: { character: '(' } }),
     hButton: newLetterButton('hButton', 'h', { swipeUpAction: { character: '[' } }),
     jButton: newLetterButton('jButton', 'j', { swipeUpAction: { character: '~' } }),
-    kButton: newLetterButton('kButton', 'k', { swipeUpAction: { character: "'" } }),
+    kButton: newLetterButton('kButton', 'k', { swipeUpAction: { character: '@' } }),
     lButton: newLetterButton('lButton', 'l', { swipeUpAction: { character: '"' } }),
 
     // 第三行字母键 (ZXCV)
     zButton: newLetterButton('zButton', 'z', {
-      swipeUpAction: { character: '@' },
+      swipeUpAction: { character: ',' },
       // swipeDownAction: { shortcut: '#redo' },
     }),
     xButton: newLetterButton('xButton', 'x', {
