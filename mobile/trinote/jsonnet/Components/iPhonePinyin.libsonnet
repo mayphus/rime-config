@@ -1,4 +1,5 @@
 local params = import '../Constants/Keyboard.libsonnet';
+local colors = import '../Constants/Colors.libsonnet';
 local basicStyle = import 'BasicStyle.libsonnet';
 local preedit = import 'Preedit.libsonnet';
 local toolbar = import 'Toolbar.libsonnet';
@@ -20,21 +21,25 @@ local visualQuadrantCenter = {
   upperRight: { x: 0.69, y: 0.30 },
 };
 
+local primaryLegendColor = {
+  normalColor: colors.labelColor.primary,
+  highlightColor: colors.labelColor.primary,
+};
+
 local abcLegendParams = {
   center: visualQuadrantCenter.upperLeft,
   fontSize: 14,
-  fontWeight: 'bold',
-};
+} + primaryLegendColor;
 
 local cangjieLegendParams = {
   center: visualQuadrantCenter.lowerLeft,
   fontSize: 12,
-};
+} + primaryLegendColor;
 
 local flypyLegendParams = {
   center: visualQuadrantCenter.upperRight,
   fontSize: 7.25,
-};
+} + primaryLegendColor;
 
 local newMarkedAlphabeticButton(button, isDark=false, params={}) =
   basicStyle.newAlphabeticButton(
