@@ -11,12 +11,14 @@
       "capsLockedStateForegroundStyle": [
          "aButtonAbcUppercaseForegroundStyle",
          "aButtonCangjieForegroundStyle",
-         "aButtonFlypyForegroundStyle"
+         "aButtonFlypyForegroundStyle",
+         "aButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "aButtonAbcForegroundStyle",
          "aButtonCangjieForegroundStyle",
-         "aButtonFlypyForegroundStyle"
+         "aButtonFlypyForegroundStyle",
+         "aButtonSymbolForegroundStyle"
       ],
       "hintStyle": "aButtonHintStyle",
       "size": {
@@ -25,13 +27,17 @@
       "swipeDownAction": {
          "shortcut": "#中英切换"
       },
+      "swipeUpAction": {
+         "character": "`"
+      },
       "uppercasedStateAction": {
          "character": "A"
       },
       "uppercasedStateForegroundStyle": [
          "aButtonAbcUppercaseForegroundStyle",
          "aButtonCangjieForegroundStyle",
-         "aButtonFlypyForegroundStyle"
+         "aButtonFlypyForegroundStyle",
+         "aButtonSymbolForegroundStyle"
       ]
    },
    "aButtonAbcForegroundStyle": {
@@ -92,6 +98,17 @@
          "width": 50
       }
    },
+   "aButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "`"
+   },
    "aButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -126,16 +143,21 @@
       "capsLockedStateForegroundStyle": [
          "bButtonAbcUppercaseForegroundStyle",
          "bButtonCangjieForegroundStyle",
-         "bButtonFlypyForegroundStyle"
+         "bButtonFlypyForegroundStyle",
+         "bButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "bButtonAbcForegroundStyle",
          "bButtonCangjieForegroundStyle",
-         "bButtonFlypyForegroundStyle"
+         "bButtonFlypyForegroundStyle",
+         "bButtonSymbolForegroundStyle"
       ],
       "hintStyle": "bButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "?"
       },
       "uppercasedStateAction": {
          "character": "B"
@@ -143,7 +165,8 @@
       "uppercasedStateForegroundStyle": [
          "bButtonAbcUppercaseForegroundStyle",
          "bButtonCangjieForegroundStyle",
-         "bButtonFlypyForegroundStyle"
+         "bButtonFlypyForegroundStyle",
+         "bButtonSymbolForegroundStyle"
       ]
    },
    "bButtonAbcForegroundStyle": {
@@ -204,6 +227,17 @@
          "width": 50
       }
    },
+   "bButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "?"
+   },
    "bButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -260,16 +294,21 @@
       "capsLockedStateForegroundStyle": [
          "cButtonAbcUppercaseForegroundStyle",
          "cButtonCangjieForegroundStyle",
-         "cButtonFlypyForegroundStyle"
+         "cButtonFlypyForegroundStyle",
+         "cButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "cButtonAbcForegroundStyle",
          "cButtonCangjieForegroundStyle",
-         "cButtonFlypyForegroundStyle"
+         "cButtonFlypyForegroundStyle",
+         "cButtonSymbolForegroundStyle"
       ],
       "hintStyle": "cButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "#"
       },
       "uppercasedStateAction": {
          "character": "C"
@@ -277,7 +316,8 @@
       "uppercasedStateForegroundStyle": [
          "cButtonAbcUppercaseForegroundStyle",
          "cButtonCangjieForegroundStyle",
-         "cButtonFlypyForegroundStyle"
+         "cButtonFlypyForegroundStyle",
+         "cButtonSymbolForegroundStyle"
       ]
    },
    "cButtonAbcForegroundStyle": {
@@ -338,6 +378,17 @@
          "width": 50
       }
    },
+   "cButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "#"
+   },
    "cButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -361,16 +412,21 @@
       "capsLockedStateForegroundStyle": [
          "dButtonAbcUppercaseForegroundStyle",
          "dButtonCangjieForegroundStyle",
-         "dButtonFlypyForegroundStyle"
+         "dButtonFlypyForegroundStyle",
+         "dButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "dButtonAbcForegroundStyle",
          "dButtonCangjieForegroundStyle",
-         "dButtonFlypyForegroundStyle"
+         "dButtonFlypyForegroundStyle",
+         "dButtonSymbolForegroundStyle"
       ],
       "hintStyle": "dButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": ":"
       },
       "uppercasedStateAction": {
          "character": "D"
@@ -378,7 +434,8 @@
       "uppercasedStateForegroundStyle": [
          "dButtonAbcUppercaseForegroundStyle",
          "dButtonCangjieForegroundStyle",
-         "dButtonFlypyForegroundStyle"
+         "dButtonFlypyForegroundStyle",
+         "dButtonSymbolForegroundStyle"
       ]
    },
    "dButtonAbcForegroundStyle": {
@@ -439,6 +496,17 @@
          "width": 50
       }
    },
+   "dButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": ":"
+   },
    "dButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -454,12 +522,14 @@
       "capsLockedStateForegroundStyle": [
          "eButtonAbcUppercaseForegroundStyle",
          "eButtonCangjieForegroundStyle",
-         "eButtonFlypyForegroundStyle"
+         "eButtonFlypyForegroundStyle",
+         "eButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "eButtonAbcForegroundStyle",
          "eButtonCangjieForegroundStyle",
-         "eButtonFlypyForegroundStyle"
+         "eButtonFlypyForegroundStyle",
+         "eButtonSymbolForegroundStyle"
       ],
       "hintStyle": "eButtonHintStyle",
       "size": {
@@ -468,13 +538,17 @@
       "swipeDownAction": {
          "keyboardType": "emojis"
       },
+      "swipeUpAction": {
+         "character": "3"
+      },
       "uppercasedStateAction": {
          "character": "E"
       },
       "uppercasedStateForegroundStyle": [
          "eButtonAbcUppercaseForegroundStyle",
          "eButtonCangjieForegroundStyle",
-         "eButtonFlypyForegroundStyle"
+         "eButtonFlypyForegroundStyle",
+         "eButtonSymbolForegroundStyle"
       ]
    },
    "eButtonAbcForegroundStyle": {
@@ -534,6 +608,17 @@
          "height": 50,
          "width": 50
       }
+   },
+   "eButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "3"
    },
    "eButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
@@ -635,16 +720,21 @@
       "capsLockedStateForegroundStyle": [
          "fButtonAbcUppercaseForegroundStyle",
          "fButtonCangjieForegroundStyle",
-         "fButtonFlypyForegroundStyle"
+         "fButtonFlypyForegroundStyle",
+         "fButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "fButtonAbcForegroundStyle",
          "fButtonCangjieForegroundStyle",
-         "fButtonFlypyForegroundStyle"
+         "fButtonFlypyForegroundStyle",
+         "fButtonSymbolForegroundStyle"
       ],
       "hintStyle": "fButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": ";"
       },
       "uppercasedStateAction": {
          "character": "F"
@@ -652,7 +742,8 @@
       "uppercasedStateForegroundStyle": [
          "fButtonAbcUppercaseForegroundStyle",
          "fButtonCangjieForegroundStyle",
-         "fButtonFlypyForegroundStyle"
+         "fButtonFlypyForegroundStyle",
+         "fButtonSymbolForegroundStyle"
       ]
    },
    "fButtonAbcForegroundStyle": {
@@ -713,6 +804,17 @@
          "width": 50
       }
    },
+   "fButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": ";"
+   },
    "fButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -729,16 +831,21 @@
       "capsLockedStateForegroundStyle": [
          "gButtonAbcUppercaseForegroundStyle",
          "gButtonCangjieForegroundStyle",
-         "gButtonFlypyForegroundStyle"
+         "gButtonFlypyForegroundStyle",
+         "gButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "gButtonAbcForegroundStyle",
          "gButtonCangjieForegroundStyle",
-         "gButtonFlypyForegroundStyle"
+         "gButtonFlypyForegroundStyle",
+         "gButtonSymbolForegroundStyle"
       ],
       "hintStyle": "gButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "("
       },
       "uppercasedStateAction": {
          "character": "G"
@@ -746,7 +853,8 @@
       "uppercasedStateForegroundStyle": [
          "gButtonAbcUppercaseForegroundStyle",
          "gButtonCangjieForegroundStyle",
-         "gButtonFlypyForegroundStyle"
+         "gButtonFlypyForegroundStyle",
+         "gButtonSymbolForegroundStyle"
       ]
    },
    "gButtonAbcForegroundStyle": {
@@ -807,6 +915,17 @@
          "width": 50
       }
    },
+   "gButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "("
+   },
    "gButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -822,16 +941,21 @@
       "capsLockedStateForegroundStyle": [
          "hButtonAbcUppercaseForegroundStyle",
          "hButtonCangjieForegroundStyle",
-         "hButtonFlypyForegroundStyle"
+         "hButtonFlypyForegroundStyle",
+         "hButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "hButtonAbcForegroundStyle",
          "hButtonCangjieForegroundStyle",
-         "hButtonFlypyForegroundStyle"
+         "hButtonFlypyForegroundStyle",
+         "hButtonSymbolForegroundStyle"
       ],
       "hintStyle": "hButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "["
       },
       "uppercasedStateAction": {
          "character": "H"
@@ -839,7 +963,8 @@
       "uppercasedStateForegroundStyle": [
          "hButtonAbcUppercaseForegroundStyle",
          "hButtonCangjieForegroundStyle",
-         "hButtonFlypyForegroundStyle"
+         "hButtonFlypyForegroundStyle",
+         "hButtonSymbolForegroundStyle"
       ]
    },
    "hButtonAbcForegroundStyle": {
@@ -900,6 +1025,17 @@
          "width": 50
       }
    },
+   "hButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "["
+   },
    "hButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -954,16 +1090,21 @@
       "capsLockedStateForegroundStyle": [
          "iButtonAbcUppercaseForegroundStyle",
          "iButtonCangjieForegroundStyle",
-         "iButtonFlypyForegroundStyle"
+         "iButtonFlypyForegroundStyle",
+         "iButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "iButtonAbcForegroundStyle",
          "iButtonCangjieForegroundStyle",
-         "iButtonFlypyForegroundStyle"
+         "iButtonFlypyForegroundStyle",
+         "iButtonSymbolForegroundStyle"
       ],
       "hintStyle": "iButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "8"
       },
       "uppercasedStateAction": {
          "character": "I"
@@ -971,7 +1112,8 @@
       "uppercasedStateForegroundStyle": [
          "iButtonAbcUppercaseForegroundStyle",
          "iButtonCangjieForegroundStyle",
-         "iButtonFlypyForegroundStyle"
+         "iButtonFlypyForegroundStyle",
+         "iButtonSymbolForegroundStyle"
       ]
    },
    "iButtonAbcForegroundStyle": {
@@ -1032,6 +1174,17 @@
          "width": 50
       }
    },
+   "iButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "8"
+   },
    "iButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -1047,16 +1200,21 @@
       "capsLockedStateForegroundStyle": [
          "jButtonAbcUppercaseForegroundStyle",
          "jButtonCangjieForegroundStyle",
-         "jButtonFlypyForegroundStyle"
+         "jButtonFlypyForegroundStyle",
+         "jButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "jButtonAbcForegroundStyle",
          "jButtonCangjieForegroundStyle",
-         "jButtonFlypyForegroundStyle"
+         "jButtonFlypyForegroundStyle",
+         "jButtonSymbolForegroundStyle"
       ],
       "hintStyle": "jButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "~"
       },
       "uppercasedStateAction": {
          "character": "J"
@@ -1064,7 +1222,8 @@
       "uppercasedStateForegroundStyle": [
          "jButtonAbcUppercaseForegroundStyle",
          "jButtonCangjieForegroundStyle",
-         "jButtonFlypyForegroundStyle"
+         "jButtonFlypyForegroundStyle",
+         "jButtonSymbolForegroundStyle"
       ]
    },
    "jButtonAbcForegroundStyle": {
@@ -1125,6 +1284,17 @@
          "width": 50
       }
    },
+   "jButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "~"
+   },
    "jButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -1140,16 +1310,21 @@
       "capsLockedStateForegroundStyle": [
          "kButtonAbcUppercaseForegroundStyle",
          "kButtonCangjieForegroundStyle",
-         "kButtonFlypyForegroundStyle"
+         "kButtonFlypyForegroundStyle",
+         "kButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "kButtonAbcForegroundStyle",
          "kButtonCangjieForegroundStyle",
-         "kButtonFlypyForegroundStyle"
+         "kButtonFlypyForegroundStyle",
+         "kButtonSymbolForegroundStyle"
       ],
       "hintStyle": "kButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "'"
       },
       "uppercasedStateAction": {
          "character": "K"
@@ -1157,7 +1332,8 @@
       "uppercasedStateForegroundStyle": [
          "kButtonAbcUppercaseForegroundStyle",
          "kButtonCangjieForegroundStyle",
-         "kButtonFlypyForegroundStyle"
+         "kButtonFlypyForegroundStyle",
+         "kButtonSymbolForegroundStyle"
       ]
    },
    "kButtonAbcForegroundStyle": {
@@ -1217,6 +1393,17 @@
          "height": 50,
          "width": 50
       }
+   },
+   "kButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "'"
    },
    "kButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
@@ -1364,16 +1551,21 @@
       "capsLockedStateForegroundStyle": [
          "lButtonAbcUppercaseForegroundStyle",
          "lButtonCangjieForegroundStyle",
-         "lButtonFlypyForegroundStyle"
+         "lButtonFlypyForegroundStyle",
+         "lButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "lButtonAbcForegroundStyle",
          "lButtonCangjieForegroundStyle",
-         "lButtonFlypyForegroundStyle"
+         "lButtonFlypyForegroundStyle",
+         "lButtonSymbolForegroundStyle"
       ],
       "hintStyle": "lButtonHintStyle",
       "size": {
          "width": "168.75/1125"
+      },
+      "swipeUpAction": {
+         "character": "\""
       },
       "uppercasedStateAction": {
          "character": "L"
@@ -1381,7 +1573,8 @@
       "uppercasedStateForegroundStyle": [
          "lButtonAbcUppercaseForegroundStyle",
          "lButtonCangjieForegroundStyle",
-         "lButtonFlypyForegroundStyle"
+         "lButtonFlypyForegroundStyle",
+         "lButtonSymbolForegroundStyle"
       ]
    },
    "lButtonAbcForegroundStyle": {
@@ -1442,6 +1635,17 @@
          "width": 50
       }
    },
+   "lButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "\""
+   },
    "lButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -1457,16 +1661,21 @@
       "capsLockedStateForegroundStyle": [
          "mButtonAbcUppercaseForegroundStyle",
          "mButtonCangjieForegroundStyle",
-         "mButtonFlypyForegroundStyle"
+         "mButtonFlypyForegroundStyle",
+         "mButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "mButtonAbcForegroundStyle",
          "mButtonCangjieForegroundStyle",
-         "mButtonFlypyForegroundStyle"
+         "mButtonFlypyForegroundStyle",
+         "mButtonSymbolForegroundStyle"
       ],
       "hintStyle": "mButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "symbol": "…"
       },
       "uppercasedStateAction": {
          "character": "M"
@@ -1474,7 +1683,8 @@
       "uppercasedStateForegroundStyle": [
          "mButtonAbcUppercaseForegroundStyle",
          "mButtonCangjieForegroundStyle",
-         "mButtonFlypyForegroundStyle"
+         "mButtonFlypyForegroundStyle",
+         "mButtonSymbolForegroundStyle"
       ]
    },
    "mButtonAbcForegroundStyle": {
@@ -1535,6 +1745,17 @@
          "width": 50
       }
    },
+   "mButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "…"
+   },
    "mButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -1550,16 +1771,21 @@
       "capsLockedStateForegroundStyle": [
          "nButtonAbcUppercaseForegroundStyle",
          "nButtonCangjieForegroundStyle",
-         "nButtonFlypyForegroundStyle"
+         "nButtonFlypyForegroundStyle",
+         "nButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "nButtonAbcForegroundStyle",
          "nButtonCangjieForegroundStyle",
-         "nButtonFlypyForegroundStyle"
+         "nButtonFlypyForegroundStyle",
+         "nButtonSymbolForegroundStyle"
       ],
       "hintStyle": "nButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "!"
       },
       "uppercasedStateAction": {
          "character": "N"
@@ -1567,7 +1793,8 @@
       "uppercasedStateForegroundStyle": [
          "nButtonAbcUppercaseForegroundStyle",
          "nButtonCangjieForegroundStyle",
-         "nButtonFlypyForegroundStyle"
+         "nButtonFlypyForegroundStyle",
+         "nButtonSymbolForegroundStyle"
       ]
    },
    "nButtonAbcForegroundStyle": {
@@ -1628,6 +1855,17 @@
          "width": 50
       }
    },
+   "nButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "!"
+   },
    "nButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -1661,16 +1899,21 @@
       "capsLockedStateForegroundStyle": [
          "oButtonAbcUppercaseForegroundStyle",
          "oButtonCangjieForegroundStyle",
-         "oButtonFlypyForegroundStyle"
+         "oButtonFlypyForegroundStyle",
+         "oButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "oButtonAbcForegroundStyle",
          "oButtonCangjieForegroundStyle",
-         "oButtonFlypyForegroundStyle"
+         "oButtonFlypyForegroundStyle",
+         "oButtonSymbolForegroundStyle"
       ],
       "hintStyle": "oButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "9"
       },
       "uppercasedStateAction": {
          "character": "O"
@@ -1678,7 +1921,8 @@
       "uppercasedStateForegroundStyle": [
          "oButtonAbcUppercaseForegroundStyle",
          "oButtonCangjieForegroundStyle",
-         "oButtonFlypyForegroundStyle"
+         "oButtonFlypyForegroundStyle",
+         "oButtonSymbolForegroundStyle"
       ]
    },
    "oButtonAbcForegroundStyle": {
@@ -1739,6 +1983,17 @@
          "width": 50
       }
    },
+   "oButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "9"
+   },
    "oButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -1754,12 +2009,14 @@
       "capsLockedStateForegroundStyle": [
          "pButtonAbcUppercaseForegroundStyle",
          "pButtonCangjieForegroundStyle",
-         "pButtonFlypyForegroundStyle"
+         "pButtonFlypyForegroundStyle",
+         "pButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "pButtonAbcForegroundStyle",
          "pButtonCangjieForegroundStyle",
-         "pButtonFlypyForegroundStyle"
+         "pButtonFlypyForegroundStyle",
+         "pButtonSymbolForegroundStyle"
       ],
       "hintStyle": "pButtonHintStyle",
       "size": {
@@ -1768,13 +2025,17 @@
       "swipeDownAction": {
          "shortcut": "#showPasteboardView"
       },
+      "swipeUpAction": {
+         "character": "0"
+      },
       "uppercasedStateAction": {
          "character": "P"
       },
       "uppercasedStateForegroundStyle": [
          "pButtonAbcUppercaseForegroundStyle",
          "pButtonCangjieForegroundStyle",
-         "pButtonFlypyForegroundStyle"
+         "pButtonFlypyForegroundStyle",
+         "pButtonSymbolForegroundStyle"
       ]
    },
    "pButtonAbcForegroundStyle": {
@@ -1834,6 +2095,17 @@
          "height": 50,
          "width": 50
       }
+   },
+   "pButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "0"
    },
    "pButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
@@ -1924,16 +2196,21 @@
       "capsLockedStateForegroundStyle": [
          "qButtonAbcUppercaseForegroundStyle",
          "qButtonCangjieForegroundStyle",
-         "qButtonFlypyForegroundStyle"
+         "qButtonFlypyForegroundStyle",
+         "qButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "qButtonAbcForegroundStyle",
          "qButtonCangjieForegroundStyle",
-         "qButtonFlypyForegroundStyle"
+         "qButtonFlypyForegroundStyle",
+         "qButtonSymbolForegroundStyle"
       ],
       "hintStyle": "qButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "1"
       },
       "uppercasedStateAction": {
          "character": "Q"
@@ -1941,7 +2218,8 @@
       "uppercasedStateForegroundStyle": [
          "qButtonAbcUppercaseForegroundStyle",
          "qButtonCangjieForegroundStyle",
-         "qButtonFlypyForegroundStyle"
+         "qButtonFlypyForegroundStyle",
+         "qButtonSymbolForegroundStyle"
       ]
    },
    "qButtonAbcForegroundStyle": {
@@ -2002,6 +2280,17 @@
          "width": 50
       }
    },
+   "qButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "1"
+   },
    "qButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2017,16 +2306,21 @@
       "capsLockedStateForegroundStyle": [
          "rButtonAbcUppercaseForegroundStyle",
          "rButtonCangjieForegroundStyle",
-         "rButtonFlypyForegroundStyle"
+         "rButtonFlypyForegroundStyle",
+         "rButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "rButtonAbcForegroundStyle",
          "rButtonCangjieForegroundStyle",
-         "rButtonFlypyForegroundStyle"
+         "rButtonFlypyForegroundStyle",
+         "rButtonSymbolForegroundStyle"
       ],
       "hintStyle": "rButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "4"
       },
       "uppercasedStateAction": {
          "character": "R"
@@ -2034,7 +2328,8 @@
       "uppercasedStateForegroundStyle": [
          "rButtonAbcUppercaseForegroundStyle",
          "rButtonCangjieForegroundStyle",
-         "rButtonFlypyForegroundStyle"
+         "rButtonFlypyForegroundStyle",
+         "rButtonSymbolForegroundStyle"
       ]
    },
    "rButtonAbcForegroundStyle": {
@@ -2095,6 +2390,17 @@
          "width": 50
       }
    },
+   "rButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "4"
+   },
    "rButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2120,12 +2426,14 @@
       "capsLockedStateForegroundStyle": [
          "sButtonAbcUppercaseForegroundStyle",
          "sButtonCangjieForegroundStyle",
-         "sButtonFlypyForegroundStyle"
+         "sButtonFlypyForegroundStyle",
+         "sButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "sButtonAbcForegroundStyle",
          "sButtonCangjieForegroundStyle",
-         "sButtonFlypyForegroundStyle"
+         "sButtonFlypyForegroundStyle",
+         "sButtonSymbolForegroundStyle"
       ],
       "hintStyle": "sButtonHintStyle",
       "size": {
@@ -2134,13 +2442,17 @@
       "swipeDownAction": {
          "shortcut": "#toggleScriptView"
       },
+      "swipeUpAction": {
+         "character": "/"
+      },
       "uppercasedStateAction": {
          "character": "S"
       },
       "uppercasedStateForegroundStyle": [
          "sButtonAbcUppercaseForegroundStyle",
          "sButtonCangjieForegroundStyle",
-         "sButtonFlypyForegroundStyle"
+         "sButtonFlypyForegroundStyle",
+         "sButtonSymbolForegroundStyle"
       ]
    },
    "sButtonAbcForegroundStyle": {
@@ -2200,6 +2512,17 @@
          "height": 50,
          "width": 50
       }
+   },
+   "sButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "/"
    },
    "sButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
@@ -2281,16 +2604,21 @@
       "capsLockedStateForegroundStyle": [
          "tButtonAbcUppercaseForegroundStyle",
          "tButtonCangjieForegroundStyle",
-         "tButtonFlypyForegroundStyle"
+         "tButtonFlypyForegroundStyle",
+         "tButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "tButtonAbcForegroundStyle",
          "tButtonCangjieForegroundStyle",
-         "tButtonFlypyForegroundStyle"
+         "tButtonFlypyForegroundStyle",
+         "tButtonSymbolForegroundStyle"
       ],
       "hintStyle": "tButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "5"
       },
       "uppercasedStateAction": {
          "character": "T"
@@ -2298,7 +2626,8 @@
       "uppercasedStateForegroundStyle": [
          "tButtonAbcUppercaseForegroundStyle",
          "tButtonCangjieForegroundStyle",
-         "tButtonFlypyForegroundStyle"
+         "tButtonFlypyForegroundStyle",
+         "tButtonSymbolForegroundStyle"
       ]
    },
    "tButtonAbcForegroundStyle": {
@@ -2359,6 +2688,17 @@
          "width": 50
       }
    },
+   "tButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "5"
+   },
    "tButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2379,16 +2719,21 @@
       "capsLockedStateForegroundStyle": [
          "uButtonAbcUppercaseForegroundStyle",
          "uButtonCangjieForegroundStyle",
-         "uButtonFlypyForegroundStyle"
+         "uButtonFlypyForegroundStyle",
+         "uButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "uButtonAbcForegroundStyle",
          "uButtonCangjieForegroundStyle",
-         "uButtonFlypyForegroundStyle"
+         "uButtonFlypyForegroundStyle",
+         "uButtonSymbolForegroundStyle"
       ],
       "hintStyle": "uButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "7"
       },
       "uppercasedStateAction": {
          "character": "U"
@@ -2396,7 +2741,8 @@
       "uppercasedStateForegroundStyle": [
          "uButtonAbcUppercaseForegroundStyle",
          "uButtonCangjieForegroundStyle",
-         "uButtonFlypyForegroundStyle"
+         "uButtonFlypyForegroundStyle",
+         "uButtonSymbolForegroundStyle"
       ]
    },
    "uButtonAbcForegroundStyle": {
@@ -2457,6 +2803,17 @@
          "width": 50
       }
    },
+   "uButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "7"
+   },
    "uButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2472,16 +2829,21 @@
       "capsLockedStateForegroundStyle": [
          "vButtonAbcUppercaseForegroundStyle",
          "vButtonCangjieForegroundStyle",
-         "vButtonFlypyForegroundStyle"
+         "vButtonFlypyForegroundStyle",
+         "vButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "vButtonAbcForegroundStyle",
          "vButtonCangjieForegroundStyle",
-         "vButtonFlypyForegroundStyle"
+         "vButtonFlypyForegroundStyle",
+         "vButtonSymbolForegroundStyle"
       ],
       "hintStyle": "vButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "\\"
       },
       "uppercasedStateAction": {
          "character": "V"
@@ -2489,7 +2851,8 @@
       "uppercasedStateForegroundStyle": [
          "vButtonAbcUppercaseForegroundStyle",
          "vButtonCangjieForegroundStyle",
-         "vButtonFlypyForegroundStyle"
+         "vButtonFlypyForegroundStyle",
+         "vButtonSymbolForegroundStyle"
       ]
    },
    "vButtonAbcForegroundStyle": {
@@ -2549,6 +2912,17 @@
          "height": 50,
          "width": 50
       }
+   },
+   "vButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "\\"
    },
    "vButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
@@ -2689,16 +3063,21 @@
       "capsLockedStateForegroundStyle": [
          "wButtonAbcUppercaseForegroundStyle",
          "wButtonCangjieForegroundStyle",
-         "wButtonFlypyForegroundStyle"
+         "wButtonFlypyForegroundStyle",
+         "wButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "wButtonAbcForegroundStyle",
          "wButtonCangjieForegroundStyle",
-         "wButtonFlypyForegroundStyle"
+         "wButtonFlypyForegroundStyle",
+         "wButtonSymbolForegroundStyle"
       ],
       "hintStyle": "wButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "2"
       },
       "uppercasedStateAction": {
          "character": "W"
@@ -2706,7 +3085,8 @@
       "uppercasedStateForegroundStyle": [
          "wButtonAbcUppercaseForegroundStyle",
          "wButtonCangjieForegroundStyle",
-         "wButtonFlypyForegroundStyle"
+         "wButtonFlypyForegroundStyle",
+         "wButtonSymbolForegroundStyle"
       ]
    },
    "wButtonAbcForegroundStyle": {
@@ -2767,6 +3147,17 @@
          "width": 50
       }
    },
+   "wButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "2"
+   },
    "wButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2782,16 +3173,21 @@
       "capsLockedStateForegroundStyle": [
          "xButtonAbcUppercaseForegroundStyle",
          "xButtonCangjieForegroundStyle",
-         "xButtonFlypyForegroundStyle"
+         "xButtonFlypyForegroundStyle",
+         "xButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "xButtonAbcForegroundStyle",
          "xButtonCangjieForegroundStyle",
-         "xButtonFlypyForegroundStyle"
+         "xButtonFlypyForegroundStyle",
+         "xButtonSymbolForegroundStyle"
       ],
       "hintStyle": "xButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "."
       },
       "uppercasedStateAction": {
          "character": "X"
@@ -2799,7 +3195,8 @@
       "uppercasedStateForegroundStyle": [
          "xButtonAbcUppercaseForegroundStyle",
          "xButtonCangjieForegroundStyle",
-         "xButtonFlypyForegroundStyle"
+         "xButtonFlypyForegroundStyle",
+         "xButtonSymbolForegroundStyle"
       ]
    },
    "xButtonAbcForegroundStyle": {
@@ -2860,6 +3257,17 @@
          "width": 50
       }
    },
+   "xButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "."
+   },
    "xButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2875,16 +3283,21 @@
       "capsLockedStateForegroundStyle": [
          "yButtonAbcUppercaseForegroundStyle",
          "yButtonCangjieForegroundStyle",
-         "yButtonFlypyForegroundStyle"
+         "yButtonFlypyForegroundStyle",
+         "yButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "yButtonAbcForegroundStyle",
          "yButtonCangjieForegroundStyle",
-         "yButtonFlypyForegroundStyle"
+         "yButtonFlypyForegroundStyle",
+         "yButtonSymbolForegroundStyle"
       ],
       "hintStyle": "yButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "6"
       },
       "uppercasedStateAction": {
          "character": "Y"
@@ -2892,7 +3305,8 @@
       "uppercasedStateForegroundStyle": [
          "yButtonAbcUppercaseForegroundStyle",
          "yButtonCangjieForegroundStyle",
-         "yButtonFlypyForegroundStyle"
+         "yButtonFlypyForegroundStyle",
+         "yButtonSymbolForegroundStyle"
       ]
    },
    "yButtonAbcForegroundStyle": {
@@ -2953,6 +3367,17 @@
          "width": 50
       }
    },
+   "yButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "6"
+   },
    "yButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",
       "fontSize": 22.5,
@@ -2968,16 +3393,21 @@
       "capsLockedStateForegroundStyle": [
          "zButtonAbcUppercaseForegroundStyle",
          "zButtonCangjieForegroundStyle",
-         "zButtonFlypyForegroundStyle"
+         "zButtonFlypyForegroundStyle",
+         "zButtonSymbolForegroundStyle"
       ],
       "foregroundStyle": [
          "zButtonAbcForegroundStyle",
          "zButtonCangjieForegroundStyle",
-         "zButtonFlypyForegroundStyle"
+         "zButtonFlypyForegroundStyle",
+         "zButtonSymbolForegroundStyle"
       ],
       "hintStyle": "zButtonHintStyle",
       "size": {
          "width": "112.5/1125"
+      },
+      "swipeUpAction": {
+         "character": "@"
       },
       "uppercasedStateAction": {
          "character": "Z"
@@ -2985,7 +3415,8 @@
       "uppercasedStateForegroundStyle": [
          "zButtonAbcUppercaseForegroundStyle",
          "zButtonCangjieForegroundStyle",
-         "zButtonFlypyForegroundStyle"
+         "zButtonFlypyForegroundStyle",
+         "zButtonSymbolForegroundStyle"
       ]
    },
    "zButtonAbcForegroundStyle": {
@@ -3045,6 +3476,17 @@
          "height": 50,
          "width": 50
       }
+   },
+   "zButtonSymbolForegroundStyle": {
+      "buttonStyleType": "text",
+      "center": {
+         "x": 0.68999999999999995,
+         "y": 0.69999999999999996
+      },
+      "fontSize": 9,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
+      "text": "@"
    },
    "zButtonUppercaseForegroundStyle": {
       "buttonStyleType": "text",

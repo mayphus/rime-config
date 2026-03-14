@@ -59,11 +59,41 @@ local flypyLegends = {
   m: 'ian',
 };
 
+local symbolLegends = {
+  q: '1',
+  w: '2',
+  e: '3',
+  r: '4',
+  t: '5',
+  y: '6',
+  u: '7',
+  i: '8',
+  o: '9',
+  p: '0',
+  a: '`',
+  s: '/',
+  d: ':',
+  f: ';',
+  g: '(',
+  h: '[',
+  j: '~',
+  k: "'",
+  l: '"',
+  z: '@',
+  x: '.',
+  c: '#',
+  v: '\\',
+  b: '?',
+  n: '!',
+  m: '…',
+};
+
 local newLetterButton(name, letter, extraParams={}) = {
   name: name,
   legend: {
     cangjie: cangjieLegends[letter],
     flypy: flypyLegends[letter],
+    symbol: symbolLegends[letter],
   },
   params:
     {
@@ -181,50 +211,60 @@ local newLetterButton(name, letter, extraParams={}) = {
     },
 
     // 按键定义
-    qButton: newLetterButton('qButton', 'q'),
-    wButton: newLetterButton('wButton', 'w'),
-    eButton: newLetterButton('eButton', 'e', { swipeDownAction: { keyboardType: 'emojis' } }),
-    rButton: newLetterButton('rButton', 'r'),
-    tButton: newLetterButton('tButton', 't'),
-    yButton: newLetterButton('yButton', 'y'),
-    uButton: newLetterButton('uButton', 'u'),
-    iButton: newLetterButton('iButton', 'i'),
-    oButton: newLetterButton('oButton', 'o'),
-    pButton: newLetterButton('pButton', 'p', { swipeDownAction: { shortcut: '#showPasteboardView' } }),
+    qButton: newLetterButton('qButton', 'q', { swipeUpAction: { character: '1' } }),
+    wButton: newLetterButton('wButton', 'w', { swipeUpAction: { character: '2' } }),
+    eButton: newLetterButton('eButton', 'e', {
+      swipeUpAction: { character: '3' },
+      swipeDownAction: { keyboardType: 'emojis' },
+    }),
+    rButton: newLetterButton('rButton', 'r', { swipeUpAction: { character: '4' } }),
+    tButton: newLetterButton('tButton', 't', { swipeUpAction: { character: '5' } }),
+    yButton: newLetterButton('yButton', 'y', { swipeUpAction: { character: '6' } }),
+    uButton: newLetterButton('uButton', 'u', { swipeUpAction: { character: '7' } }),
+    iButton: newLetterButton('iButton', 'i', { swipeUpAction: { character: '8' } }),
+    oButton: newLetterButton('oButton', 'o', { swipeUpAction: { character: '9' } }),
+    pButton: newLetterButton('pButton', 'p', {
+      swipeUpAction: { character: '0' },
+      swipeDownAction: { shortcut: '#showPasteboardView' },
+    }),
 
     // 第二行字母键 (ASDF)
     aButton: newLetterButton('aButton', 'a', {
       // swipeUpAction: { shortcut: '#selectText' },
+      swipeUpAction: { character: '`' },
       swipeDownAction: { shortcut: '#中英切换' },
     }),
-    sButton: newLetterButton('sButton', 's', { swipeDownAction: { shortcut: '#toggleScriptView' } }),
-    dButton: newLetterButton('dButton', 'd', {
-      // swipeUpAction: { shortcut: '#deleteText' },
+    sButton: newLetterButton('sButton', 's', {
+      swipeUpAction: { character: '/' },
+      swipeDownAction: { shortcut: '#toggleScriptView' },
     }),
-    fButton: newLetterButton('fButton', 'f'),
-    gButton: newLetterButton('gButton', 'g'),
-    hButton: newLetterButton('hButton', 'h'),
-    jButton: newLetterButton('jButton', 'j'),
-    kButton: newLetterButton('kButton', 'k'),
-    lButton: newLetterButton('lButton', 'l'),
+    dButton: newLetterButton('dButton', 'd', {
+      swipeUpAction: { character: ':' },
+    }),
+    fButton: newLetterButton('fButton', 'f', { swipeUpAction: { character: ';' } }),
+    gButton: newLetterButton('gButton', 'g', { swipeUpAction: { character: '(' } }),
+    hButton: newLetterButton('hButton', 'h', { swipeUpAction: { character: '[' } }),
+    jButton: newLetterButton('jButton', 'j', { swipeUpAction: { character: '~' } }),
+    kButton: newLetterButton('kButton', 'k', { swipeUpAction: { character: "'" } }),
+    lButton: newLetterButton('lButton', 'l', { swipeUpAction: { character: '"' } }),
 
     // 第三行字母键 (ZXCV)
     zButton: newLetterButton('zButton', 'z', {
-      // swipeUpAction: { shortcut: '#undo' },
+      swipeUpAction: { character: '@' },
       // swipeDownAction: { shortcut: '#redo' },
     }),
     xButton: newLetterButton('xButton', 'x', {
-      // swipeUpAction: { shortcut: '#cut' },
+      swipeUpAction: { character: '.' },
     }),
     cButton: newLetterButton('cButton', 'c', {
-      // swipeUpAction: { shortcut: '#copy' },
+      swipeUpAction: { character: '#' },
     }),
     vButton: newLetterButton('vButton', 'v', {
-      // swipeUpAction: { shortcut: '#paste' },
+      swipeUpAction: { character: '\\' },
     }),
-    bButton: newLetterButton('bButton', 'b'),
-    nButton: newLetterButton('nButton', 'n'),
-    mButton: newLetterButton('mButton', 'm'),
+    bButton: newLetterButton('bButton', 'b', { swipeUpAction: { character: '?' } }),
+    nButton: newLetterButton('nButton', 'n', { swipeUpAction: { character: '!' } }),
+    mButton: newLetterButton('mButton', 'm', { swipeUpAction: { symbol: '…' } }),
 
     // 数字键
     oneButton: {

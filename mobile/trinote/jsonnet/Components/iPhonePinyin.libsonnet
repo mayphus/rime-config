@@ -19,11 +19,17 @@ local visualQuadrantCenter = {
   upperLeft: { x: 0.31, y: 0.30 },
   lowerLeft: { x: 0.31, y: 0.70 },
   upperRight: { x: 0.69, y: 0.30 },
+  lowerRight: { x: 0.69, y: 0.70 },
 };
 
 local primaryLegendColor = {
   normalColor: colors.labelColor.primary,
   highlightColor: colors.labelColor.primary,
+};
+
+local secondaryLegendColor = {
+  normalColor: colors.labelColor.secondary,
+  highlightColor: colors.labelColor.secondary,
 };
 
 local abcLegendParams = {
@@ -41,6 +47,11 @@ local flypyLegendParams = {
   fontSize: 7.25,
 } + primaryLegendColor;
 
+local symbolLegendParams = {
+  center: visualQuadrantCenter.lowerRight,
+  fontSize: 9,
+} + secondaryLegendColor;
+
 local newMarkedAlphabeticButton(button, isDark=false, params={}) =
   basicStyle.newAlphabeticButton(
     button.name,
@@ -52,16 +63,19 @@ local newMarkedAlphabeticButton(button, isDark=false, params={}) =
         button.name + 'AbcForegroundStyle',
         button.name + 'CangjieForegroundStyle',
         button.name + 'FlypyForegroundStyle',
+        button.name + 'SymbolForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
         button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
         button.name + 'FlypyForegroundStyle',
+        button.name + 'SymbolForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
         button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
         button.name + 'FlypyForegroundStyle',
+        button.name + 'SymbolForegroundStyle',
       ],
       foregroundStyle: {
         [button.name + 'AbcForegroundStyle']:
@@ -73,6 +87,8 @@ local newMarkedAlphabeticButton(button, isDark=false, params={}) =
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, cangjieLegendParams + { text: button.legend.cangjie }),
         [button.name + 'FlypyForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyLegendParams + { text: button.legend.flypy }),
+        [button.name + 'SymbolForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, symbolLegendParams + { text: button.legend.symbol }),
       },
     }
   );
