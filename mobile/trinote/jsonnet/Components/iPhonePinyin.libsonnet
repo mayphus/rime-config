@@ -40,7 +40,6 @@ local abcLegendParams = {
 local cangjieLegendParams = {
   center: visualQuadrantCenter.lowerLeft,
   fontSize: 12,
-  fontWeight: 'bold',
 } + primaryLegendColor;
 
 local flypyLegendParams = {

@@ -65,7 +65,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "日"
@@ -238,7 +237,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "月"
@@ -386,7 +384,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "金"
@@ -632,7 +629,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "木"
@@ -767,7 +763,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "水"
@@ -1053,7 +1048,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "火"
@@ -1277,7 +1271,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "土"
@@ -1421,7 +1414,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "的"
@@ -1615,7 +1607,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "戈"
@@ -1759,7 +1750,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "十"
@@ -1866,7 +1856,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "大"
@@ -2188,7 +2177,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "中"
@@ -2406,7 +2394,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "一"
@@ -2513,7 +2500,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "弓"
@@ -2675,7 +2661,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "人"
@@ -2837,7 +2822,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "心"
@@ -3040,7 +3024,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "手"
@@ -3157,7 +3140,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "口"
@@ -3381,7 +3363,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "尸"
@@ -3606,7 +3587,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "廿"
@@ -3821,7 +3801,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "山"
@@ -3928,7 +3907,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "女"
@@ -4175,7 +4153,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "田"
@@ -4282,7 +4259,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "止"
@@ -4389,7 +4365,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "卜"
@@ -4496,7 +4471,6 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
-      "fontWeight": "bold",
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
       "text": "片"
