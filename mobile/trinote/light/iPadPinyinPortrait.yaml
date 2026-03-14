@@ -42,9 +42,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "a"
    },
    "aButtonAbcUppercaseForegroundStyle": {
@@ -53,9 +53,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "A"
    },
    "aButtonCangjieForegroundStyle": {
@@ -65,6 +65,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "日"
@@ -214,9 +215,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "b"
    },
    "bButtonAbcUppercaseForegroundStyle": {
@@ -225,9 +226,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "B"
    },
    "bButtonCangjieForegroundStyle": {
@@ -237,6 +238,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "月"
@@ -361,9 +363,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "c"
    },
    "cButtonAbcUppercaseForegroundStyle": {
@@ -372,9 +374,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "C"
    },
    "cButtonCangjieForegroundStyle": {
@@ -384,6 +386,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "金"
@@ -606,9 +609,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "d"
    },
    "dButtonAbcUppercaseForegroundStyle": {
@@ -617,9 +620,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "D"
    },
    "dButtonCangjieForegroundStyle": {
@@ -629,6 +632,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "木"
@@ -740,9 +744,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "e"
    },
    "eButtonAbcUppercaseForegroundStyle": {
@@ -751,9 +755,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "E"
    },
    "eButtonCangjieForegroundStyle": {
@@ -763,6 +767,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "水"
@@ -1025,9 +1030,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "f"
    },
    "fButtonAbcUppercaseForegroundStyle": {
@@ -1036,9 +1041,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "F"
    },
    "fButtonCangjieForegroundStyle": {
@@ -1048,6 +1053,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "火"
@@ -1248,9 +1254,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "g"
    },
    "gButtonAbcUppercaseForegroundStyle": {
@@ -1259,9 +1265,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "G"
    },
    "gButtonCangjieForegroundStyle": {
@@ -1271,6 +1277,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "土"
@@ -1391,9 +1398,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "h"
    },
    "hButtonAbcUppercaseForegroundStyle": {
@@ -1402,9 +1409,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "H"
    },
    "hButtonCangjieForegroundStyle": {
@@ -1414,6 +1421,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "的"
@@ -1584,9 +1592,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "i"
    },
    "iButtonAbcUppercaseForegroundStyle": {
@@ -1595,9 +1603,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "I"
    },
    "iButtonCangjieForegroundStyle": {
@@ -1607,6 +1615,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "戈"
@@ -1727,9 +1736,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "j"
    },
    "jButtonAbcUppercaseForegroundStyle": {
@@ -1738,9 +1747,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "J"
    },
    "jButtonCangjieForegroundStyle": {
@@ -1750,6 +1759,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "十"
@@ -1833,9 +1843,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "k"
    },
    "kButtonAbcUppercaseForegroundStyle": {
@@ -1844,9 +1854,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "K"
    },
    "kButtonCangjieForegroundStyle": {
@@ -1856,6 +1866,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "大"
@@ -2154,9 +2165,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "l"
    },
    "lButtonAbcUppercaseForegroundStyle": {
@@ -2165,9 +2176,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "L"
    },
    "lButtonCangjieForegroundStyle": {
@@ -2177,6 +2188,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "中"
@@ -2371,9 +2383,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "m"
    },
    "mButtonAbcUppercaseForegroundStyle": {
@@ -2382,9 +2394,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "M"
    },
    "mButtonCangjieForegroundStyle": {
@@ -2394,6 +2406,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "一"
@@ -2477,9 +2490,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "n"
    },
    "nButtonAbcUppercaseForegroundStyle": {
@@ -2488,9 +2501,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "N"
    },
    "nButtonCangjieForegroundStyle": {
@@ -2500,6 +2513,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "弓"
@@ -2638,9 +2652,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "o"
    },
    "oButtonAbcUppercaseForegroundStyle": {
@@ -2649,9 +2663,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "O"
    },
    "oButtonCangjieForegroundStyle": {
@@ -2661,6 +2675,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "人"
@@ -2799,9 +2814,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "p"
    },
    "pButtonAbcUppercaseForegroundStyle": {
@@ -2810,9 +2825,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "P"
    },
    "pButtonCangjieForegroundStyle": {
@@ -2822,6 +2837,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "心"
@@ -3001,9 +3017,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "q"
    },
    "qButtonAbcUppercaseForegroundStyle": {
@@ -3012,9 +3028,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "Q"
    },
    "qButtonCangjieForegroundStyle": {
@@ -3024,6 +3040,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "手"
@@ -3117,9 +3134,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "r"
    },
    "rButtonAbcUppercaseForegroundStyle": {
@@ -3128,9 +3145,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "R"
    },
    "rButtonCangjieForegroundStyle": {
@@ -3140,6 +3157,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "口"
@@ -3340,9 +3358,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "s"
    },
    "sButtonAbcUppercaseForegroundStyle": {
@@ -3351,9 +3369,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "S"
    },
    "sButtonCangjieForegroundStyle": {
@@ -3363,6 +3381,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "尸"
@@ -3564,9 +3583,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "t"
    },
    "tButtonAbcUppercaseForegroundStyle": {
@@ -3575,9 +3594,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "T"
    },
    "tButtonCangjieForegroundStyle": {
@@ -3587,6 +3606,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "廿"
@@ -3778,9 +3798,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "u"
    },
    "uButtonAbcUppercaseForegroundStyle": {
@@ -3789,9 +3809,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "U"
    },
    "uButtonCangjieForegroundStyle": {
@@ -3801,6 +3821,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "山"
@@ -3884,9 +3905,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "v"
    },
    "vButtonAbcUppercaseForegroundStyle": {
@@ -3895,9 +3916,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "V"
    },
    "vButtonCangjieForegroundStyle": {
@@ -3907,6 +3928,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "女"
@@ -4130,9 +4152,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "w"
    },
    "wButtonAbcUppercaseForegroundStyle": {
@@ -4141,9 +4163,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "W"
    },
    "wButtonCangjieForegroundStyle": {
@@ -4153,6 +4175,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "田"
@@ -4236,9 +4259,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "x"
    },
    "xButtonAbcUppercaseForegroundStyle": {
@@ -4247,9 +4270,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "X"
    },
    "xButtonCangjieForegroundStyle": {
@@ -4259,6 +4282,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "止"
@@ -4342,9 +4366,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "y"
    },
    "yButtonAbcUppercaseForegroundStyle": {
@@ -4353,9 +4377,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "Y"
    },
    "yButtonCangjieForegroundStyle": {
@@ -4365,6 +4389,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "卜"
@@ -4448,9 +4473,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "z"
    },
    "zButtonAbcUppercaseForegroundStyle": {
@@ -4459,9 +4484,9 @@
          "x": 0.31,
          "y": 0.29999999999999999
       },
-      "fontSize": 18,
-      "highlightColor": "#000000",
-      "normalColor": "#000000",
+      "fontSize": 14,
+      "highlightColor": "#3c3c4399",
+      "normalColor": "#3c3c4399",
       "text": "Z"
    },
    "zButtonCangjieForegroundStyle": {
@@ -4471,6 +4496,7 @@
          "y": 0.69999999999999996
       },
       "fontSize": 14,
+      "fontWeight": "bold",
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "片"

@@ -34,12 +34,13 @@ local secondaryLegendColor = {
 
 local abcLegendParams = {
   center: visualQuadrantCenter.upperLeft,
-  fontSize: 14,
-} + primaryLegendColor;
+  fontSize: 12,
+} + secondaryLegendColor;
 
 local cangjieLegendParams = {
   center: visualQuadrantCenter.lowerLeft,
   fontSize: 12,
+  fontWeight: 'bold',
 } + primaryLegendColor;
 
 local flypyLegendParams = {
