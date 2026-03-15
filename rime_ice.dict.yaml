@@ -1,0 +1,13 @@
+# Rime dictionary
+# encoding: utf-8
+
+---
+name: rime_ice
+version: "2026-03-15"
+import_tables:
+  - rime_ice_dicts/8105
+  - rime_ice_dicts/base
+  - rime_ice_dicts/ext
+  - rime_ice_dicts/tencent
+  - rime_ice_dicts/others
+...

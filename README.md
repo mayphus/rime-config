@@ -6,6 +6,7 @@ This repository contains my Rime configuration.
 
 - `cangjie6.schema.yaml`: Cangjie 6
 - `flypy.schema.yaml`: Flypy double pinyin
+- `flypy_ice.schema.yaml`: Flypy with rime-ice dictionaries
 - `bopomofo.schema.yaml`: Bopomofo
 - `default.custom.yaml`: schema list
 
@@ -13,6 +14,8 @@ Related shared files:
 
 - `cangjie6.dict.yaml`
 - `flypy.yaml`
+- `rime_ice.dict.yaml`
+- `rime_ice_dicts/*.dict.yaml`
 
 ## Mobile Bundle
 

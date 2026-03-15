@@ -20,11 +20,15 @@ mkdir -p "$OUT_DIR"
 cp "$ROOT_DIR/cangjie6.dict.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/cangjie6.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.schema.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/flypy_ice.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/rime_ice.dict.yaml" "$OUT_DIR/"
+cp -R "$ROOT_DIR/rime_ice_dicts" "$OUT_DIR/"
 
 cp "$SRC_DIR/default.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/cangjie6.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/flypy.custom.yaml" "$OUT_DIR/"
+cp "$SRC_DIR/flypy_ice.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/luna_pinyin.dict.yaml" "$OUT_DIR/"
 
 if [ "$BUILD_SKIN" -eq 1 ]; then
