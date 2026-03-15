@@ -10,7 +10,6 @@ schema:
     - Rime schema by 佛振 <chen.sst@gmail.com>
   description: |
     朙月拼音＋小鶴雙拼方案。
-    已整合蒼頡六代反查及教師模式。
   dependencies:
     - cangjie6
 
