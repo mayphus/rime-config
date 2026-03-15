@@ -1,6 +1,3 @@
-# Rime preedit format for Flypy
-# encoding: utf-8
-
 flypy:
   - xform/([bpmfdtnljqx])n/$1iao/
   - xform/(\w)g/$1eng/

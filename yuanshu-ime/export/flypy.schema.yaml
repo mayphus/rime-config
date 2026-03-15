@@ -4,13 +4,14 @@
 schema:
   schema_id: flypy
   name: 雙拼
-  version: "0.1"
+  version: "0.18.custom"
   author:
     - double pinyin layout by 鶴
     - Rime schema by 佛振 <chen.sst@gmail.com>
   description: |
     朙月拼音＋小鶴雙拼方案。
-    精簡版，適合移動端匯入
+  dependencies:
+    - cangjie6
 
 switches:
   - name: ascii_mode
@@ -18,7 +19,6 @@ switches:
     states: ["鶴", "A"]
   - name: simplification
     states: [ 漢字, 汉字 ]
-    reset: 0
   - name: full_shape
     states: [ 半角, 全角 ]
   - name: ascii_punct
@@ -42,35 +42,12 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
+    - reverse_lookup_translator
     - script_translator
   filters:
-    - simplifier@simplify
+    - simplifier
     - uniquifier
 
-simplify:
-  option_name: simplification
-  opencc_config: t2s.json
-  tips: all
-
-punctuator:
-  __include: default:/punctuator
-  full_shape:
-    __include: default:/punctuator/full_shape
-  half_shape:
-    __include: default:/punctuator/half_shape
-
-recognizer:
-  import_preset: default
-
-key_binder:
-  import_preset: default
-
-editor:
-  bindings:
-    space: confirm
-    Return: commit_raw_input
-    BackSpace: revert
-    Escape: cancel
 
 speller:
   alphabet: zyxwvutsrqponmlkjihgfedcba
@@ -112,3 +89,26 @@ translator:
   prism: flypy
   preedit_format:
     __include: flypy:/flypy
+
+reverse_lookup:
+  dictionary: cangjie6
+  enable_completion: true
+  prefix: "`"
+  suffix: "'"
+  tips: "〔蒼頡〕"
+  preedit_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
+  comment_format:
+    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
+
+
+punctuator:
+  import_preset: default
+
+key_binder:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*'?$"
