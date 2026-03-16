@@ -109,7 +109,7 @@
       "fontSize": 8.25,
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
-      "text": "ㄘ"
+      "text": "ㄟ"
    },
    "aButtonZhuyinMiddleForegroundStyle": {
       "buttonStyleType": "text",
@@ -131,7 +131,7 @@
       "fontSize": 8.25,
       "highlightColor": "#FFFFFF",
       "normalColor": "#FFFFFF",
-      "text": "ㄟ"
+      "text": "ㄘ"
    },
    "alphabeticButtonBackgroundStyle": {
       "buttonStyleType": "geometry",
