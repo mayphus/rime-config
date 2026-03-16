@@ -1,0 +1,6 @@
+patch:
+  engine/filters:
+    - simplifier@simplify
+    - uniquifier
+    - reverse_lookup_filter@flypy_reverse_lookup
+    - single_char_filter

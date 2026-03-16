@@ -2,6 +2,13 @@ patch:
   schema/description: |
     第六代蒼頡檢字法
     精簡版，適合移動端匯入
+  translator:
+    dictionary: cangjie6.extended
+    enable_user_dict: true
+    enable_sentence: true
+    enable_encoder: true
+    encode_commit_history: true
+    max_phrase_length: 5
   engine/filters:
     - simplifier@simplify
     - reverse_lookup_filter@flypy_reverse_lookup

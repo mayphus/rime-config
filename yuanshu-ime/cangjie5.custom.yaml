@@ -2,6 +2,11 @@ patch:
   schema/description: |
     第五代倉頡輸入法
     精簡版，適合移動端匯入
+  translator:
+    enable_sentence: true
+    enable_encoder: true
+    encode_commit_history: true
+    max_phrase_length: 5
   engine/filters:
     - simplifier@simplify
     - reverse_lookup_filter@flypy_reverse_lookup

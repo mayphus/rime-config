@@ -2,13 +2,15 @@
 
 `yuanshu-ime/` holds the app-specific source files for the generated `export/` bundle.
 
-Shared Rime schemas stay at the repository root.
+Shared Rime schemas and dictionaries stay at the repository root.
 
 ## Source Files
 
 - `default.custom.yaml`
+- `cangjie5.custom.yaml`
 - `cangjie6.custom.yaml`
 - `flypy.custom.yaml`
+- `flypy_ice.custom.yaml`
 - `luna_pinyin.dict.yaml`
 - `quadharmonic/`
 

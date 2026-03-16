@@ -10,6 +10,7 @@ rm -rf "$OUT_DIR"
 mkdir -p "$OUT_DIR"
 
 cp "$ROOT_DIR/cangjie6.dict.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/cangjie6.extended.dict.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/cangjie6.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/cangjie5.dict.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/cangjie5.schema.yaml" "$OUT_DIR/"
