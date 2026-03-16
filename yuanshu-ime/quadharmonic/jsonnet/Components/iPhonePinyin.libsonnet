@@ -15,11 +15,13 @@ local hintStyle = {
   },
 };
 
-local visualQuadrantCenter = {
-  upperLeft: { x: 0.31, y: 0.30 },
-  lowerLeft: { x: 0.31, y: 0.70 },
-  upperRight: { x: 0.69, y: 0.30 },
-  lowerRight: { x: 0.69, y: 0.70 },
+local legendCenter = {
+  cangjie: { x: 0.37, y: 0.34 },
+  symbol: { x: 0.73, y: 0.24 },
+  abc: { x: 0.72, y: 0.40 },
+  flypySingle: { x: 0.50, y: 0.74 },
+  flypyDoubleTop: { x: 0.50, y: 0.68 },
+  flypyDoubleBottom: { x: 0.50, y: 0.79 },
 };
 
 local primaryLegendColor = {
@@ -32,24 +34,44 @@ local secondaryLegendColor = {
   highlightColor: colors.labelColor.secondary,
 };
 
+local hasMultipleFlypyLines(button) = std.length(std.split(button.legend.flypy, '\n')) > 1;
+local flypyLines(button) = std.split(button.legend.flypy, '\n');
+local flypyLineOne(button) = flypyLines(button)[0];
+local flypyLineTwo(button) = if hasMultipleFlypyLines(button) then flypyLines(button)[1] else '';
+
 local abcLegendParams = {
-  center: visualQuadrantCenter.upperLeft,
-  fontSize: 12,
-} + secondaryLegendColor;
+  center: legendCenter.abc,
+  fontSize: 10.5,
+} + primaryLegendColor;
 
 local cangjieLegendParams = {
-  center: visualQuadrantCenter.lowerLeft,
-  fontSize: 12,
+  center: legendCenter.cangjie,
+  fontSize: 15.5,
 } + primaryLegendColor;
 
-local flypyLegendParams = {
-  center: visualQuadrantCenter.upperRight,
-  fontSize: 7.25,
-} + primaryLegendColor;
+local flypyTopLegendParams(button) = {
+  center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleTop else legendCenter.flypySingle,
+  fontSize: if hasMultipleFlypyLines(button) then 7.25 else 12,
+} + (
+  if hasMultipleFlypyLines(button) then
+    { fontWeight: 'bold' }
+  else
+    {}
+) + primaryLegendColor;
+
+local flypyBottomLegendParams(button) = {
+  center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleBottom else legendCenter.flypySingle,
+  fontSize: if hasMultipleFlypyLines(button) then 7.25 else 12,
+} + (
+  if hasMultipleFlypyLines(button) then
+    { fontWeight: 'bold' }
+  else
+    {}
+) + primaryLegendColor;
 
 local symbolLegendParams = {
-  center: visualQuadrantCenter.lowerRight,
-  fontSize: 9,
+  center: legendCenter.symbol,
+  fontSize: 8.5,
 } + secondaryLegendColor;
 
 local newMarkedAlphabeticButton(button, isDark=false, params={}) =
@@ -62,19 +84,22 @@ local newMarkedAlphabeticButton(button, isDark=false, params={}) =
       foregroundStyleName: [
         button.name + 'AbcForegroundStyle',
         button.name + 'CangjieForegroundStyle',
-        button.name + 'FlypyForegroundStyle',
+        button.name + 'FlypyTopForegroundStyle',
+        button.name + 'FlypyBottomForegroundStyle',
         button.name + 'SymbolForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
         button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
-        button.name + 'FlypyForegroundStyle',
+        button.name + 'FlypyTopForegroundStyle',
+        button.name + 'FlypyBottomForegroundStyle',
         button.name + 'SymbolForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
         button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
-        button.name + 'FlypyForegroundStyle',
+        button.name + 'FlypyTopForegroundStyle',
+        button.name + 'FlypyBottomForegroundStyle',
         button.name + 'SymbolForegroundStyle',
       ],
       foregroundStyle: {
@@ -85,8 +110,10 @@ local newMarkedAlphabeticButton(button, isDark=false, params={}) =
           + basicStyle.getKeyboardActionText(button.params, 'uppercasedStateAction'),
         [button.name + 'CangjieForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, cangjieLegendParams + { text: button.legend.cangjie }),
-        [button.name + 'FlypyForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyLegendParams + { text: button.legend.flypy }),
+        [button.name + 'FlypyTopForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyTopLegendParams(button) + { text: if hasMultipleFlypyLines(button) then flypyLineOne(button) else '' }),
+        [button.name + 'FlypyBottomForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyBottomLegendParams(button) + { text: if hasMultipleFlypyLines(button) then flypyLineTwo(button) else button.legend.flypy }),
         [button.name + 'SymbolForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, symbolLegendParams + { text: button.legend.symbol }),
       },
