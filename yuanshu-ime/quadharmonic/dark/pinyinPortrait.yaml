@@ -72,8 +72,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "日"
    },
    "aButtonFlypyBottomForegroundStyle": {
@@ -215,8 +215,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "月"
    },
    "bButtonFlypyBottomForegroundStyle": {
@@ -380,8 +380,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "金"
    },
    "cButtonFlypyBottomForegroundStyle": {
@@ -512,8 +512,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "木"
    },
    "dButtonFlypyBottomForegroundStyle": {
@@ -639,8 +639,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "水"
    },
    "eButtonFlypyBottomForegroundStyle": {
@@ -848,8 +848,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "火"
    },
    "fButtonFlypyBottomForegroundStyle": {
@@ -973,8 +973,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "土"
    },
    "gButtonFlypyBottomForegroundStyle": {
@@ -1097,8 +1097,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "的"
    },
    "hButtonFlypyBottomForegroundStyle": {
@@ -1260,8 +1260,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "戈"
    },
    "iButtonFlypyBottomForegroundStyle": {
@@ -1384,8 +1384,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "十"
    },
    "jButtonFlypyBottomForegroundStyle": {
@@ -1508,8 +1508,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "大"
    },
    "kButtonFlypyBottomForegroundStyle": {
@@ -1765,8 +1765,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "中"
    },
    "lButtonFlypyBottomForegroundStyle": {
@@ -1891,8 +1891,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "一"
    },
    "mButtonFlypyBottomForegroundStyle": {
@@ -2015,8 +2015,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "弓"
    },
    "nButtonFlypyBottomForegroundStyle": {
@@ -2157,8 +2157,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "人"
    },
    "oButtonFlypyBottomForegroundStyle": {
@@ -2284,8 +2284,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "心"
    },
    "pButtonFlypyBottomForegroundStyle": {
@@ -2482,8 +2482,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "手"
    },
    "qButtonFlypyBottomForegroundStyle": {
@@ -2606,8 +2606,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "口"
    },
    "rButtonFlypyBottomForegroundStyle": {
@@ -2743,8 +2743,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "尸"
    },
    "sButtonFlypyBottomForegroundStyle": {
@@ -2934,8 +2934,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "廿"
    },
    "tButtonFlypyBottomForegroundStyle": {
@@ -3065,8 +3065,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "山"
    },
    "uButtonFlypyBottomForegroundStyle": {
@@ -3189,8 +3189,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "女"
    },
    "vButtonFlypyBottomForegroundStyle": {
@@ -3439,8 +3439,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "田"
    },
    "wButtonFlypyBottomForegroundStyle": {
@@ -3563,8 +3563,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "止"
    },
    "xButtonFlypyBottomForegroundStyle": {
@@ -3689,8 +3689,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "卜"
    },
    "yButtonFlypyBottomForegroundStyle": {
@@ -3813,8 +3813,8 @@
          "y": 0.34000000000000002
       },
       "fontSize": 15.5,
-      "highlightColor": "#FFFFFF",
-      "normalColor": "#FFFFFF",
+      "highlightColor": "#ebebf599",
+      "normalColor": "#ebebf599",
       "text": "片"
    },
    "zButtonFlypyBottomForegroundStyle": {

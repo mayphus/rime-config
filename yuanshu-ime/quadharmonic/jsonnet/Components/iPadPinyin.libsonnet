@@ -80,7 +80,7 @@ local abcLegendParams = {
 local cangjieLegendParams = {
   center: legendCenter.cangjie,
   fontSize: 18,
-} + primaryLegendColor;
+} + secondaryLegendColor;
 
 local flypyTopLegendParams(button) = {
   center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleTop else legendCenter.flypySingle,
