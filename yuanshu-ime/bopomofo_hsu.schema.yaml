@@ -1,0 +1,85 @@
+# Rime schema
+# encoding: utf-8
+
+__include: bopomofo.schema:/
+
+schema:
+  schema_id: bopomofo_hsu
+  name: 許氏注音
+  version: '0.1'
+  author:
+    - 佛振 <chen.sst@gmail.com>
+    - Patrick <ipatrickmac@gmail.com>
+  description: |
+    注音符號輸入，採用「許氏」鍵盤排列。
+
+    本配置可省略第一聲，也可用 q 顯式輸入第一聲；
+    第二、三、四聲與輕聲分別為 d、f、j、s。
+
+speller:
+  alphabet: 'zyxwvutsrqponmlkjihgfedcba'
+  initials: 'zyxwvutsrqponmlkjihgfedcba'
+  finals: "q"
+  delimiter: "'"
+  use_space: false
+  algebra:
+    __patch:
+      - bopomofo_hsu.custom:/pinyin_to_zhuyin
+      - __append:
+          - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+$/$1/
+          - derive/^([A-Za-z]+)\d$/$1/
+          - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+(\d)$/$1$2/
+          - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR12345|bpmfdtnlgkhjvcjvcrzasexuyhgeiawomnkllqdfjs|'
+
+translator:
+  prism: bopomofo_hsu
+  preedit_format:
+    - xform/b/ㄅ/
+    - xform/p/ㄆ/
+    - xform/m([yhgexuiawomnkl])/ㄇ$1/
+    - xform/(^|[ '])f/ㄈ/
+    - xform/(^|[ '])d/ㄉ/
+    - xform/t/ㄊ/
+    - xform/n([yhgexuiawomnkl])/ㄋ$1/
+    - xform/(^|[ '])l$/ㄦ/
+    - xform/(^|[ '])ld/ㄦˊ/
+    - xform/(^|[ '])lf/ㄦˇ/
+    - xform/(^|[ '])lj/ㄦˋ/
+    - xform/(^|[ '])ls/ㄥ˙/
+    - xform/(^|[ '])l/ㄌ/
+    - xform/h([yhgexuiawomnkl])/ㄏ$1/
+    - xform/k([yhgexuiawomnkl])/ㄎ$1/
+    - xform/g([yhgexuiawomnkl])/ㄍ$1/
+    - xform/z/ㄗ/
+    - xform/(^|[ '])a/ㄘ/
+    - xform/(^|[ '])s/ㄙ/
+    - xform/(^|[ '])j([eu])/ㄐ$2/
+    - xform/(^|[ '])v([eu])/ㄑ$2/
+    - xform/(^|[ '])c([eu])/ㄒ$2/
+    - xform/(^|[ '])j/ㄓ/
+    - xform/(^|[ '])v/ㄔ/
+    - xform/(^|[ '])c/ㄕ/
+    - xform/r/ㄖ/
+    - xform/y/ㄚ/
+    - xform/h/ㄛ/
+    - xform/g/ㄜ/
+    - xform/([eu])e/$1ㄝ/
+    - xform/e/ㄧ/
+    - xform/u/ㄩ/
+    - xform/x/ㄨ/
+    - xform/i/ㄞ/
+    - xform/a/ㄟ/
+    - xform/w/ㄠ/
+    - xform/o/ㄡ/
+    - xform/m/ㄢ/
+    - xform/n/ㄣ/
+    - xform/k/ㄤ/
+    - xform/l/ㄥ/
+    - xform/d/ˊ/
+    - xform/f/ˇ/
+    - xform/j/ˋ/
+    - xform/s/˙/
+    - xlit|q'|ˉ |
+
+__patch:
+  - bopomofo_hsu.custom:/patch?

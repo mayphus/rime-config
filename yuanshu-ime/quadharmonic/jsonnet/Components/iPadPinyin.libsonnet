@@ -53,9 +53,9 @@ local legendCenter = {
   zhuyinSingle: { x: 0.72, y: 0.34 },
   zhuyinDoubleTop: { x: 0.72, y: 0.24 },
   zhuyinDoubleBottom: { x: 0.72, y: 0.43 },
-  zhuyinTripleTop: { x: 0.72, y: 0.16 },
-  zhuyinTripleMiddle: { x: 0.72, y: 0.29 },
-  zhuyinTripleBottom: { x: 0.72, y: 0.42 },
+  zhuyinTripleTop: { x: 0.72, y: 0.19 },
+  zhuyinTripleMiddle: { x: 0.72, y: 0.32 },
+  zhuyinTripleBottom: { x: 0.72, y: 0.45 },
   flypySingle: { x: 0.50, y: 0.74 },
   flypyDoubleTop: { x: 0.50, y: 0.68 },
   flypyDoubleBottom: { x: 0.50, y: 0.79 },
@@ -92,12 +92,12 @@ local cangjieLegendParams = {
 
 local flypyTopLegendParams(button) = {
   center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleTop else legendCenter.flypySingle,
-  fontSize: if hasMultipleFlypyLines(button) then 11.5 else 16.5,
+  fontSize: if hasMultipleFlypyLines(button) then 10.5 else 15,
 } + primaryLegendColor;
 
 local flypyBottomLegendParams(button) = {
   center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleBottom else legendCenter.flypySingle,
-  fontSize: if hasMultipleFlypyLines(button) then 11.5 else 16.5,
+  fontSize: if hasMultipleFlypyLines(button) then 10.5 else 15,
 } + primaryLegendColor;
 
 local zhuyinSingleLegendParams = {

@@ -63,7 +63,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "a"
@@ -74,7 +74,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -209,7 +209,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "in"
@@ -220,7 +220,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -377,7 +377,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ao"
@@ -388,7 +388,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -512,7 +512,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ai"
@@ -523,7 +523,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -642,7 +642,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "e"
@@ -653,7 +653,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -854,7 +854,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "en"
@@ -865,7 +865,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -982,7 +982,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "eng"
@@ -993,7 +993,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -1109,7 +1109,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ang"
@@ -1120,7 +1120,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -1275,7 +1275,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ch"
@@ -1286,7 +1286,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -1402,7 +1402,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "an"
@@ -1413,7 +1413,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -1443,7 +1443,7 @@
       "buttonStyleType": "text",
       "center": {
          "x": 0.71999999999999997,
-         "y": 0.41999999999999998
+         "y": 0.45000000000000001
       },
       "fontSize": 7,
       "highlightColor": "#000000",
@@ -1454,7 +1454,7 @@
       "buttonStyleType": "text",
       "center": {
          "x": 0.71999999999999997,
-         "y": 0.28999999999999998
+         "y": 0.32000000000000001
       },
       "fontSize": 7,
       "highlightColor": "#000000",
@@ -1465,7 +1465,7 @@
       "buttonStyleType": "text",
       "center": {
          "x": 0.71999999999999997,
-         "y": 0.16
+         "y": 0.19
       },
       "fontSize": 7,
       "highlightColor": "#000000",
@@ -1529,7 +1529,7 @@
          "x": 0.5,
          "y": 0.79000000000000004
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "uai"
@@ -1540,7 +1540,7 @@
          "x": 0.5,
          "y": 0.68000000000000005
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ing"
@@ -1787,7 +1787,7 @@
          "x": 0.5,
          "y": 0.79000000000000004
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "uang"
@@ -1798,7 +1798,7 @@
          "x": 0.5,
          "y": 0.68000000000000005
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "iang"
@@ -1828,7 +1828,7 @@
       "buttonStyleType": "text",
       "center": {
          "x": 0.71999999999999997,
-         "y": 0.41999999999999998
+         "y": 0.45000000000000001
       },
       "fontSize": 7,
       "highlightColor": "#000000",
@@ -1839,7 +1839,7 @@
       "buttonStyleType": "text",
       "center": {
          "x": 0.71999999999999997,
-         "y": 0.28999999999999998
+         "y": 0.32000000000000001
       },
       "fontSize": 7,
       "highlightColor": "#000000",
@@ -1850,7 +1850,7 @@
       "buttonStyleType": "text",
       "center": {
          "x": 0.71999999999999997,
-         "y": 0.16
+         "y": 0.19
       },
       "fontSize": 7,
       "highlightColor": "#000000",
@@ -1914,7 +1914,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ian"
@@ -1925,7 +1925,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -2041,7 +2041,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "iao"
@@ -2052,7 +2052,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -2186,7 +2186,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "uo"
@@ -2197,7 +2197,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -2316,7 +2316,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ie"
@@ -2327,7 +2327,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -2517,7 +2517,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "iu"
@@ -2528,7 +2528,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -2644,7 +2644,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "uan"
@@ -2655,7 +2655,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -2784,7 +2784,7 @@
          "x": 0.5,
          "y": 0.79000000000000004
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "iong"
@@ -2795,7 +2795,7 @@
          "x": 0.5,
          "y": 0.68000000000000005
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ong"
@@ -2976,7 +2976,7 @@
          "x": 0.5,
          "y": 0.79000000000000004
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ve"
@@ -2987,7 +2987,7 @@
          "x": 0.5,
          "y": 0.68000000000000005
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ue"
@@ -3108,7 +3108,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "sh"
@@ -3119,7 +3119,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -3235,7 +3235,7 @@
          "x": 0.5,
          "y": 0.79000000000000004
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ui"
@@ -3246,7 +3246,7 @@
          "x": 0.5,
          "y": 0.68000000000000005
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "zh"
@@ -3486,7 +3486,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ei"
@@ -3497,7 +3497,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -3613,7 +3613,7 @@
          "x": 0.5,
          "y": 0.79000000000000004
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ua"
@@ -3624,7 +3624,7 @@
          "x": 0.5,
          "y": 0.68000000000000005
       },
-      "fontSize": 7.25,
+      "fontSize": 6.5,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ia"
@@ -3740,7 +3740,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "un"
@@ -3751,7 +3751,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""
@@ -3867,7 +3867,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": "ou"
@@ -3878,7 +3878,7 @@
          "x": 0.5,
          "y": 0.73999999999999999
       },
-      "fontSize": 12,
+      "fontSize": 11,
       "highlightColor": "#000000",
       "normalColor": "#000000",
       "text": ""

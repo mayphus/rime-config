@@ -1,0 +1,51 @@
+patch:
+  schema/version: "0.1"
+  schema/description: |
+    許氏注音輸入方案。
+    精簡版，適合移動端匯入
+  punctuator:
+    __include: default:/punctuator
+    full_shape:
+      __include: default:/punctuator/full_shape
+    half_shape:
+      __include: default:/punctuator/half_shape
+  recognizer:
+    import_preset: default
+    patterns:
+      reverse_lookup: "`[a-z]*'?$"
+  key_binder:
+    import_preset: default
+  editor:
+    bindings:
+      space: confirm
+      Return: commit_raw_input
+      BackSpace: revert
+      Escape: cancel
+
+pinyin_to_zhuyin:
+  __append:
+    - xform/^m(\d)$/mu$1/  # 呣
+    - xform/^r5$/er5/  # 〜兒
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/^yi?/i/
+    - xform/^wu?/u/
+    - xform/iu/v/
+    - xform/^([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/^zhi?/Z/
+    - xform/^chi?/C/
+    - xform/^shi?/S/
+    - xform/^([zcsr])i/$1/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
