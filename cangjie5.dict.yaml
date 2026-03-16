@@ -20,8 +20,7 @@
 name: "cangjie5"
 version: "0.18"
 sort: by_weight
-use_preset_vocabulary: true
-max_phrase_length: 7
+use_preset_vocabulary: false
 min_phrase_weight: 100
 columns:
   - text

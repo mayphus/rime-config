@@ -12,7 +12,27 @@ mkdir -p "$OUT_DIR"
 cp "$ROOT_DIR/cangjie6.dict.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/cangjie6.extended.dict.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/cangjie6.schema.yaml" "$OUT_DIR/"
-cp "$ROOT_DIR/cangjie5.dict.yaml" "$OUT_DIR/"
+awk '
+  /^use_preset_vocabulary:/ {
+    print "use_preset_vocabulary: true"
+    seen_use=1
+    next
+  }
+  /^max_phrase_length:/ {
+    print "max_phrase_length: 7"
+    seen_max=1
+    next
+  }
+  /^min_phrase_weight:/ {
+    if (!seen_use) {
+      print "use_preset_vocabulary: true"
+    }
+    if (!seen_max) {
+      print "max_phrase_length: 7"
+    }
+  }
+  { print }
+' "$ROOT_DIR/cangjie5.dict.yaml" > "$OUT_DIR/cangjie5.dict.yaml"
 cp "$ROOT_DIR/cangjie5.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy_ice.schema.yaml" "$OUT_DIR/"
