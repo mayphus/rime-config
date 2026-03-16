@@ -60,7 +60,7 @@ local flypyLegends = {
 };
 
 local hsuZhuyinLegends = {
-  q: 'ˉ',
+  q: '',
   w: 'ㄠ',
   e: 'ㄝ\nㄧ',
   r: 'ㄖ',
