@@ -13,6 +13,9 @@ This repository contains my Rime configuration.
 Related shared files:
 
 - `cangjie6.dict.yaml`
+- `luna_pinyin.dict.yaml`
+- `terra_pinyin.dict.yaml`
+- `zhuyin.yaml`
 - `flypy.yaml`
 - `rime_ice.dict.yaml`
 - `rime_ice_dicts/*.dict.yaml`

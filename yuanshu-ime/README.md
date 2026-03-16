@@ -6,14 +6,12 @@ Shared Rime schemas and dictionaries stay at the repository root.
 
 ## Source Files
 
-- `bopomofo_hsu.schema.yaml`
 - `bopomofo_hsu.custom.yaml`
 - `default.custom.yaml`
 - `cangjie5.custom.yaml`
 - `cangjie6.custom.yaml`
 - `flypy.custom.yaml`
 - `flypy_ice.custom.yaml`
-- `luna_pinyin.dict.yaml`
 - `quadharmonic/`
 
 ## Generate Export

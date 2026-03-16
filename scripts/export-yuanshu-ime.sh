@@ -35,19 +35,21 @@ awk '
 ' "$ROOT_DIR/cangjie5.dict.yaml" > "$OUT_DIR/cangjie5.dict.yaml"
 cp "$ROOT_DIR/cangjie5.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/bopomofo.schema.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/bopomofo_hsu.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy_ice.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/luna_pinyin.dict.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/terra_pinyin.dict.yaml" "$OUT_DIR/"
+cp "$ROOT_DIR/zhuyin.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/rime_ice.dict.yaml" "$OUT_DIR/"
 cp -R "$ROOT_DIR/rime_ice_dicts" "$OUT_DIR/"
 
-cp "$SRC_DIR/bopomofo_hsu.schema.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/bopomofo_hsu.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/cangjie5.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/cangjie6.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/flypy.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/flypy_ice.custom.yaml" "$OUT_DIR/"
-cp "$SRC_DIR/luna_pinyin.dict.yaml" "$OUT_DIR/"
 
 (
   cd "$SRC_DIR"
