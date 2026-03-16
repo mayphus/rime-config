@@ -20,12 +20,6 @@ Rebuild the self-contained iPhone bundle with:
 scripts/export-yuanshu-ime.sh
 ```
 
-This writes the copyable bundle to `yuanshu-ime/export/`.
+This writes the copyable bundle to `yuanshu-ime/export/` and also packages `quadharmonic.cskin`.
 
 Generated files in `yuanshu-ime/export/` are not source files.
-
-If you also want to package the skin archive:
-
-```sh
-scripts/export-yuanshu-ime.sh --with-skin
-```
