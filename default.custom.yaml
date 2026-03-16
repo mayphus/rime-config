@@ -3,4 +3,5 @@ patch:
     - schema: cangjie6
     - schema: cangjie5
     - schema: bopomofo
+    - schema: bopomofo_hsu
     - schema: flypy
