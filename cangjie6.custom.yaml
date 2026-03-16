@@ -1,0 +1,5 @@
+patch:
+  switches/+:
+    - name: _hide_candidate
+      reset: 1
+      states: [候選, 隱藏]
