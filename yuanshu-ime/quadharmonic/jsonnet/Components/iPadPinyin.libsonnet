@@ -50,8 +50,12 @@ local candidateInsets = {
 
 local legendCenter = {
   cangjie: { x: 0.37, y: 0.34 },
-  symbol: { x: 0.73, y: 0.24 },
-  abc: { x: 0.72, y: 0.40 },
+  zhuyinSingle: { x: 0.72, y: 0.34 },
+  zhuyinDoubleTop: { x: 0.72, y: 0.24 },
+  zhuyinDoubleBottom: { x: 0.72, y: 0.43 },
+  zhuyinTripleTop: { x: 0.72, y: 0.16 },
+  zhuyinTripleMiddle: { x: 0.72, y: 0.29 },
+  zhuyinTripleBottom: { x: 0.72, y: 0.42 },
   flypySingle: { x: 0.50, y: 0.74 },
   flypyDoubleTop: { x: 0.50, y: 0.68 },
   flypyDoubleBottom: { x: 0.50, y: 0.79 },
@@ -72,10 +76,14 @@ local flypyLines(button) = std.split(button.legend.flypy, '\n');
 local flypyLineOne(button) = flypyLines(button)[0];
 local flypyLineTwo(button) = if hasMultipleFlypyLines(button) then flypyLines(button)[1] else '';
 
-local abcLegendParams = {
-  center: legendCenter.abc,
-  fontSize: 12,
-} + primaryLegendColor;
+local zhuyinLines(button) =
+  if button.legend.hsuZhuyin == '' then
+    []
+  else
+    std.split(button.legend.hsuZhuyin, '\n');
+
+local zhuyinLineCount(button) = std.length(zhuyinLines(button));
+local zhuyinLine(button, idx) = if idx < zhuyinLineCount(button) then zhuyinLines(button)[idx] else '';
 
 local cangjieLegendParams = {
   center: legendCenter.cangjie,
@@ -85,27 +93,82 @@ local cangjieLegendParams = {
 local flypyTopLegendParams(button) = {
   center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleTop else legendCenter.flypySingle,
   fontSize: if hasMultipleFlypyLines(button) then 11.5 else 16.5,
-} + (
-  if hasMultipleFlypyLines(button) then
-    { fontWeight: 'bold' }
-  else
-    {}
-) + primaryLegendColor;
+} + primaryLegendColor;
 
 local flypyBottomLegendParams(button) = {
   center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleBottom else legendCenter.flypySingle,
   fontSize: if hasMultipleFlypyLines(button) then 11.5 else 16.5,
-} + (
-  if hasMultipleFlypyLines(button) then
-    { fontWeight: 'bold' }
-  else
-    {}
-) + primaryLegendColor;
+} + primaryLegendColor;
 
-local symbolLegendParams = {
-  center: legendCenter.symbol,
-  fontSize: 10,
-} + secondaryLegendColor;
+local zhuyinSingleLegendParams = {
+  center: legendCenter.zhuyinSingle,
+  fontSize: 13,
+} + primaryLegendColor;
+
+local zhuyinDoubleTopLegendParams = {
+  center: legendCenter.zhuyinDoubleTop,
+  fontSize: 10.5,
+} + primaryLegendColor;
+
+local zhuyinDoubleBottomLegendParams = {
+  center: legendCenter.zhuyinDoubleBottom,
+  fontSize: 10.5,
+} + primaryLegendColor;
+
+local zhuyinTripleTopLegendParams = {
+  center: legendCenter.zhuyinTripleTop,
+  fontSize: 8.5,
+} + primaryLegendColor;
+
+local zhuyinTripleMiddleLegendParams = {
+  center: legendCenter.zhuyinTripleMiddle,
+  fontSize: 8.5,
+} + primaryLegendColor;
+
+local zhuyinTripleBottomLegendParams = {
+  center: legendCenter.zhuyinTripleBottom,
+  fontSize: 8.5,
+} + primaryLegendColor;
+
+local zhuyinTopText(button) =
+  if zhuyinLineCount(button) == 2 || zhuyinLineCount(button) == 3 then
+    zhuyinLine(button, 0)
+  else
+    '';
+
+local zhuyinMiddleText(button) =
+  if zhuyinLineCount(button) == 1 then
+    zhuyinLine(button, 0)
+  else if zhuyinLineCount(button) == 3 then
+    zhuyinLine(button, 1)
+  else
+    '';
+
+local zhuyinBottomText(button) =
+  if zhuyinLineCount(button) == 2 then
+    zhuyinLine(button, 1)
+  else if zhuyinLineCount(button) == 3 then
+    zhuyinLine(button, 2)
+  else
+    '';
+
+local zhuyinTopLegendParams(button) =
+  if zhuyinLineCount(button) == 3 then
+    zhuyinTripleTopLegendParams
+  else
+    zhuyinDoubleTopLegendParams;
+
+local zhuyinMiddleLegendParams(button) =
+  if zhuyinLineCount(button) == 3 then
+    zhuyinTripleMiddleLegendParams
+  else
+    zhuyinSingleLegendParams;
+
+local zhuyinBottomLegendParams(button) =
+  if zhuyinLineCount(button) == 3 then
+    zhuyinTripleBottomLegendParams
+  else
+    zhuyinDoubleBottomLegendParams;
 
 local newMarkedAlphabeticButton(button, isDark=false, params={}) =
   basicStyle.newAlphabeticButton(
@@ -115,40 +178,42 @@ local newMarkedAlphabeticButton(button, isDark=false, params={}) =
     + button.params
     + {
       foregroundStyleName: [
-        button.name + 'AbcForegroundStyle',
         button.name + 'CangjieForegroundStyle',
+        button.name + 'ZhuyinTopForegroundStyle',
+        button.name + 'ZhuyinMiddleForegroundStyle',
+        button.name + 'ZhuyinBottomForegroundStyle',
         button.name + 'FlypyTopForegroundStyle',
         button.name + 'FlypyBottomForegroundStyle',
-        button.name + 'SymbolForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
-        button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
+        button.name + 'ZhuyinTopForegroundStyle',
+        button.name + 'ZhuyinMiddleForegroundStyle',
+        button.name + 'ZhuyinBottomForegroundStyle',
         button.name + 'FlypyTopForegroundStyle',
         button.name + 'FlypyBottomForegroundStyle',
-        button.name + 'SymbolForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
-        button.name + 'AbcUppercaseForegroundStyle',
         button.name + 'CangjieForegroundStyle',
+        button.name + 'ZhuyinTopForegroundStyle',
+        button.name + 'ZhuyinMiddleForegroundStyle',
+        button.name + 'ZhuyinBottomForegroundStyle',
         button.name + 'FlypyTopForegroundStyle',
         button.name + 'FlypyBottomForegroundStyle',
-        button.name + 'SymbolForegroundStyle',
       ],
       foregroundStyle: {
-        [button.name + 'AbcForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, abcLegendParams + button.params),
-        [button.name + 'AbcUppercaseForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, abcLegendParams + button.params)
-          + basicStyle.getKeyboardActionText(button.params, 'uppercasedStateAction'),
         [button.name + 'CangjieForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, cangjieLegendParams + { text: button.legend.cangjie }),
+        [button.name + 'ZhuyinTopForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, zhuyinTopLegendParams(button) + { text: zhuyinTopText(button) }),
+        [button.name + 'ZhuyinMiddleForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, zhuyinMiddleLegendParams(button) + { text: zhuyinMiddleText(button) }),
+        [button.name + 'ZhuyinBottomForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, zhuyinBottomLegendParams(button) + { text: zhuyinBottomText(button) }),
         [button.name + 'FlypyTopForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyTopLegendParams(button) + { text: if hasMultipleFlypyLines(button) then flypyLineOne(button) else '' }),
         [button.name + 'FlypyBottomForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyBottomLegendParams(button) + { text: if hasMultipleFlypyLines(button) then flypyLineTwo(button) else button.legend.flypy }),
-        [button.name + 'SymbolForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, symbolLegendParams + { text: button.legend.symbol }),
       },
     }
   );
