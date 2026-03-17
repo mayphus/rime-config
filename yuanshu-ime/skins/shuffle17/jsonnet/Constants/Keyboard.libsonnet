@@ -102,12 +102,12 @@ local newLetterButton(name, letter, extraParams={}) = {
     } + extraParams,
 };
 
-local newShuffleButton(name, code, label, initials, finals, extraParams={}) = {
+local newShuffleButton(name, code, label, finals, sideLeft='', sideRight='', extraParams={}) = {
   name: name,
   legend: {
-    initials: initials,
     finals: finals,
-    code: std.asciiUpper(code),
+    sideLeft: sideLeft,
+    sideRight: sideRight,
   },
   params:
     {
@@ -283,32 +283,32 @@ local newShuffleButton(name, code, label, initials, finals, extraParams={}) = {
     mButton: newLetterButton('mButton', 'm', { swipeUpAction: { symbol: '…' } }),
 
     // 亂序17 鍵位（iPhone 版皮肤使用；iPad 暂时保留现有 26 键）
-    hpButton: newShuffleButton('hpButton', 'a', 'HP', 'h p', 'a\nia ua'),
-    sh17Button: newShuffleButton('sh17Button', 'b', 'Sh', 'sh', 'en in'),
-    zh17Button: newShuffleButton('zh17Button', 'c', 'Zh', 'zh', 'ang\niao'),
-    b17Button: newShuffleButton('b17Button', 'd', 'B', 'b', 'ao\niong'),
-    oxvButton: newShuffleButton('oxvButton', 'e', 'o X v', 'x', 'o v\nuai uan', {
-      fontSize: 15.5,
+    hpButton: newShuffleButton('hpButton', 'a', 'HP', 'a ia ua'),
+    sh17Button: newShuffleButton('sh17Button', 'b', 'Sh', 'en in'),
+    zh17Button: newShuffleButton('zh17Button', 'c', 'Zh', 'ang iao'),
+    b17Button: newShuffleButton('b17Button', 'd', 'B', 'ao iong'),
+    oxvButton: newShuffleButton('oxvButton', 'e', 'X', 'uai uan', 'o', 'v', {
+      fontSize: 19,
       swipeDownAction: { keyboardType: 'emojis' },
     }),
-    smButton: newShuffleButton('smButton', 'f', 'SM', 's m', 'ie uo', {
+    smButton: newShuffleButton('smButton', 'f', 'SM', 'ie uo', '', '', {
       swipeDownAction: { shortcut: '#toggleScriptView' },
     }),
 
-    l17Button: newShuffleButton('l17Button', 'g', 'L', 'l', 'ai ue'),
-    d17Button: newShuffleButton('d17Button', 'h', 'D', 'd', 'u'),
-    y17Button: newShuffleButton('y17Button', 'i', 'Y', 'y', 'eng\ning'),
-    wzButton: newShuffleButton('wzButton', 'j', 'WZ', 'w z', 'e', {
+    l17Button: newShuffleButton('l17Button', 'g', 'L', 'ai ue'),
+    d17Button: newShuffleButton('d17Button', 'h', 'D', 'u'),
+    y17Button: newShuffleButton('y17Button', 'i', 'Y', 'eng ing'),
+    wzButton: newShuffleButton('wzButton', 'j', 'WZ', 'e', '', '', {
       swipeDownAction: { shortcut: '#showPasteboardView' },
     }),
-    jkButton: newShuffleButton('jkButton', 'k', 'JK', 'j k', 'i'),
-    rnButton: newShuffleButton('rnButton', 'l', 'RN', 'r n', 'an'),
+    jkButton: newShuffleButton('jkButton', 'k', 'JK', 'i'),
+    rnButton: newShuffleButton('rnButton', 'l', 'RN', 'an'),
 
-    ch17Button: newShuffleButton('ch17Button', 'm', 'Ch', 'ch', 'iang\nui'),
-    qGuideButton: newShuffleButton('qGuideButton', 'n', 'Q~', 'q', 'ian\nuang'),
-    g17Button: newShuffleButton('g17Button', 'o', 'G', 'g', 'ei un'),
-    cfButton: newShuffleButton('cfButton', 'p', 'CF', 'c f', 'iu ou'),
-    t17Button: newShuffleButton('t17Button', 'q', 'T', 't', 'er ong'),
+    ch17Button: newShuffleButton('ch17Button', 'm', 'Ch', 'iang ui'),
+    qGuideButton: newShuffleButton('qGuideButton', 'n', 'Q~', 'ian uang'),
+    g17Button: newShuffleButton('g17Button', 'o', 'G', 'ei un'),
+    cfButton: newShuffleButton('cfButton', 'p', 'CF', 'iu ou'),
+    t17Button: newShuffleButton('t17Button', 'q', 'T', 'er ong'),
 
     // 数字键
     oneButton: {

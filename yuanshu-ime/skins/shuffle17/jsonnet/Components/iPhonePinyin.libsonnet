@@ -24,12 +24,10 @@ local hintStyle = {
 };
 
 local legendCenter = {
-  initials: { x: 0.24, y: 0.24 },
-  code: { x: 0.76, y: 0.22 },
-  main: { x: 0.50, y: 0.44 },
-  finalSingle: { x: 0.50, y: 0.76 },
-  finalDoubleTop: { x: 0.50, y: 0.69 },
-  finalDoubleBottom: { x: 0.50, y: 0.81 },
+  sideLeft: { x: 0.24, y: 0.28 },
+  sideRight: { x: 0.76, y: 0.28 },
+  main: { x: 0.50, y: 0.33 },
+  finalSingle: { x: 0.50, y: 0.77 },
 };
 
 local primaryLegendColor = {
@@ -42,33 +40,24 @@ local secondaryLegendColor = {
   highlightColor: colors.labelColor.secondary,
 };
 
-local hasMultipleFinalLines(button) = std.length(std.split(button.legend.finals, '\n')) > 1;
-local finalLines(button) = std.split(button.legend.finals, '\n');
-local finalLineOne(button) = finalLines(button)[0];
-local finalLineTwo(button) = if hasMultipleFinalLines(button) then finalLines(button)[1] else '';
-
 local mainLegendParams = {
   center: legendCenter.main,
 } + primaryLegendColor;
 
-local initialsLegendParams = {
-  center: legendCenter.initials,
+local sideLegendParams = {
+  center: legendCenter.sideLeft,
   fontSize: 10.5,
-} + primaryLegendColor;
+} + secondaryLegendColor;
 
-local finalTopLegendParams(button) = {
-  center: if hasMultipleFinalLines(button) then legendCenter.finalDoubleTop else legendCenter.finalSingle,
-  fontSize: if hasMultipleFinalLines(button) then 8.5 else 10.5,
-} + primaryLegendColor;
+local sideLeftLegendParams = sideLegendParams;
+local sideRightLegendParams = {
+  center: legendCenter.sideRight,
+  fontSize: 10.5,
+} + secondaryLegendColor;
 
-local finalBottomLegendParams(button) = {
-  center: if hasMultipleFinalLines(button) then legendCenter.finalDoubleBottom else legendCenter.finalSingle,
-  fontSize: if hasMultipleFinalLines(button) then 8.5 else 10.5,
-} + primaryLegendColor;
-
-local codeLegendParams = {
-  center: legendCenter.code,
-  fontSize: 9.5,
+local finalLegendParams = {
+  center: legendCenter.finalSingle,
+  fontSize: 10.5,
 } + secondaryLegendColor;
 
 local newMarkedAlphabeticButton(button, isDark=false, extraParams={}) =
@@ -80,44 +69,39 @@ local newMarkedAlphabeticButton(button, isDark=false, extraParams={}) =
     + {
       foregroundStyleName: [
         button.name + 'MainForegroundStyle',
-        button.name + 'InitialsForegroundStyle',
-        button.name + 'FinalTopForegroundStyle',
-        button.name + 'FinalBottomForegroundStyle',
-        button.name + 'CodeForegroundStyle',
+        button.name + 'SideLeftForegroundStyle',
+        button.name + 'SideRightForegroundStyle',
+        button.name + 'FinalForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
         button.name + 'MainUppercaseForegroundStyle',
-        button.name + 'InitialsForegroundStyle',
-        button.name + 'FinalTopForegroundStyle',
-        button.name + 'FinalBottomForegroundStyle',
-        button.name + 'CodeForegroundStyle',
+        button.name + 'SideLeftForegroundStyle',
+        button.name + 'SideRightForegroundStyle',
+        button.name + 'FinalForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
         button.name + 'MainUppercaseForegroundStyle',
-        button.name + 'InitialsForegroundStyle',
-        button.name + 'FinalTopForegroundStyle',
-        button.name + 'FinalBottomForegroundStyle',
-        button.name + 'CodeForegroundStyle',
+        button.name + 'SideLeftForegroundStyle',
+        button.name + 'SideRightForegroundStyle',
+        button.name + 'FinalForegroundStyle',
       ],
       foregroundStyle: {
         [button.name + 'MainForegroundStyle']:
           basicStyle.newAlphabeticButtonForegroundStyle(isDark, mainLegendParams + button.params),
         [button.name + 'MainUppercaseForegroundStyle']:
           basicStyle.newAlphabeticButtonForegroundStyle(isDark, mainLegendParams + button.params),
-        [button.name + 'InitialsForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, initialsLegendParams + { text: button.legend.initials }),
-        [button.name + 'FinalTopForegroundStyle']:
+        [button.name + 'SideLeftForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(
             isDark,
-            finalTopLegendParams(button) + { text: if hasMultipleFinalLines(button) then finalLineOne(button) else '' }
+            sideLeftLegendParams + { text: button.legend.sideLeft }
           ),
-        [button.name + 'FinalBottomForegroundStyle']:
+        [button.name + 'SideRightForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(
             isDark,
-            finalBottomLegendParams(button) + { text: if hasMultipleFinalLines(button) then finalLineTwo(button) else button.legend.finals }
+            sideRightLegendParams + { text: button.legend.sideRight }
           ),
-        [button.name + 'CodeForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, codeLegendParams + { text: button.legend.code }),
+        [button.name + 'FinalForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, finalLegendParams + { text: button.legend.finals }),
       },
     }
   );
