@@ -9,11 +9,11 @@
 name: jyut6ping3
 version: "2022.03.17"
 sort: by_weight
-vocabulary: essay-cantonese
+vocabulary: jyut6ping3_dicts/essay-cantonese
 import_tables:
-  - jyut6ping3.chars
-  - jyut6ping3.words
-  - jyut6ping3.phrase
-  - jyut6ping3.lettered
-  - jyut6ping3.maps
+  - jyut6ping3_dicts/jyut6ping3.chars
+  - jyut6ping3_dicts/jyut6ping3.words
+  - jyut6ping3_dicts/jyut6ping3.phrase
+  - jyut6ping3_dicts/jyut6ping3.lettered
+  - jyut6ping3_dicts/jyut6ping3.maps
 ...

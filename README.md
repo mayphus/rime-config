@@ -15,6 +15,8 @@ Related shared files:
 - `cangjie6.dict.yaml`
 - `luna_pinyin.dict.yaml`
 - `terra_pinyin.dict.yaml`
+- `jyut6ping3_dicts/*.dict.yaml`
+- `jyut6ping3_dicts/essay-cantonese.txt`
 - `zhuyin.yaml`
 - `flypy.yaml`
 - `rime_ice.dict.yaml`
