@@ -3,6 +3,7 @@ set -eu
 
 ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 SRC_DIR="$ROOT_DIR/yuanshu-ime"
+SKINS_DIR="$SRC_DIR/skins"
 OUT_DIR="$SRC_DIR/export"
 SKIN_NAME="quadharmonic"
 
@@ -54,6 +55,6 @@ cp "$SRC_DIR/flypy_ice.custom.yaml" "$OUT_DIR/"
 cp "$SRC_DIR/jyut6ping3.custom.yaml" "$OUT_DIR/"
 
 (
-  cd "$SRC_DIR"
+  cd "$SKINS_DIR"
   zip -qr "$OUT_DIR/$SKIN_NAME.cskin" "$SKIN_NAME"
 )
