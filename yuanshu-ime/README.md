@@ -15,6 +15,7 @@ Shared Rime schemas and dictionaries stay at the repository root.
 - `rime_ice.dict.yaml`
 - `rime_ice_dicts/*.dict.yaml`
 - `skins/quadharmonic/`
+- `skins/shuffle17/`
 
 ## Generate Export
 
