@@ -58,20 +58,6 @@ speller:
     - xform/^(a|ai|an|ang|ao|e|ei|en|eng|er|o|ou)$/N$1/
 
     # Normalize pinyin orthography to the final groups used by the 17-key chart.
-    - xform/^ya$/yia/
-    - xform/^yan$/yian/
-    - xform/^yang$/yiang/
-    - xform/^yao$/yiao/
-    - xform/^ye$/yie/
-    - xform/^you$/yiu/
-    - xform/^yong$/yiong/
-    - xform/^wa$/wua/
-    - xform/^wai$/wuai/
-    - xform/^wan$/wuan/
-    - xform/^wang$/wuang/
-    - xform/^wo$/wuo/
-    - xform/^wei$/wui/
-    - xform/^wen$/wun/
     - xform/^([jqxy])u$/$1v/
 
     # Initial groups.
