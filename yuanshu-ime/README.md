@@ -9,8 +9,11 @@ Shared Rime schemas and dictionaries stay at the repository root.
 - `cangjie5.custom.yaml`
 - `cangjie6.custom.yaml`
 - `flypy.custom.yaml`
+- `flypy_ice.schema.yaml`
 - `flypy_ice.custom.yaml`
 - `jyut6ping3.custom.yaml`
+- `rime_ice.dict.yaml`
+- `rime_ice_dicts/*.dict.yaml`
 - `quadharmonic/`
 
 ## Generate Export
