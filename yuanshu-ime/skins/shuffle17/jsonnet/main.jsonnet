@@ -46,6 +46,7 @@ local darkIpadNumericLandscapeContent = iPadNumeric.new(isDark=true, isPortrait=
 
 local config = {
   pinyin: {
+    schema: 'shuffle17_ice',
     iPhone: {
       portrait: pinyinPortraitFileName,
       landscape: pinyinLandscapeFileName,
