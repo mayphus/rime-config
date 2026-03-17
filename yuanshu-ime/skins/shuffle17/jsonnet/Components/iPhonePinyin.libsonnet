@@ -13,10 +13,6 @@ local fiveColumnButtonSize = {
   size: { width: '157.5/1125' },
 };
 
-local rowSideSystemButtonSize = {
-  size: { width: '168.75/1125' },
-};
-
 local bottomSystemButtonSize = {
   size: { width: '280/1125' },
 };
@@ -155,7 +151,6 @@ local shuffle17KeyboardLayout = {
     {
       HStack: {
         subviews: [
-          { Cell: params.keyboard.asciiModeButton.name },
           { Cell: params.keyboard.ch17Button.name },
           { Cell: params.keyboard.qGuideButton.name },
           { Cell: params.keyboard.g17Button.name },
@@ -201,28 +196,15 @@ local newKeyLayout(isDark=false, isPortrait=true) =
   + newMarkedAlphabeticButton(params.keyboard.rnButton, isDark, sixColumnButtonSize + hintStyle)
 
   // Third Row
-  + basicStyle.newSystemButton(
-    params.keyboard.asciiModeButton.name,
-    isDark,
-    rowSideSystemButtonSize
-    + {
-      bounds: { width: '151/168.75', alignment: 'left' },
-    }
-    + params.keyboard.asciiModeButton.params,
-  )
-  + newMarkedAlphabeticButton(params.keyboard.ch17Button, isDark, fiveColumnButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.qGuideButton, isDark, fiveColumnButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.g17Button, isDark, fiveColumnButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.cfButton, isDark, fiveColumnButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.t17Button, isDark, fiveColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.ch17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.qGuideButton, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.g17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.cfButton, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.t17Button, isDark, sixColumnButtonSize + hintStyle)
   + basicStyle.newSystemButton(
     params.keyboard.backspaceButton.name,
     isDark,
-    rowSideSystemButtonSize
-    + {
-      bounds: { width: '151/168.75', alignment: 'right' },
-    }
-    + params.keyboard.backspaceButton.params,
+    sixColumnButtonSize + params.keyboard.backspaceButton.params,
   )
 
   // Fourth Row
