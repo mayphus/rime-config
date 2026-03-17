@@ -6,7 +6,6 @@ Shared Rime schemas and dictionaries stay at the repository root.
 
 ## Source Files
 
-- `bopomofo_hsu.custom.yaml`
 - `cangjie5.custom.yaml`
 - `cangjie6.custom.yaml`
 - `flypy.custom.yaml`

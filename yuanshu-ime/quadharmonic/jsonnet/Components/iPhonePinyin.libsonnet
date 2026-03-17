@@ -44,10 +44,10 @@ local flypyLineOne(button) = flypyLines(button)[0];
 local flypyLineTwo(button) = if hasMultipleFlypyLines(button) then flypyLines(button)[1] else '';
 
 local zhuyinLines(button) =
-  if button.legend.hsuZhuyin == '' then
+  if button.legend.auxiliaryZhuyin == '' then
     []
   else
-    std.split(button.legend.hsuZhuyin, '\n');
+    std.split(button.legend.auxiliaryZhuyin, '\n');
 
 local zhuyinLineCount(button) = std.length(zhuyinLines(button));
 local zhuyinLine(button, idx) = if idx < zhuyinLineCount(button) then zhuyinLines(button)[idx] else '';
