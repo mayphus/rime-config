@@ -1,47 +1,46 @@
-# 亂序17
+# Shuffle17 (亂序17) Keyboard Skin
 
-`skins/shuffle17` 是这个皮肤在仓库里的源目录。
+`skins/shuffle17` is the source directory for the **Shuffle17 (亂序17)** keyboard skin.
 
-`shuffle17` 是当前建议的英文内部名，对应中文名 `亂序17`。
-
-对应的 Rime 方案设计说明见：
+For details on the Rime schema design that corresponds to this skin, see:
 `../../shuffle17.schema-plan.md`
 
-当前版本已经改为 17 键 iPhone 布局，用于配合 `shuffle17_ice` / `亂序17` 方案测试。
+This skin implements an experimental 17-key layout for iPhone, designed to be tested alongside the `shuffle17_ice` (亂序17) Rime schema.
 
-- 中央大字：`HP / Sh / Zh / ...` 这类可见键位标签
-- 下方：该键承载的韵母组，当前改为单行显示
-- `X` 键额外在主标签左右标出较小的 `o / v`
+## Layout Features
 
-说明：
+- **Large Central Labels:** Displays visible key labels like `HP / Sh / Zh / ...`.
+- **Bottom Labels:** Shows the vowel/final groups assigned to that key (currently displayed on a single line).
+- **`X` Key:** Shows smaller `o / v` labels on the left and right of the main label.
 
-- 皮肤上的主标签只是视觉标识；真正送给 Rime 的是内部码 `a-q`。
-- `o X v` 键下划：打开 Emoji 键盘。
-- `SM` 键下划：打开脚本页面。
-- `WZ` 键下划：打开剪贴板页面。
-- 数字、符号和回车仍然走原来的系统功能键。
+### Usage Notes
 
-皮肤文件通过 `Jsonnet` 语法编写，PC 端编译时需要安装 `jsonnet` 等命令行工具。
+- The labels on the skin are purely visual identifiers. The actual internal codes sent to the Rime engine are the letters `a-q`.
+- **Swipe Down Actions:**
+  - `o X v` key: Opens the Emoji keyboard.
+  - `SM` key: Opens the Script (脚本) page.
+  - `WZ` key: Opens the Clipboard (剪贴板) page.
+- Numbers, symbols, and the Return key still use the default system function keys.
+- **English Input:** This skin does not provide a standard English QWERTY layout. To type in English, please switch to the native iOS system English keyboard.
 
-仓库中的 `jsonnet/`、`config.yaml` 等文件是源文件；
-`dark/` 和 `light/` 是编译生成的输出目录，不作为源文件跟踪。
+## Development & Customization
 
-## 使用说明
+The skin files are written in [Jsonnet](https://jsonnet.org/). To compile them on a PC, you must have the `jsonnet` command-line tool installed.
 
-本皮肤不单独提供英文字母排布；测试英文时请直接切回系统英文键盘。
+- The `jsonnet/` directory and `config.yaml` are the source files.
+- The `dark/` and `light/` directories are compilation outputs and are ignored by git.
 
-## 自定义皮肤调整说明
+### Adjusting the Skin
 
-- `jsonnet/Constants/Keyboard.libsonnet`: 定义了键盘按键，各区域高度等常量。
+- `jsonnet/Constants/Keyboard.libsonnet`: Defines the keyboard keys and the heights of different regions.
+- To adjust the swipe up/down actions for any key, modify the `swipeUpAction` or `swipeDownAction` properties in this file.
 
-  如想对按键上下划动进行调整，可在此文件中添加或修改对应按键的 `swipeUpAction` 或 `swipeDownAction` 属性。
+### Compilation
 
-## 手机端编译
+**On Mobile (Yuanshu / 元书输入法):**
+Long-press the skin and select "Run main.jsonnet" (运行 main.jsonnet).
 
-长按皮肤，选择「运行 main.jsonnet」
-
-## PC 端编译
-
+**On PC:**
 ```shell
 make
 ```

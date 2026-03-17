@@ -1,48 +1,48 @@
-# 四合一鍵盤
+# QuadHarmonic Keyboard (四合一鍵盤)
 
-`skins/quadharmonic` 是这个皮肤在仓库里的源目录。
+`skins/quadharmonic` is the source directory for the **QuadHarmonic (四合一鍵盤)** keyboard skin.
 
-在默认皮肤基础上调整为双层键面标注：
+This skin modifies the default keyboard to display a dual-layer layout on the keys:
 
-- 左侧：`倉解碼`
-- 右下：`小鶴雙拼`
+- **Top-Left:** Cangjie codes (倉解碼)
+- **Bottom-Right:** Flypy Double Pinyin codes (小鶴雙拼)
 
-说明：
+## Features
 
-- `倉解碼` 标记直接沿用当前工作区 `cangjie6` 配置里的映射，因此会显示 `的 / 止 / 片` 这些现有字形。
-- `小鶴雙拼`、数字、工具栏和上划动作仍然保留。
+- **Cangjie Coding:** The Cangjie labels map directly to the `cangjie6` configuration in the current workspace, showing existing character components like `的 / 止 / 片`.
+- **Double Pinyin:** The Flypy (小鶴雙拼) labels, numbers, toolbar, and swipe-up actions are preserved from the default skin.
 
-皮肤文件通过 `Jsonnet` 语法编写，PC 端编译时需要安装 `jsonnet` 等命令行工具。
+### Usage Notes
 
-仓库中的 `jsonnet/`、`config.yaml` 等文件是源文件；
-`dark/` 和 `light/` 是编译生成的输出目录，不作为源文件跟踪。
+- **English Input:** This skin does not include a dedicated "English keyboard". To type in English, either switch Rime to `ascii_mode` (English mode) or use the native iOS system English keyboard.
+- **Swipe Actions:**
+  - `e` swipe down: Open Emoji keyboard.
+  - `s` swipe down: Open Script (脚本) page (Mnemonic: `s` for Script).
+  - `p` swipe down: Open Clipboard (剪贴板) page (Mnemonic: `p` for Pasteboard).
+  - `a` swipe down: Toggle RIME `ascii_mode`.
+- **Swipe Up (Numbers & Symbols):**
+  - Top row (`q` to `p`): `1 2 3 4 5 6 7 8 9 0`
+  - Middle row (`a` to `l`): <code>\` / : ; ( [ ~ @ "</code>
+  - Bottom row (`z` to `m`): `, . # \ ? ! …`
 
-## 使用说明
+## Development & Customization
 
-本皮肤不包含「英文键盘」，如需输入英文，可使用 RIME 的 `ascii_mode` 切换，或者使用系统自带的英文输入法。
+The skin files are written in [Jsonnet](https://jsonnet.org/). To compile them on a PC, you must have the `jsonnet` command-line tool installed.
 
-快捷键：
+- The `jsonnet/` directory and `config.yaml` are the source files.
+- The `dark/` and `light/` directories are compilation outputs and are ignored by git.
 
-- `e` 键下划：打开 Emoji 键盘
-- `s` 键下划：打开脚本页面(助记：脚本 = Script，所以放在 `s` 键下划)
-- `p` 键下划：打开剪贴板页面（助记：剪贴板 = Pasteboard，所以放在 `p` 键下划）
-- `a` 键下划：RIME `ascii_mode` 状态切换
-- `q` 到 `p` 键上划：输入 `1 2 3 4 5 6 7 8 9 0`
-- `a s d f g h j k l` 键上划分别输入：反引号、`/`、`:`、`;`、`(`、`[`、`~`、`@`、`"`
-- `z x c v b n m` 键上划分别输入：`,`、`.`、`#`、`\`、`?`、`!`、`…`
+### Adjusting the Skin
 
-## 自定义皮肤调整说明
+- `jsonnet/Constants/Keyboard.libsonnet`: Defines the keyboard keys and the heights of different regions.
+- To adjust the swipe up/down actions for any key, modify the `swipeUpAction` or `swipeDownAction` properties in this file.
 
-- `jsonnet/Constants/Keyboard.libsonnet`: 定义了键盘按键，各区域高度等常量。
+### Compilation
 
-  如想对按键上下划动进行调整，可在此文件中添加或修改对应按键的 `swipeUpAction` 或 `swipeDownAction` 属性。
+**On Mobile (Yuanshu / 元书输入法):**
+Long-press the skin and select "Run main.jsonnet" (运行 main.jsonnet).
 
-## 手机端编译
-
-长按皮肤，选择「运行 main.jsonnet」
-
-## PC 端编译
-
+**On PC:**
 ```shell
 make
 ```
