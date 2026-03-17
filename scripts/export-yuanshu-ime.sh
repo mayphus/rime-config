@@ -34,7 +34,6 @@ awk '
   { print }
 ' "$ROOT_DIR/cangjie5.dict.yaml" > "$OUT_DIR/cangjie5.dict.yaml"
 cp "$ROOT_DIR/cangjie5.schema.yaml" "$OUT_DIR/"
-cp "$ROOT_DIR/bopomofo.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.schema.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/flypy.yaml" "$OUT_DIR/"
 cp "$ROOT_DIR/jyut6ping3.schema.yaml" "$OUT_DIR/"
