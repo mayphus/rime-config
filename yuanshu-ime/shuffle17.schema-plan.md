@@ -45,13 +45,13 @@ From the official `落格十七` docs:
 Relevant local files:
 
 - Existing double-pinyin schema:
-  [flypy_ice.schema.yaml](/Users/mayphus/Library/Rime/yuanshu-ime/flypy_ice.schema.yaml)
+  [flypy_ice.schema.yaml](./flypy_ice.schema.yaml)
 - Existing copied skin scaffold:
-  [README.md](/Users/mayphus/Library/Rime/yuanshu-ime/skins/shuffle17/README.md)
+  [README.md](./skins/shuffle17/README.md)
 - Current keyboard layout implementation:
-  [iPhonePinyin.libsonnet](/Users/mayphus/Library/Rime/yuanshu-ime/skins/shuffle17/jsonnet/Components/iPhonePinyin.libsonnet)
+  [iPhonePinyin.libsonnet](./skins/shuffle17/jsonnet/Components/iPhonePinyin.libsonnet)
 - Current key-definition file:
-  [Keyboard.libsonnet](/Users/mayphus/Library/Rime/yuanshu-ime/skins/shuffle17/jsonnet/Constants/Keyboard.libsonnet)
+  [Keyboard.libsonnet](./skins/shuffle17/jsonnet/Constants/Keyboard.libsonnet)
 
 The repo already proves two important things:
 
