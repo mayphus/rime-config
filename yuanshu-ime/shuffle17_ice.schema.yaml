@@ -100,7 +100,7 @@ speller:
     - xform/iao$/C/
     - xform/(uai|uan)$/E/
     - xform/(ie|uo)$/F/
-    - xform/(ue|ai)$/G/
+    - xform/(ue|ve|ai)$/G/
     - xform/(eng|ing)$/I/
     - xform/(iu|ou)$/P/
     - xform/(er|ong)$/Q/
