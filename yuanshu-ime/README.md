@@ -14,6 +14,9 @@ Shared Rime schemas and dictionaries stay at the repository root.
 - `jyut6ping3.custom.yaml`
 - `rime_ice.dict.yaml`
 - `rime_ice_dicts/*.dict.yaml`
+- `shuffle17.schema-plan.md`
+- `shuffle17_ice.schema.yaml`
+- `shuffle17_ice.custom.yaml`
 - `skins/quadharmonic/`
 - `skins/shuffle17/`
 
@@ -25,6 +28,6 @@ Rebuild the self-contained iPhone bundle with:
 scripts/export-yuanshu-ime.sh
 ```
 
-This writes the copyable bundle to `yuanshu-ime/export/` and also packages `skins/quadharmonic/` as `quadharmonic.cskin`.
+This writes the copyable bundle to `yuanshu-ime/export/` and packages each directory under `skins/` as its own `.cskin` bundle, including `quadharmonic.cskin` and `shuffle17.cskin`.
 
 Generated files in `yuanshu-ime/export/` are not source files.

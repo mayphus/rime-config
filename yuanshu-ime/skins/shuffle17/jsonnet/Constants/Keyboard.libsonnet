@@ -102,6 +102,22 @@ local newLetterButton(name, letter, extraParams={}) = {
     } + extraParams,
 };
 
+local newShuffleButton(name, code, label, initials, finals, extraParams={}) = {
+  name: name,
+  legend: {
+    initials: initials,
+    finals: finals,
+    code: std.asciiUpper(code),
+  },
+  params:
+    {
+      action: { character: code },
+      uppercasedStateAction: { character: std.asciiUpper(code) },
+      text: label,
+      fontSize: 18,
+    } + extraParams,
+};
+
 {
   local root = self,
 
@@ -265,6 +281,34 @@ local newLetterButton(name, letter, extraParams={}) = {
     bButton: newLetterButton('bButton', 'b', { swipeUpAction: { character: '?' } }),
     nButton: newLetterButton('nButton', 'n', { swipeUpAction: { character: '!' } }),
     mButton: newLetterButton('mButton', 'm', { swipeUpAction: { symbol: '…' } }),
+
+    // 亂序17 鍵位（iPhone 版皮肤使用；iPad 暂时保留现有 26 键）
+    hpButton: newShuffleButton('hpButton', 'a', 'HP', 'h p', 'a\nia ua'),
+    sh17Button: newShuffleButton('sh17Button', 'b', 'Sh', 'sh', 'en in'),
+    zh17Button: newShuffleButton('zh17Button', 'c', 'Zh', 'zh', 'ang\niao'),
+    b17Button: newShuffleButton('b17Button', 'd', 'B', 'b', 'ao\niong'),
+    oxvButton: newShuffleButton('oxvButton', 'e', 'o X v', 'x', 'o v\nuai uan', {
+      fontSize: 15.5,
+      swipeDownAction: { keyboardType: 'emojis' },
+    }),
+    smButton: newShuffleButton('smButton', 'f', 'SM', 's m', 'ie uo', {
+      swipeDownAction: { shortcut: '#toggleScriptView' },
+    }),
+
+    l17Button: newShuffleButton('l17Button', 'g', 'L', 'l', 'ai ue'),
+    d17Button: newShuffleButton('d17Button', 'h', 'D', 'd', 'u'),
+    y17Button: newShuffleButton('y17Button', 'i', 'Y', 'y', 'eng\ning'),
+    wzButton: newShuffleButton('wzButton', 'j', 'WZ', 'w z', 'e', {
+      swipeDownAction: { shortcut: '#showPasteboardView' },
+    }),
+    jkButton: newShuffleButton('jkButton', 'k', 'JK', 'j k', 'i'),
+    rnButton: newShuffleButton('rnButton', 'l', 'RN', 'r n', 'an'),
+
+    ch17Button: newShuffleButton('ch17Button', 'm', 'Ch', 'ch', 'iang\nui'),
+    qGuideButton: newShuffleButton('qGuideButton', 'n', 'Q~', 'q', 'ian\nuang'),
+    g17Button: newShuffleButton('g17Button', 'o', 'G', 'g', 'ei un'),
+    cfButton: newShuffleButton('cfButton', 'p', 'CF', 'c f', 'iu ou'),
+    t17Button: newShuffleButton('t17Button', 'q', 'T', 't', 'er ong'),
 
     // 数字键
     oneButton: {

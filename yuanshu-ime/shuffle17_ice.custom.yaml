@@ -1,0 +1,27 @@
+patch:
+  schema/version: "0.1"
+  schema/description: |
+    朙月拼音＋亂序17方案。
+    使用 rime-ice 詞庫，精簡版，適合移動端匯入
+  engine/translators:
+    - punct_translator
+    - script_translator
+  engine/filters:
+    - simplifier@simplify
+    - uniquifier
+  punctuator:
+    __include: default:/punctuator
+    full_shape:
+      __include: default:/punctuator/full_shape
+    half_shape:
+      __include: default:/punctuator/half_shape
+  recognizer:
+    import_preset: default
+  key_binder:
+    import_preset: default
+  editor:
+    bindings:
+      space: confirm
+      Return: commit_raw_input
+      BackSpace: revert
+      Escape: cancel

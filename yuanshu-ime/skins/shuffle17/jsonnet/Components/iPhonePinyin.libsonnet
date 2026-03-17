@@ -5,8 +5,20 @@ local preedit = import 'Preedit.libsonnet';
 local toolbar = import 'Toolbar.libsonnet';
 local utils = import 'Utils.libsonnet';
 
-local portraitNormalButtonSize = {
-  size: { width: '112.5/1125' },
+local sixColumnButtonSize = {
+  size: { width: '187.5/1125' },
+};
+
+local fiveColumnButtonSize = {
+  size: { width: '157.5/1125' },
+};
+
+local rowSideSystemButtonSize = {
+  size: { width: '168.75/1125' },
+};
+
+local bottomSystemButtonSize = {
+  size: { width: '280/1125' },
 };
 
 local hintStyle = {
@@ -16,12 +28,12 @@ local hintStyle = {
 };
 
 local legendCenter = {
-  cangjie: { x: 0.37, y: 0.34 },
-  symbol: { x: 0.73, y: 0.24 },
-  abc: { x: 0.72, y: 0.40 },
-  flypySingle: { x: 0.50, y: 0.74 },
-  flypyDoubleTop: { x: 0.50, y: 0.68 },
-  flypyDoubleBottom: { x: 0.50, y: 0.79 },
+  initials: { x: 0.24, y: 0.24 },
+  code: { x: 0.76, y: 0.22 },
+  main: { x: 0.50, y: 0.44 },
+  finalSingle: { x: 0.50, y: 0.76 },
+  finalDoubleTop: { x: 0.50, y: 0.69 },
+  finalDoubleBottom: { x: 0.50, y: 0.81 },
 };
 
 local primaryLegendColor = {
@@ -34,215 +46,136 @@ local secondaryLegendColor = {
   highlightColor: colors.labelColor.secondary,
 };
 
-local hasMultipleFlypyLines(button) = std.length(std.split(button.legend.flypy, '\n')) > 1;
-local flypyLines(button) = std.split(button.legend.flypy, '\n');
-local flypyLineOne(button) = flypyLines(button)[0];
-local flypyLineTwo(button) = if hasMultipleFlypyLines(button) then flypyLines(button)[1] else '';
+local hasMultipleFinalLines(button) = std.length(std.split(button.legend.finals, '\n')) > 1;
+local finalLines(button) = std.split(button.legend.finals, '\n');
+local finalLineOne(button) = finalLines(button)[0];
+local finalLineTwo(button) = if hasMultipleFinalLines(button) then finalLines(button)[1] else '';
 
-local abcLegendParams = {
-  center: legendCenter.abc,
+local mainLegendParams = {
+  center: legendCenter.main,
+} + primaryLegendColor;
+
+local initialsLegendParams = {
+  center: legendCenter.initials,
   fontSize: 10.5,
 } + primaryLegendColor;
 
-local cangjieLegendParams = {
-  center: legendCenter.cangjie,
-  fontSize: 15.5,
+local finalTopLegendParams(button) = {
+  center: if hasMultipleFinalLines(button) then legendCenter.finalDoubleTop else legendCenter.finalSingle,
+  fontSize: if hasMultipleFinalLines(button) then 8.5 else 10.5,
 } + primaryLegendColor;
 
-local flypyTopLegendParams(button) = {
-  center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleTop else legendCenter.flypySingle,
-  fontSize: if hasMultipleFlypyLines(button) then 7.25 else 12,
-} + (
-  if hasMultipleFlypyLines(button) then
-    { fontWeight: 'bold' }
-  else
-    {}
-) + primaryLegendColor;
+local finalBottomLegendParams(button) = {
+  center: if hasMultipleFinalLines(button) then legendCenter.finalDoubleBottom else legendCenter.finalSingle,
+  fontSize: if hasMultipleFinalLines(button) then 8.5 else 10.5,
+} + primaryLegendColor;
 
-local flypyBottomLegendParams(button) = {
-  center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleBottom else legendCenter.flypySingle,
-  fontSize: if hasMultipleFlypyLines(button) then 7.25 else 12,
-} + (
-  if hasMultipleFlypyLines(button) then
-    { fontWeight: 'bold' }
-  else
-    {}
-) + primaryLegendColor;
-
-local symbolLegendParams = {
-  center: legendCenter.symbol,
-  fontSize: 8.5,
+local codeLegendParams = {
+  center: legendCenter.code,
+  fontSize: 9.5,
 } + secondaryLegendColor;
 
-local newMarkedAlphabeticButton(button, isDark=false, params={}) =
+local newMarkedAlphabeticButton(button, isDark=false, extraParams={}) =
   basicStyle.newAlphabeticButton(
     button.name,
     isDark,
-    params
+    extraParams
     + button.params
     + {
       foregroundStyleName: [
-        button.name + 'AbcForegroundStyle',
-        button.name + 'CangjieForegroundStyle',
-        button.name + 'FlypyTopForegroundStyle',
-        button.name + 'FlypyBottomForegroundStyle',
-        button.name + 'SymbolForegroundStyle',
+        button.name + 'MainForegroundStyle',
+        button.name + 'InitialsForegroundStyle',
+        button.name + 'FinalTopForegroundStyle',
+        button.name + 'FinalBottomForegroundStyle',
+        button.name + 'CodeForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
-        button.name + 'AbcUppercaseForegroundStyle',
-        button.name + 'CangjieForegroundStyle',
-        button.name + 'FlypyTopForegroundStyle',
-        button.name + 'FlypyBottomForegroundStyle',
-        button.name + 'SymbolForegroundStyle',
+        button.name + 'MainUppercaseForegroundStyle',
+        button.name + 'InitialsForegroundStyle',
+        button.name + 'FinalTopForegroundStyle',
+        button.name + 'FinalBottomForegroundStyle',
+        button.name + 'CodeForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
-        button.name + 'AbcUppercaseForegroundStyle',
-        button.name + 'CangjieForegroundStyle',
-        button.name + 'FlypyTopForegroundStyle',
-        button.name + 'FlypyBottomForegroundStyle',
-        button.name + 'SymbolForegroundStyle',
+        button.name + 'MainUppercaseForegroundStyle',
+        button.name + 'InitialsForegroundStyle',
+        button.name + 'FinalTopForegroundStyle',
+        button.name + 'FinalBottomForegroundStyle',
+        button.name + 'CodeForegroundStyle',
       ],
       foregroundStyle: {
-        [button.name + 'AbcForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, abcLegendParams + button.params),
-        [button.name + 'AbcUppercaseForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, abcLegendParams + button.params)
-          + basicStyle.getKeyboardActionText(button.params, 'uppercasedStateAction'),
-        [button.name + 'CangjieForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, cangjieLegendParams + { text: button.legend.cangjie }),
-        [button.name + 'FlypyTopForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyTopLegendParams(button) + { text: if hasMultipleFlypyLines(button) then flypyLineOne(button) else '' }),
-        [button.name + 'FlypyBottomForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, flypyBottomLegendParams(button) + { text: if hasMultipleFlypyLines(button) then flypyLineTwo(button) else button.legend.flypy }),
-        [button.name + 'SymbolForegroundStyle']:
-          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, symbolLegendParams + { text: button.legend.symbol }),
+        [button.name + 'MainForegroundStyle']:
+          basicStyle.newAlphabeticButtonForegroundStyle(isDark, mainLegendParams + button.params),
+        [button.name + 'MainUppercaseForegroundStyle']:
+          basicStyle.newAlphabeticButtonForegroundStyle(isDark, mainLegendParams + button.params),
+        [button.name + 'InitialsForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, initialsLegendParams + { text: button.legend.initials }),
+        [button.name + 'FinalTopForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(
+            isDark,
+            finalTopLegendParams(button) + { text: if hasMultipleFinalLines(button) then finalLineOne(button) else '' }
+          ),
+        [button.name + 'FinalBottomForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(
+            isDark,
+            finalBottomLegendParams(button) + { text: if hasMultipleFinalLines(button) then finalLineTwo(button) else button.legend.finals }
+          ),
+        [button.name + 'CodeForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(isDark, codeLegendParams + { text: button.legend.code }),
       },
     }
   );
 
-// 标准26键布局
-local alphabeticKeyboardLayout = {
+local shuffle17KeyboardLayout = {
   keyboardLayout: [
     {
       HStack: {
         subviews: [
-          {
-            Cell: params.keyboard.qButton.name,
-          },
-          {
-            Cell: params.keyboard.wButton.name,
-          },
-          {
-            Cell: params.keyboard.eButton.name,
-          },
-          {
-            Cell: params.keyboard.rButton.name,
-          },
-          {
-            Cell: params.keyboard.tButton.name,
-          },
-          {
-            Cell: params.keyboard.yButton.name,
-          },
-          {
-            Cell: params.keyboard.uButton.name,
-          },
-          {
-            Cell: params.keyboard.iButton.name,
-          },
-          {
-            Cell: params.keyboard.oButton.name,
-          },
-          {
-            Cell: params.keyboard.pButton.name,
-          },
+          { Cell: params.keyboard.hpButton.name },
+          { Cell: params.keyboard.sh17Button.name },
+          { Cell: params.keyboard.zh17Button.name },
+          { Cell: params.keyboard.b17Button.name },
+          { Cell: params.keyboard.oxvButton.name },
+          { Cell: params.keyboard.smButton.name },
         ],
       },
     },
     {
       HStack: {
         subviews: [
-          {
-            Cell: params.keyboard.aButton.name,
-          },
-          {
-            Cell: params.keyboard.sButton.name,
-          },
-          {
-            Cell: params.keyboard.dButton.name,
-          },
-          {
-            Cell: params.keyboard.fButton.name,
-          },
-          {
-            Cell: params.keyboard.gButton.name,
-          },
-          {
-            Cell: params.keyboard.hButton.name,
-          },
-          {
-            Cell: params.keyboard.jButton.name,
-          },
-          {
-            Cell: params.keyboard.kButton.name,
-          },
-          {
-            Cell: params.keyboard.lButton.name,
-          },
+          { Cell: params.keyboard.l17Button.name },
+          { Cell: params.keyboard.d17Button.name },
+          { Cell: params.keyboard.y17Button.name },
+          { Cell: params.keyboard.wzButton.name },
+          { Cell: params.keyboard.jkButton.name },
+          { Cell: params.keyboard.rnButton.name },
         ],
       },
     },
     {
       HStack: {
         subviews: [
-          {
-            Cell: params.keyboard.shiftButton.name,
-          },
-          {
-            Cell: params.keyboard.zButton.name,
-          },
-          {
-            Cell: params.keyboard.xButton.name,
-          },
-          {
-            Cell: params.keyboard.cButton.name,
-          },
-          {
-            Cell: params.keyboard.vButton.name,
-          },
-          {
-            Cell: params.keyboard.bButton.name,
-          },
-          {
-            Cell: params.keyboard.nButton.name,
-          },
-          {
-            Cell: params.keyboard.mButton.name,
-          },
-          {
-            Cell: params.keyboard.backspaceButton.name,
-          },
+          { Cell: params.keyboard.asciiModeButton.name },
+          { Cell: params.keyboard.ch17Button.name },
+          { Cell: params.keyboard.qGuideButton.name },
+          { Cell: params.keyboard.g17Button.name },
+          { Cell: params.keyboard.cfButton.name },
+          { Cell: params.keyboard.t17Button.name },
+          { Cell: params.keyboard.backspaceButton.name },
         ],
       },
     },
     {
       HStack: {
         subviews: [
-          {
-            Cell: params.keyboard.numericButton.name,
-          },
-          {
-            Cell: params.keyboard.spaceButton.name,
-          },
-          {
-            Cell: params.keyboard.enterButton.name,
-          },
+          { Cell: params.keyboard.numericButton.name },
+          { Cell: params.keyboard.spaceButton.name },
+          { Cell: params.keyboard.enterButton.name },
         ],
       },
     },
   ],
 };
-
 
 local newKeyLayout(isDark=false, isPortrait=true) =
   local keyboardHeight = if isPortrait then params.keyboard.height.iPhone.portrait else params.keyboard.height.iPhone.landscape;
@@ -250,122 +183,74 @@ local newKeyLayout(isDark=false, isPortrait=true) =
     keyboardHeight: keyboardHeight,
     keyboardStyle: utils.newBackgroundStyle(style=basicStyle.keyboardBackgroundStyleName),
   }
-  + alphabeticKeyboardLayout
+  + shuffle17KeyboardLayout
   // First Row
-  + newMarkedAlphabeticButton(params.keyboard.qButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.wButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.eButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.rButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.tButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.yButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.uButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.iButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.oButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.pButton, isDark, portraitNormalButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.hpButton, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.sh17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.zh17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.b17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.oxvButton, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.smButton, isDark, sixColumnButtonSize + hintStyle)
 
   // Second Row
-  + newMarkedAlphabeticButton(
-    params.keyboard.aButton,
-    isDark,
-    {
-      size:
-        { width: '168.75/1125' },
-      bounds:
-        { width: '111/168.75', alignment: 'right' },
-    } + hintStyle,
-  )
-  + newMarkedAlphabeticButton(params.keyboard.sButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.dButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.fButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.gButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.hButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.jButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.kButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(
-    params.keyboard.lButton,
-    isDark,
-    {
-      size:
-        { width: '168.75/1125' },
-      bounds:
-        { width: '111/168.75', alignment: 'left' },
-    } + hintStyle
-  )
+  + newMarkedAlphabeticButton(params.keyboard.l17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.d17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.y17Button, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.wzButton, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.jkButton, isDark, sixColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.rnButton, isDark, sixColumnButtonSize + hintStyle)
 
   // Third Row
   + basicStyle.newSystemButton(
-    params.keyboard.shiftButton.name,
+    params.keyboard.asciiModeButton.name,
     isDark,
-    {
-      size:
-        { width: '168.75/1125' },
-      bounds:
-        { width: '151/168.75', alignment: 'left' },
-    }
-    + params.keyboard.shiftButton.params
+    rowSideSystemButtonSize
     + {
-      uppercasedStateForegroundStyle: params.keyboard.shiftButton.name + 'UppercasedForegroundStyle',
+      bounds: { width: '151/168.75', alignment: 'left' },
     }
-    + {
-      capsLockedStateForegroundStyle: params.keyboard.shiftButton.name + 'CapsLockedForegroundStyle',
-    }
+    + params.keyboard.asciiModeButton.params,
   )
-  + {
-    [params.keyboard.shiftButton.name + 'UppercasedForegroundStyle']:
-      basicStyle.newImageSystemButtonForegroundStyle(isDark, params.keyboard.shiftButton.uppercasedParams),
-    [params.keyboard.shiftButton.name + 'CapsLockedForegroundStyle']:
-      basicStyle.newImageSystemButtonForegroundStyle(isDark, params.keyboard.shiftButton.capsLockedParams),
-  }
-
-  + newMarkedAlphabeticButton(params.keyboard.zButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.xButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.cButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.vButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.bButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.nButton, isDark, portraitNormalButtonSize + hintStyle)
-  + newMarkedAlphabeticButton(params.keyboard.mButton, isDark, portraitNormalButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.ch17Button, isDark, fiveColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.qGuideButton, isDark, fiveColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.g17Button, isDark, fiveColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.cfButton, isDark, fiveColumnButtonSize + hintStyle)
+  + newMarkedAlphabeticButton(params.keyboard.t17Button, isDark, fiveColumnButtonSize + hintStyle)
   + basicStyle.newSystemButton(
     params.keyboard.backspaceButton.name,
     isDark,
-    {
-      size:
-        { width: '168.75/1125' },
-      bounds:
-        { width: '151/168.75', alignment: 'right' },
-    } + params.keyboard.backspaceButton.params,
+    rowSideSystemButtonSize
+    + {
+      bounds: { width: '151/168.75', alignment: 'right' },
+    }
+    + params.keyboard.backspaceButton.params,
   )
 
   // Fourth Row
   + basicStyle.newSystemButton(
     params.keyboard.numericButton.name,
     isDark,
-    {
-      size:
-        { width: '280/1125' },
-    } + params.keyboard.numericButton.params
+    bottomSystemButtonSize + params.keyboard.numericButton.params,
   )
-
   + basicStyle.newAlphabeticButton(
     params.keyboard.spaceButton.name,
     isDark,
     params.keyboard.spaceButton.params,
-    needHint=false
+    needHint=false,
   )
   + basicStyle.newSystemButton(
     params.keyboard.enterButton.name,
     isDark,
-    {
-      size: { width: '280/1125' },
+    bottomSystemButtonSize
+    + {
       backgroundStyle: basicStyle.enterButtonBackgroundStyle,
       foregroundStyle: basicStyle.enterButtonForegroundStyle,
-    } + params.keyboard.enterButton.params
-  )
-;
+    }
+    + params.keyboard.enterButton.params,
+  );
 
 {
   new(isDark, isPortrait):
     local insets = if isPortrait then params.keyboard.button.backgroundInsets.iPhone.portrait else params.keyboard.button.backgroundInsets.iPhone.landscape;
-
     local extraParams = {
       insets: insets,
     };
@@ -382,7 +267,6 @@ local newKeyLayout(isDark=false, isPortrait=true) =
     + newKeyLayout(isDark, isPortrait)
     + basicStyle.newEnterButtonForegroundStyle(isDark, params.keyboard.enterButton.params)
     + basicStyle.newCommitCandidateForegroundStyle(isDark, { text: '选定' })
-    // Notifications
     + basicStyle.returnKeyboardTypeChangedNotification
     + basicStyle.preeditChangedForEnterButtonNotification
     + basicStyle.preeditChangedForSpaceButtonNotification,
