@@ -47,7 +47,7 @@ local abcLegendParams = {
 local cangjieLegendParams = {
   center: legendCenter.cangjie,
   fontSize: 15.5,
-} + primaryLegendColor;
+} + secondaryLegendColor;
 
 local flypyTopLegendParams(button) = {
   center: if hasMultipleFlypyLines(button) then legendCenter.flypyDoubleTop else legendCenter.flypySingle,
