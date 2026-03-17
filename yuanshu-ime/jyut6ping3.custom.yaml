@@ -1,0 +1,25 @@
+patch:
+  schema/version: "0.1"
+  schema/description: |
+    香港語言學學會粵拼方案。
+    精簡版，適合移動端匯入
+  punctuator:
+    __include: default:/punctuator
+    full_shape:
+      __include: default:/punctuator/full_shape
+    half_shape:
+      __include: default:/punctuator/half_shape
+  recognizer:
+    import_preset: default
+    patterns:
+      punct: "^/([0-9]0?|[a-z]+)$"
+      flypy: "^`[a-z']*;?$"
+      cangjie6: "^v[a-z]*;?$"
+  key_binder:
+    import_preset: default
+  editor:
+    bindings:
+      space: confirm
+      Return: commit_raw_input
+      BackSpace: revert
+      Escape: cancel
