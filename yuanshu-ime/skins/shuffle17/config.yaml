@@ -19,8 +19,7 @@
       "iPhone": {
          "landscape": "pinyinLandscape",
          "portrait": "pinyinPortrait"
-      },
-      "schema": "shuffle17_ice"
+      }
    },
    "symbolic": {
       "iPad": {
