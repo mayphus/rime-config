@@ -13,7 +13,6 @@ Note: Shared Rime schemas and dictionaries are maintained at the repository root
   - `rime_ice.dict.yaml`, `rime_ice_dicts/*.dict.yaml`
 - **Experimental 17-Key Layout:**
   - `shuffle17_ice.schema.yaml`, `shuffle17_ice.custom.yaml`
-  - `shuffle17.schema-plan.md`
 - **Keyboard Skins:**
   - `yuanshu-skin/quadharmonic/`
   - `yuanshu-skin/shuffle17/`
