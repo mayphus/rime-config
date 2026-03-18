@@ -12,8 +12,6 @@ schema:
   description: |
     朙月拼音＋亂序17方案，使用 rime-ice 詞庫。
     移動端優先，17 鍵內碼採用 a-q。
-  dependencies:
-    - cangjie6
 
 switches:
   - name: ascii_mode
@@ -44,7 +42,6 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    - reverse_lookup_translator
     - script_translator
   filters:
     - simplifier
@@ -109,17 +106,6 @@ translator:
   dictionary: rime_ice
   prism: shuffle17_ice
 
-reverse_lookup:
-  dictionary: cangjie6
-  enable_completion: true
-  prefix: "`"
-  suffix: "'"
-  tips: "〔蒼頡〕"
-  preedit_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
-  comment_format:
-    - "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"
-
 punctuator:
   import_preset: default
 
@@ -128,5 +114,3 @@ key_binder:
 
 recognizer:
   import_preset: default
-  patterns:
-    reverse_lookup: "`[a-z]*'?$"

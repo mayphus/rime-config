@@ -57,10 +57,7 @@ ifneq (,$(findstring _ice,$(YUANSHU_SCHEMAS)))
 	SRC_DIRS += rime_ice_dicts
 endif
 
-# Shuffle17 specific dependency (cangjie6 for reverse lookup)
-ifneq (,$(findstring shuffle17_ice,$(YUANSHU_SCHEMAS)))
-	ROOT_YAML_FILES += cangjie6.schema.yaml cangjie6.dict.yaml cangjie6.extended.dict.yaml
-endif
+
 
 # Any extra dicts or files explicitly requested by the profile
 ROOT_YAML_FILES += $(EXTRA_ROOT_FILES)
