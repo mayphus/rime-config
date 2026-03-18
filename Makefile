@@ -31,13 +31,27 @@ YUANSHU_SKINS :=
 
 # Handle "all" keyword to automatically grab everything
 ifeq ($(YUANSHU_SCHEMAS),all)
-YUANSHU_SCHEMAS := $(patsubst $(SRC_DIR)/%.schema.yaml,%,$(wildcard $(SRC_DIR)/*.schema.yaml))
+	SRC_SCHEMAS_V1 := $(patsubst $(SRC_DIR)/%.schema.yaml,%,$(wildcard $(SRC_DIR)/*.schema.yaml))
+	SRC_SCHEMAS_V2 := $(patsubst $(SRC_DIR)/%.custom.yaml,%,$(wildcard $(SRC_DIR)/*.custom.yaml))
+	YUANSHU_SCHEMAS := $(sort $(SRC_SCHEMAS_V1) $(SRC_SCHEMAS_V2))
 endif
 
 
 # Map schemas to their base files and custom patches
-$(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).schema.yaml))
-$(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).custom.yaml))
+$(foreach schema, $(YUANSHU_SCHEMAS), \
+	$(if $(wildcard $(SRC_DIR)/$(schema).schema.yaml), \
+		$(eval SRC_YAML_FILES += $(schema).schema.yaml), \
+		$(if $(wildcard $(ROOT_DIR)/$(schema).schema.yaml), \
+			$(eval ROOT_YAML_FILES += $(schema).schema.yaml) \
+		) \
+	) \
+	$(if $(wildcard $(SRC_DIR)/$(schema).custom.yaml), \
+		$(eval SRC_YAML_FILES += $(schema).custom.yaml), \
+		$(if $(wildcard $(ROOT_DIR)/$(schema).custom.yaml), \
+			$(eval ROOT_YAML_FILES += $(schema).custom.yaml) \
+		) \
+	) \
+)
 
 # Cangjie6
 ifneq (,$(findstring cangjie6,$(YUANSHU_SCHEMAS)))
@@ -146,7 +160,7 @@ $(PROFILE_OUT)/cangjie5.dict.yaml: $(ROOT_DIR)/cangjie5.dict.yaml
 	' $< > $@
 
 # Auto-generate default.custom.yaml snippet based on requested schemas
-$(PROFILE_OUT)/default.custom.yaml:
+$(PROFILE_OUT)/default.custom.yaml: $(PROFILE_FILE)
 	@echo "patch:" > $@
 	@echo "  schema_list:" >> $@
 	@for schema in $(YUANSHU_SCHEMAS); do \
