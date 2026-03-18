@@ -2,101 +2,157 @@ ROOT_DIR := $(shell pwd)
 SRC_DIR := $(ROOT_DIR)/yuanshu-config
 SKINS_DIR := $(ROOT_DIR)/yuanshu-skin
 OUTPUT_DIR := $(ROOT_DIR)/yuanshu-output
-YUANSHU_OUT := $(OUTPUT_DIR)/yuanshu
-YUANSHU_OUT_SKINS := $(YUANSHU_OUT)/skins
-CUSTOMER_OUT := $(OUTPUT_DIR)/customer-shuffle17
 
-# Find all skin directories
-SKIN_DIRS := $(wildcard $(SKINS_DIR)/*)
-SKIN_NAMES := $(notdir $(SKIN_DIRS))
-SKIN_CSKINS := $(patsubst %,$(YUANSHU_OUT_SKINS)/%.cskin,$(SKIN_NAMES))
-CUSTOMER_SKIN := $(CUSTOMER_OUT)/shuffle17.cskin
+# Default profile if none provided
+PROFILE ?= my
+PROFILE_FILE := yuanshu-profiles/$(PROFILE).mk
 
-.PHONY: all clean build-yuanshu build-customer-pack copy-yuanshu-files
+# Check if profile exists
+ifeq ($(wildcard $(PROFILE_FILE)),)
+$(error Profile $(PROFILE_FILE) does not exist! Create it first.)
+endif
 
-all: build-yuanshu build-customer-pack
+include $(PROFILE_FILE)
+
+# Setup output directory for this profile
+PROFILE_OUT := $(OUTPUT_DIR)/$(PROFILE)
+PROFILE_SKINS_OUT := $(PROFILE_OUT)/skins
+
+# ---------------------------------------------------------
+# SMART DEPENDENCY MAPPING
+# ---------------------------------------------------------
+
+# Initialize lists
+ROOT_YAML_FILES :=
+ROOT_DIRS :=
+SRC_YAML_FILES :=
+SRC_DIRS :=
+
+# Map schemas to their base files
+$(foreach schema, $(ROOT_SCHEMAS), $(eval ROOT_YAML_FILES += $(schema).schema.yaml))
+$(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).schema.yaml))
+$(foreach patch, $(YUANSHU_CUSTOM_PATCHES), $(eval SRC_YAML_FILES += $(patch).custom.yaml))
+
+# --- Dependency Rules ---
+
+# Cangjie6
+ifneq (,$(findstring cangjie6,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+	ROOT_YAML_FILES += cangjie6.dict.yaml cangjie6.extended.dict.yaml
+endif
+
+# Flypy
+ifneq (,$(findstring flypy,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+	ROOT_YAML_FILES += flypy.yaml
+endif
+
+# Jyut6ping3
+ifneq (,$(findstring jyut6ping3,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+	ROOT_YAML_FILES += jyut6ping3.dict.yaml symbols_cantonese.yaml
+	ROOT_DIRS += jyut6ping3_dicts
+endif
+
+# Rime Ice (used by both flypy_ice and shuffle17_ice)
+ifneq (,$(findstring _ice,$(YUANSHU_SCHEMAS)))
+	SRC_YAML_FILES += rime_ice.dict.yaml
+	SRC_DIRS += rime_ice_dicts
+endif
+
+# Shuffle17 specific dependency (cangjie6 for reverse lookup)
+ifneq (,$(findstring shuffle17_ice,$(YUANSHU_SCHEMAS)))
+	ROOT_YAML_FILES += cangjie6.schema.yaml cangjie6.dict.yaml cangjie6.extended.dict.yaml
+endif
+
+# Any extra dicts or files explicitly requested by the profile
+ROOT_YAML_FILES += $(EXTRA_ROOT_FILES)
+SRC_YAML_FILES += $(EXTRA_SRC_FILES)
+
+# Deduplicate lists
+ROOT_YAML_FILES := $(sort $(ROOT_YAML_FILES))
+SRC_YAML_FILES := $(sort $(SRC_YAML_FILES))
+ROOT_DIRS := $(sort $(ROOT_DIRS))
+SRC_DIRS := $(sort $(SRC_DIRS))
+
+# --- Build Targets ---
+
+SKIN_CSKINS := $(patsubst %,$(PROFILE_SKINS_OUT)/%.cskin,$(PROFILE_SKINS))
+
+BUILD_DEPS := copy-files $(SKIN_CSKINS) $(PROFILE_OUT)/default.custom.yaml
+ifneq (,$(findstring cangjie5,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+BUILD_DEPS += $(PROFILE_OUT)/cangjie5.dict.yaml
+endif
+
+.PHONY: all clean build copy-files zip
+
+all: build
 
 clean:
 	rm -rf $(OUTPUT_DIR)
 
-# --- Yuanshu (Personal) Build ---
+build: $(BUILD_DEPS)
 
-build-yuanshu: $(YUANSHU_OUT)/cangjie5.dict.yaml copy-yuanshu-files $(SKIN_CSKINS)
+copy-files:
+	@mkdir -p $(PROFILE_OUT)
+	@if [ -n "$(ROOT_YAML_FILES)" ]; then \
+		for file in $(ROOT_YAML_FILES); do \
+			if [ -f "$(ROOT_DIR)/$$file" ]; then cp "$(ROOT_DIR)/$$file" "$(PROFILE_OUT)/"; fi; \
+		done; \
+	fi
+	@if [ -n "$(SRC_YAML_FILES)" ]; then \
+		for file in $(SRC_YAML_FILES); do \
+			if [ -f "$(SRC_DIR)/$$file" ]; then cp "$(SRC_DIR)/$$file" "$(PROFILE_OUT)/"; fi; \
+		done; \
+	fi
+	@if [ -n "$(ROOT_DIRS)" ]; then \
+		for dir in $(ROOT_DIRS); do \
+			if [ -d "$(ROOT_DIR)/$$dir" ]; then cp -R "$(ROOT_DIR)/$$dir" "$(PROFILE_OUT)/"; fi; \
+		done; \
+	fi
+	@if [ -n "$(SRC_DIRS)" ]; then \
+		for dir in $(SRC_DIRS); do \
+			if [ -d "$(SRC_DIR)/$$dir" ]; then cp -R "$(SRC_DIR)/$$dir" "$(PROFILE_OUT)/"; fi; \
+		done; \
+	fi
 
-copy-yuanshu-files:
-	@mkdir -p $(YUANSHU_OUT)
-	cp $(ROOT_DIR)/cangjie6.dict.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/cangjie6.extended.dict.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/cangjie6.schema.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/cangjie5.schema.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/flypy.schema.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/flypy.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/jyut6ping3.schema.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/jyut6ping3.dict.yaml $(YUANSHU_OUT)/
-	cp -R $(ROOT_DIR)/jyut6ping3_dicts $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/luna_pinyin.dict.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/symbols_cantonese.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/terra_pinyin.dict.yaml $(YUANSHU_OUT)/
-	cp $(ROOT_DIR)/zhuyin.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/flypy_ice.schema.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/shuffle17_ice.schema.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/rime_ice.dict.yaml $(YUANSHU_OUT)/
-	cp -R $(SRC_DIR)/rime_ice_dicts $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/cangjie5.custom.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/cangjie6.custom.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/flypy.custom.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/flypy_ice.custom.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/jyut6ping3.custom.yaml $(YUANSHU_OUT)/
-	cp $(SRC_DIR)/shuffle17_ice.custom.yaml $(YUANSHU_OUT)/
-
-$(YUANSHU_OUT)/cangjie5.dict.yaml: $(ROOT_DIR)/cangjie5.dict.yaml
-	@mkdir -p $(YUANSHU_OUT)
-	awk '\
+# Explicit rule for Cangjie5 dict (awk patch)
+$(PROFILE_OUT)/cangjie5.dict.yaml: $(ROOT_DIR)/cangjie5.dict.yaml
+	@mkdir -p $(PROFILE_OUT)
+	@awk '\
 		/^use_preset_vocabulary:/ { print "use_preset_vocabulary: true"; seen_use=1; next } \
 		/^max_phrase_length:/ { print "max_phrase_length: 7"; seen_max=1; next } \
 		/^min_phrase_weight:/ { if (!seen_use) print "use_preset_vocabulary: true"; if (!seen_max) print "max_phrase_length: 7" } \
 		{ print } \
 	' $< > $@
 
+# Auto-generate default.custom.yaml snippet based on requested schemas
+$(PROFILE_OUT)/default.custom.yaml:
+	@echo "patch:" > $@
+	@echo "  schema_list:" >> $@
+	@for schema in $(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS); do \
+		echo "    - schema: $$schema" >> $@; \
+	done
+
 # Skin compilation rule
-$(YUANSHU_OUT_SKINS)/%.cskin: $(SKINS_DIR)/% $(SKINS_DIR)/%/jsonnet/main.jsonnet
-	@echo "Building skin: $*"
-	@mkdir -p $(OUTPUT_DIR)/tmp/build-$*/dark $(OUTPUT_DIR)/tmp/build-$*/light $(OUTPUT_DIR)/tmp/$* $(YUANSHU_OUT_SKINS)
-	cp -R $(SKINS_DIR)/$*/* $(OUTPUT_DIR)/tmp/$*/
-	jsonnet -m $(OUTPUT_DIR)/tmp/build-$* $(SKINS_DIR)/$*/jsonnet/main.jsonnet >/dev/null
-	rm -rf $(OUTPUT_DIR)/tmp/$*/dark $(OUTPUT_DIR)/tmp/$*/light
-	cp -R $(OUTPUT_DIR)/tmp/build-$*/dark $(OUTPUT_DIR)/tmp/$*/
-	cp -R $(OUTPUT_DIR)/tmp/build-$*/light $(OUTPUT_DIR)/tmp/$*/
-	@if [ -f "$(OUTPUT_DIR)/tmp/build-$*/config.yaml" ]; then \
-		cp $(OUTPUT_DIR)/tmp/build-$*/config.yaml $(OUTPUT_DIR)/tmp/$*/config.yaml; \
+$(PROFILE_SKINS_OUT)/%.cskin: $(SKINS_DIR)/% $(SKINS_DIR)/%/jsonnet/main.jsonnet
+	@echo "Building skin for $(PROFILE): $*"
+	@mkdir -p $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/dark $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/light $(OUTPUT_DIR)/tmp-$(PROFILE)/$* $(PROFILE_SKINS_OUT)
+	@cp -R $(SKINS_DIR)/$*/* $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/
+	@jsonnet -m $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$* $(SKINS_DIR)/$*/jsonnet/main.jsonnet >/dev/null
+	@rm -rf $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/dark $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/light
+	@cp -R $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/dark $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/
+	@cp -R $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/light $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/
+	@if [ -f "$(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/config.yaml" ]; then \
+		cp $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/config.yaml $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/config.yaml; \
 	fi
-	cd $(OUTPUT_DIR)/tmp && zip -qr $@ $*
-	@rm -rf $(OUTPUT_DIR)/tmp
+	@cd $(OUTPUT_DIR)/tmp-$(PROFILE) && zip -qr $@ $*
+	@rm -rf $(OUTPUT_DIR)/tmp-$(PROFILE)
 
-# --- Customer Build ---
+# Zip target for easy distribution
+zip: build
+	@cd $(OUTPUT_DIR) && rm -f $(PROFILE).zip && zip -qr $(PROFILE).zip $(PROFILE)
+	@echo "Packaged to: $(OUTPUT_DIR)/$(PROFILE).zip"
 
-build-customer-pack: $(CUSTOMER_SKIN)
-	@mkdir -p $(CUSTOMER_OUT)
-	cp $(SRC_DIR)/shuffle17_ice.schema.yaml $(CUSTOMER_OUT)/
-	cp $(SRC_DIR)/shuffle17_ice.custom.yaml $(CUSTOMER_OUT)/
-	cp $(SRC_DIR)/rime_ice.dict.yaml $(CUSTOMER_OUT)/
-	cp -R $(SRC_DIR)/rime_ice_dicts $(CUSTOMER_OUT)/
-	@echo "patch:" > $(CUSTOMER_OUT)/default.custom.yaml
-	@echo "  schema_list:" >> $(CUSTOMER_OUT)/default.custom.yaml
-	@echo "    - schema: shuffle17_ice" >> $(CUSTOMER_OUT)/default.custom.yaml
-	cd $(OUTPUT_DIR) && rm -f customer-shuffle17.zip && zip -qr customer-shuffle17.zip customer-shuffle17
-	@echo "Customer pack created at: $(OUTPUT_DIR)/customer-shuffle17.zip"
-
-$(CUSTOMER_OUT)/shuffle17.cskin: $(SKINS_DIR)/shuffle17 $(SKINS_DIR)/shuffle17/jsonnet/main.jsonnet
-	@echo "Building skin for customer: shuffle17"
-	@mkdir -p $(OUTPUT_DIR)/tmp-customer/build-shuffle17/dark $(OUTPUT_DIR)/tmp-customer/build-shuffle17/light $(OUTPUT_DIR)/tmp-customer/shuffle17 $(CUSTOMER_OUT)
-	cp -R $(SKINS_DIR)/shuffle17/* $(OUTPUT_DIR)/tmp-customer/shuffle17/
-	jsonnet -m $(OUTPUT_DIR)/tmp-customer/build-shuffle17 $(SKINS_DIR)/shuffle17/jsonnet/main.jsonnet >/dev/null
-	rm -rf $(OUTPUT_DIR)/tmp-customer/shuffle17/dark $(OUTPUT_DIR)/tmp-customer/shuffle17/light
-	cp -R $(OUTPUT_DIR)/tmp-customer/build-shuffle17/dark $(OUTPUT_DIR)/tmp-customer/shuffle17/
-	cp -R $(OUTPUT_DIR)/tmp-customer/build-shuffle17/light $(OUTPUT_DIR)/tmp-customer/shuffle17/
-	@if [ -f "$(OUTPUT_DIR)/tmp-customer/build-shuffle17/config.yaml" ]; then \
-		cp $(OUTPUT_DIR)/tmp-customer/build-shuffle17/config.yaml $(OUTPUT_DIR)/tmp-customer/shuffle17/config.yaml; \
-	fi
-	cd $(OUTPUT_DIR)/tmp-customer && zip -qr $@ shuffle17
-	@rm -rf $(OUTPUT_DIR)/tmp-customer
+# Build all known profiles at once
+all-profiles:
+	@for p in $(basename $(notdir $(wildcard yuanshu-profiles/*.mk))); do \
+		$(MAKE) PROFILE=$$p zip; \
+	done
