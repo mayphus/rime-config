@@ -3,12 +3,13 @@ SRC_DIR := $(ROOT_DIR)/yuanshu-config
 SKINS_DIR := $(ROOT_DIR)/yuanshu-skin
 OUTPUT_DIR := $(ROOT_DIR)/yuanshu-output
 YUANSHU_OUT := $(OUTPUT_DIR)/yuanshu
+YUANSHU_OUT_SKINS := $(YUANSHU_OUT)/skins
 CUSTOMER_OUT := $(OUTPUT_DIR)/customer-shuffle17
 
 # Find all skin directories
 SKIN_DIRS := $(wildcard $(SKINS_DIR)/*)
 SKIN_NAMES := $(notdir $(SKIN_DIRS))
-SKIN_CSKINS := $(patsubst %,$(YUANSHU_OUT)/%.cskin,$(SKIN_NAMES))
+SKIN_CSKINS := $(patsubst %,$(YUANSHU_OUT_SKINS)/%.cskin,$(SKIN_NAMES))
 CUSTOMER_SKIN := $(CUSTOMER_OUT)/shuffle17.cskin
 
 .PHONY: all clean build-yuanshu build-customer-pack copy-yuanshu-files
@@ -58,9 +59,9 @@ $(YUANSHU_OUT)/cangjie5.dict.yaml: $(ROOT_DIR)/cangjie5.dict.yaml
 	' $< > $@
 
 # Skin compilation rule
-$(YUANSHU_OUT)/%.cskin: $(SKINS_DIR)/% $(SKINS_DIR)/%/jsonnet/main.jsonnet
+$(YUANSHU_OUT_SKINS)/%.cskin: $(SKINS_DIR)/% $(SKINS_DIR)/%/jsonnet/main.jsonnet
 	@echo "Building skin: $*"
-	@mkdir -p $(OUTPUT_DIR)/tmp/build-$*/dark $(OUTPUT_DIR)/tmp/build-$*/light $(OUTPUT_DIR)/tmp/$* $(YUANSHU_OUT)
+	@mkdir -p $(OUTPUT_DIR)/tmp/build-$*/dark $(OUTPUT_DIR)/tmp/build-$*/light $(OUTPUT_DIR)/tmp/$* $(YUANSHU_OUT_SKINS)
 	cp -R $(SKINS_DIR)/$*/* $(OUTPUT_DIR)/tmp/$*/
 	jsonnet -m $(OUTPUT_DIR)/tmp/build-$* $(SKINS_DIR)/$*/jsonnet/main.jsonnet >/dev/null
 	rm -rf $(OUTPUT_DIR)/tmp/$*/dark $(OUTPUT_DIR)/tmp/$*/light
