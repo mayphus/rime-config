@@ -26,7 +26,7 @@ local hintStyle = {
 local legendCenter = {
   sideLeft: { x: 0.24, y: 0.28 },
   sideRight: { x: 0.76, y: 0.28 },
-  main: { x: 0.50, y: 0.33 },
+  main: { x: 0.50, y: 0.50 },
   finalSingle: { x: 0.50, y: 0.77 },
 };
 
