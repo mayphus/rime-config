@@ -28,10 +28,10 @@ ROOT_DIRS :=
 SRC_YAML_FILES :=
 SRC_DIRS :=
 
-# Map schemas to their base files
+# Map schemas to their base files and custom patches
 $(foreach schema, $(ROOT_SCHEMAS), $(eval ROOT_YAML_FILES += $(schema).schema.yaml))
 $(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).schema.yaml))
-$(foreach patch, $(YUANSHU_CUSTOM_PATCHES), $(eval SRC_YAML_FILES += $(patch).custom.yaml))
+$(foreach schema, $(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).custom.yaml))
 
 # --- Dependency Rules ---
 
@@ -71,7 +71,7 @@ SRC_DIRS := $(sort $(SRC_DIRS))
 
 # --- Build Targets ---
 
-SKIN_CSKINS := $(patsubst %,$(PROFILE_SKINS_OUT)/%.cskin,$(PROFILE_SKINS))
+SKIN_CSKINS := $(patsubst %,$(PROFILE_SKINS_OUT)/%.cskin,$(YUANSHU_SKINS))
 
 BUILD_DEPS := copy-files $(SKIN_CSKINS) $(PROFILE_OUT)/default.custom.yaml
 ifneq (,$(findstring cangjie5,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))

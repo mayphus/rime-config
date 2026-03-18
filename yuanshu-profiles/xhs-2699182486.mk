@@ -3,11 +3,8 @@
 # Customer only needs the shuffle17 layout
 YUANSHU_SCHEMAS := shuffle17_ice
 
-# Customer's patches
-YUANSHU_CUSTOM_PATCHES := shuffle17_ice
-
 # Customer's skins
-PROFILE_SKINS := shuffle17
+YUANSHU_SKINS := shuffle17
 
 # Note: The Makefile will automatically pull the 'rime_ice' 
 # dictionaries and folders because it detects shuffle17_ice 
