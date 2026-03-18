@@ -27,6 +27,7 @@ ROOT_YAML_FILES :=
 ROOT_DIRS :=
 SRC_YAML_FILES :=
 SRC_DIRS :=
+YUANSHU_SKINS :=
 
 # Handle "all" keyword to automatically grab everything
 ifeq ($(ROOT_SCHEMAS),all)
@@ -37,9 +38,6 @@ ifeq ($(YUANSHU_SCHEMAS),all)
 YUANSHU_SCHEMAS := $(patsubst $(SRC_DIR)/%.schema.yaml,%,$(wildcard $(SRC_DIR)/*.schema.yaml))
 endif
 
-ifeq ($(YUANSHU_SKINS),all)
-YUANSHU_SKINS := $(notdir $(patsubst %/,%,$(wildcard $(SKINS_DIR)/*/)))
-endif
 
 # Map schemas to their base files and custom patches
 $(foreach schema, $(ROOT_SCHEMAS), $(eval ROOT_YAML_FILES += $(schema).schema.yaml))
@@ -80,6 +78,16 @@ ifneq (,$(findstring _ice,$(YUANSHU_SCHEMAS)))
 	SRC_DIRS += rime_ice_dicts
 endif
 
+# Quadharmonic Skin (default for standard schemas)
+ifneq (,$(filter-out shuffle17_ice,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+	YUANSHU_SKINS += quadharmonic
+endif
+
+# Shuffle17 Skin (triggered by shuffle17_ice schema)
+ifneq (,$(findstring shuffle17_ice,$(YUANSHU_SCHEMAS)))
+	YUANSHU_SKINS += shuffle17
+endif
+
 
 
 # Any extra dicts or files explicitly requested by the profile
@@ -91,6 +99,7 @@ ROOT_YAML_FILES := $(sort $(ROOT_YAML_FILES))
 SRC_YAML_FILES := $(sort $(SRC_YAML_FILES))
 ROOT_DIRS := $(sort $(ROOT_DIRS))
 SRC_DIRS := $(sort $(SRC_DIRS))
+YUANSHU_SKINS := $(sort $(YUANSHU_SKINS))
 
 # --- Build Targets ---
 
