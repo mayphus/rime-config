@@ -196,7 +196,7 @@ zip: build
 	@echo "Packaged to: $(OUTPUT_DIR)/$(PROFILE).zip"
 
 # Build all known profiles at once
-all-profiles:
+all-profiles: skins
 	@for p in $(basename $(notdir $(wildcard yuanshu-profiles/*.mk))); do \
 		$(MAKE) PROFILE=$$p zip; \
 	done
