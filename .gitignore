@@ -1,4 +1,5 @@
 build/
+output/
 *.userdb/
 *.bin
 .DS_Store
