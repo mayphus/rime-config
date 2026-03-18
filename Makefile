@@ -80,7 +80,7 @@ endif
 
 .PHONY: all clean build copy-files zip
 
-all: build
+all: all-profiles
 
 clean:
 	rm -rf $(OUTPUT_DIR)
