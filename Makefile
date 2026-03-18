@@ -117,12 +117,20 @@ ifneq (,$(findstring cangjie5,$(YUANSHU_SCHEMAS)))
 BUILD_DEPS += $(PROFILE_OUT)/cangjie5.dict.yaml
 endif
 
-.PHONY: all clean build copy-files zip
+.PHONY: all clean build copy-files zip skins
 
 all: all-profiles
 
 clean:
 	rm -rf $(OUTPUT_DIR)
+
+skins:
+	@for skin in $$(ls $(SKINS_DIR)); do \
+		if [ -f "$(SKINS_DIR)/$$skin/jsonnet/main.jsonnet" ]; then \
+			echo "Building jsonnet for $$skin..."; \
+			jsonnet -m $(SKINS_DIR)/$$skin $(SKINS_DIR)/$$skin/jsonnet/main.jsonnet; \
+		fi; \
+	done
 
 build: $(BUILD_DEPS)
 

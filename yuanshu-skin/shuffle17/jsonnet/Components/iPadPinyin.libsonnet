@@ -50,7 +50,7 @@ local candidateInsets = {
 
 local legendCenter = {
   cangjie: { x: 0.37, y: 0.34 },
-  symbol: { x: 0.73, y: 0.24 },
+  symbol: { x: 0.73, y: 0.20 },
   abc: { x: 0.72, y: 0.40 },
   flypySingle: { x: 0.50, y: 0.74 },
   flypyDoubleTop: { x: 0.50, y: 0.68 },
@@ -104,7 +104,7 @@ local flypyBottomLegendParams(button) = {
 
 local symbolLegendParams = {
   center: legendCenter.symbol,
-  fontSize: 10,
+  fontSize: 9,
 } + secondaryLegendColor;
 
 local newMarkedAlphabeticButton(button, isDark=false, params={}) =

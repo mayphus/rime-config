@@ -42,8 +42,8 @@ local hintStyle = {
 };
 
 local legendCenter = {
-  sideLeft: { x: 0.24, y: 0.28 },
-  sideRight: { x: 0.76, y: 0.28 },
+  sideLeft: { x: 0.24, y: 0.22 },
+  sideRight: { x: 0.76, y: 0.22 },
   main: { x: 0.50, y: 0.50 },
   finalSingle: { x: 0.50, y: 0.77 },
 };
@@ -65,18 +65,18 @@ local mainLegendParams = {
 
 local sideLegendParams = {
   center: legendCenter.sideLeft,
-  fontSize: 10.5,
+  fontSize: 9.5,
 } + secondaryLegendColor;
 
 local sideLeftLegendParams = sideLegendParams;
 local sideRightLegendParams = {
   center: legendCenter.sideRight,
-  fontSize: 10.5,
+  fontSize: 9.5,
 } + secondaryLegendColor;
 
 local finalLegendParams = {
   center: legendCenter.finalSingle,
-  fontSize: 10.5,
+  fontSize: 9.5,
 } + secondaryLegendColor;
 
 local newMarkedAlphabeticButton(button, isDark=false, extraParams={}) =
@@ -230,7 +230,7 @@ local newKeyLayout(isDark=false, isPortrait=true) =
   + basicStyle.newSystemButton(
     params.keyboard.numericButton.name,
     isDark,
-    numericSmallButtonSize + params.keyboard.numericButton.params + { text: '12', fontSize: 16 },
+    numericSmallButtonSize + params.keyboard.numericButton.params,
   )
   + basicStyle.newSystemButton(
     params.keyboard.enterButton.name,

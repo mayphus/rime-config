@@ -501,7 +501,9 @@ local newShuffleButton(name, code, label, finals, sideLeft='', sideRight='', ext
       name: 'numericButton',
       params: {
         action: { keyboardType: 'numeric' },
-        text: '123',
+        systemImageName: 'textformat.123',
+        fontSize: 14,
+        center: { y: 0.5 },
       },
     },
 
