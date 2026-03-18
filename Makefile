@@ -30,44 +30,37 @@ SRC_DIRS :=
 YUANSHU_SKINS :=
 
 # Handle "all" keyword to automatically grab everything
-ifeq ($(ROOT_SCHEMAS),all)
-ROOT_SCHEMAS := $(patsubst $(ROOT_DIR)/%.schema.yaml,%,$(wildcard $(ROOT_DIR)/*.schema.yaml))
-endif
-
 ifeq ($(YUANSHU_SCHEMAS),all)
 YUANSHU_SCHEMAS := $(patsubst $(SRC_DIR)/%.schema.yaml,%,$(wildcard $(SRC_DIR)/*.schema.yaml))
 endif
 
 
 # Map schemas to their base files and custom patches
-$(foreach schema, $(ROOT_SCHEMAS), $(eval ROOT_YAML_FILES += $(schema).schema.yaml))
 $(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).schema.yaml))
-$(foreach schema, $(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).custom.yaml))
-
-# --- Dependency Rules ---
+$(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).custom.yaml))
 
 # Cangjie6
-ifneq (,$(findstring cangjie6,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(findstring cangjie6,$(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += cangjie6.dict.yaml cangjie6.extended.dict.yaml
 endif
 
 # Flypy
-ifneq (,$(findstring flypy,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(findstring flypy,$(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += flypy.yaml
 endif
 
 # Luna Pinyin
-ifneq (,$(findstring luna_pinyin,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(findstring luna_pinyin,$(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += luna_pinyin.dict.yaml zhuyin.yaml
 endif
 
 # Terra Pinyin
-ifneq (,$(findstring terra_pinyin,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(findstring terra_pinyin,$(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += terra_pinyin.dict.yaml
 endif
 
 # Jyut6ping3
-ifneq (,$(findstring jyut6ping3,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(findstring jyut6ping3,$(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += jyut6ping3.dict.yaml symbols_cantonese.yaml
 	ROOT_DIRS += jyut6ping3_dicts
 endif
@@ -79,7 +72,7 @@ ifneq (,$(findstring _ice,$(YUANSHU_SCHEMAS)))
 endif
 
 # Quadharmonic Skin (default for standard schemas)
-ifneq (,$(filter-out shuffle17_ice,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(filter-out shuffle17_ice,$(YUANSHU_SCHEMAS)))
 	YUANSHU_SKINS += quadharmonic
 endif
 
@@ -106,7 +99,7 @@ YUANSHU_SKINS := $(sort $(YUANSHU_SKINS))
 SKIN_CSKINS := $(patsubst %,$(PROFILE_SKINS_OUT)/%.cskin,$(YUANSHU_SKINS))
 
 BUILD_DEPS := copy-files $(SKIN_CSKINS) $(PROFILE_OUT)/default.custom.yaml
-ifneq (,$(findstring cangjie5,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+ifneq (,$(findstring cangjie5,$(YUANSHU_SCHEMAS)))
 BUILD_DEPS += $(PROFILE_OUT)/cangjie5.dict.yaml
 endif
 
@@ -156,7 +149,7 @@ $(PROFILE_OUT)/cangjie5.dict.yaml: $(ROOT_DIR)/cangjie5.dict.yaml
 $(PROFILE_OUT)/default.custom.yaml:
 	@echo "patch:" > $@
 	@echo "  schema_list:" >> $@
-	@for schema in $(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS); do \
+	@for schema in $(YUANSHU_SCHEMAS); do \
 		echo "    - schema: $$schema" >> $@; \
 	done
 
