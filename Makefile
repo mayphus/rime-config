@@ -58,6 +58,16 @@ ifneq (,$(findstring flypy,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += flypy.yaml
 endif
 
+# Luna Pinyin
+ifneq (,$(findstring luna_pinyin,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+	ROOT_YAML_FILES += luna_pinyin.dict.yaml zhuyin.yaml
+endif
+
+# Terra Pinyin
+ifneq (,$(findstring terra_pinyin,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
+	ROOT_YAML_FILES += terra_pinyin.dict.yaml
+endif
+
 # Jyut6ping3
 ifneq (,$(findstring jyut6ping3,$(ROOT_SCHEMAS) $(YUANSHU_SCHEMAS)))
 	ROOT_YAML_FILES += jyut6ping3.dict.yaml symbols_cantonese.yaml
