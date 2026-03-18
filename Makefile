@@ -28,6 +28,19 @@ ROOT_DIRS :=
 SRC_YAML_FILES :=
 SRC_DIRS :=
 
+# Handle "all" keyword to automatically grab everything
+ifeq ($(ROOT_SCHEMAS),all)
+ROOT_SCHEMAS := $(patsubst $(ROOT_DIR)/%.schema.yaml,%,$(wildcard $(ROOT_DIR)/*.schema.yaml))
+endif
+
+ifeq ($(YUANSHU_SCHEMAS),all)
+YUANSHU_SCHEMAS := $(patsubst $(SRC_DIR)/%.schema.yaml,%,$(wildcard $(SRC_DIR)/*.schema.yaml))
+endif
+
+ifeq ($(YUANSHU_SKINS),all)
+YUANSHU_SKINS := $(notdir $(patsubst %/,%,$(wildcard $(SKINS_DIR)/*/)))
+endif
+
 # Map schemas to their base files and custom patches
 $(foreach schema, $(ROOT_SCHEMAS), $(eval ROOT_YAML_FILES += $(schema).schema.yaml))
 $(foreach schema, $(YUANSHU_SCHEMAS), $(eval SRC_YAML_FILES += $(schema).schema.yaml))
