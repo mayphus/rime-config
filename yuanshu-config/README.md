@@ -33,6 +33,6 @@ make build-customer-pack
 make all
 ```
 
-This will generate the built artifacts in the top-level `output/` directory (e.g. `output/yuanshu/` and `output/customer-shuffle17.zip`). Each custom keyboard skin directory under `yuanshu-skin/` is packaged into its own `.cskin` bundle automatically during the build process.
+This will generate the built artifacts in the top-level `yuanshu-output/` directory (e.g. `yuanshu-output/yuanshu/` and `yuanshu-output/customer-shuffle17.zip`). Each custom keyboard skin directory under `yuanshu-skin/` is packaged into its own `.cskin` bundle automatically during the build process.
 
-*Note: The generated files in `output/` are build artifacts and are automatically ignored by git.*
+*Note: The generated files in `yuanshu-output/` are build artifacts and are automatically ignored by git.*

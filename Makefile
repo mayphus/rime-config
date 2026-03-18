@@ -1,7 +1,7 @@
 ROOT_DIR := $(shell pwd)
 SRC_DIR := $(ROOT_DIR)/yuanshu-config
 SKINS_DIR := $(ROOT_DIR)/yuanshu-skin
-OUTPUT_DIR := $(ROOT_DIR)/output
+OUTPUT_DIR := $(ROOT_DIR)/yuanshu-output
 YUANSHU_OUT := $(OUTPUT_DIR)/yuanshu
 CUSTOMER_OUT := $(OUTPUT_DIR)/customer-shuffle17
 
