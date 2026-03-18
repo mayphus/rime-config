@@ -78,6 +78,8 @@ build-customer-pack: $(CUSTOMER_SKIN)
 	@mkdir -p $(CUSTOMER_OUT)
 	cp $(SRC_DIR)/shuffle17_ice.schema.yaml $(CUSTOMER_OUT)/
 	cp $(SRC_DIR)/shuffle17_ice.custom.yaml $(CUSTOMER_OUT)/
+	cp $(SRC_DIR)/rime_ice.dict.yaml $(CUSTOMER_OUT)/
+	cp -R $(SRC_DIR)/rime_ice_dicts $(CUSTOMER_OUT)/
 	@echo "patch:" > $(CUSTOMER_OUT)/default.custom.yaml
 	@echo "  schema_list:" >> $(CUSTOMER_OUT)/default.custom.yaml
 	@echo "    - schema: shuffle17_ice" >> $(CUSTOMER_OUT)/default.custom.yaml
