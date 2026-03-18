@@ -86,23 +86,6 @@ build-customer-pack: $(CUSTOMER_SKIN)
 	@echo "patch:" > $(CUSTOMER_OUT)/default.custom.yaml
 	@echo "  schema_list:" >> $(CUSTOMER_OUT)/default.custom.yaml
 	@echo "    - schema: shuffle17_ice" >> $(CUSTOMER_OUT)/default.custom.yaml
-	@echo "========== Shuffle17 - Yuanshu App Installation Pack ==========" > $(CUSTOMER_OUT)/README.txt
-	@echo "" >> $(CUSTOMER_OUT)/README.txt
-	@echo "Please follow these steps to import the schema and skin into the Yuanshu app:" >> $(CUSTOMER_OUT)/README.txt
-	@echo "" >> $(CUSTOMER_OUT)/README.txt
-	@echo "1. [Import Config Files]:" >> $(CUSTOMER_OUT)/README.txt
-	@echo "   Drag or import all .yaml files and the rime_ice_dicts folder in this directory into the Rime configuration directory of the Yuanshu app." >> $(CUSTOMER_OUT)/README.txt
-	@echo "   (If you already have your own default.custom.yaml, open the default.custom.yaml in this directory, copy its contents, and merge it with your device's configuration file)" >> $(CUSTOMER_OUT)/README.txt
-	@echo "" >> $(CUSTOMER_OUT)/README.txt
-	@echo "2. [Import Skin]:" >> $(CUSTOMER_OUT)/README.txt
-	@echo "   Import or share the shuffle17.cskin file in this directory to the Yuanshu app." >> $(CUSTOMER_OUT)/README.txt
-	@echo "" >> $(CUSTOMER_OUT)/README.txt
-	@echo "3. [Deploy Configuration]:" >> $(CUSTOMER_OUT)/README.txt
-	@echo "   Open the Yuanshu app and click 'Deploy'." >> $(CUSTOMER_OUT)/README.txt
-	@echo "   Deploying might take a short while depending on the device, please be patient." >> $(CUSTOMER_OUT)/README.txt
-	@echo "" >> $(CUSTOMER_OUT)/README.txt
-	@echo "4. [Start Using]:" >> $(CUSTOMER_OUT)/README.txt
-	@echo "   Once deployment is complete, open the keyboard, select the 'Shuffle 17' schema, and apply the Shuffle 17 skin." >> $(CUSTOMER_OUT)/README.txt
 	cd $(OUTPUT_DIR) && rm -f customer-shuffle17.zip && zip -qr customer-shuffle17.zip customer-shuffle17
 	@echo "Customer pack created at: $(OUTPUT_DIR)/customer-shuffle17.zip"
 
