@@ -102,10 +102,11 @@ local newLetterButton(name, letter, extraParams={}) = {
     } + extraParams,
 };
 
-local newShuffleButton(name, code, label, finals, sideLeft='', sideRight='', extraParams={}) = {
+local newShuffleButton(name, code, label, finals, topSymbol='', sideLeft='', sideRight='', extraParams={}) = {
   name: name,
   legend: {
     finals: finals,
+    topSymbol: topSymbol,
     sideLeft: sideLeft,
     sideRight: sideRight,
   },
@@ -283,35 +284,35 @@ local newShuffleButton(name, code, label, finals, sideLeft='', sideRight='', ext
     mButton: newLetterButton('mButton', 'm', { swipeUpAction: { symbol: '…' } }),
 
     // 亂序17 鍵位（iPhone 版皮肤使用；iPad 暂时保留现有 26 键）
-    hpButton: newShuffleButton('hpButton', 'a', 'H P', '', sideLeft='1', extraParams={ swipeUpAction: { character: '1' } }),
-    sh17Button: newShuffleButton('sh17Button', 'b', 'Sh', '', sideLeft='2', extraParams={ swipeUpAction: { character: '2' } }),
-    zh17Button: newShuffleButton('zh17Button', 'c', 'Zh', '', sideLeft='3', extraParams={ swipeUpAction: { character: '3' } }),
-    b17Button: newShuffleButton('b17Button', 'd', 'B', '', sideLeft='@', extraParams={ swipeUpAction: { character: '@' } }),
-    oxvButton: newShuffleButton('oxvButton', 'e', 'X', '', sideLeft='*', extraParams={
+    hpButton: newShuffleButton('hpButton', 'a', 'H P', 'a ia ua', topSymbol='1', extraParams={ swipeUpAction: { character: '1' } }),
+    sh17Button: newShuffleButton('sh17Button', 'b', 'Sh', 'en in', topSymbol='2', extraParams={ swipeUpAction: { character: '2' } }),
+    zh17Button: newShuffleButton('zh17Button', 'c', 'Zh', 'ang iao', topSymbol='3', extraParams={ swipeUpAction: { character: '3' } }),
+    b17Button: newShuffleButton('b17Button', 'd', 'B', 'ao iong', topSymbol='@', extraParams={ swipeUpAction: { character: '@' } }),
+    oxvButton: newShuffleButton('oxvButton', 'e', 'X', 'uai uan', topSymbol='*', sideLeft='o', sideRight='v', extraParams={
       fontSize: 19,
       swipeUpAction: { character: '*' },
       swipeDownAction: { keyboardType: 'emojis' },
     }),
-    smButton: newShuffleButton('smButton', 'f', 'M S', '', sideLeft='#', extraParams={
+    smButton: newShuffleButton('smButton', 'f', 'M S', 'ie uo', topSymbol='#', extraParams={
       swipeUpAction: { character: '#' },
       swipeDownAction: { shortcut: '#toggleScriptView' },
     }),
 
-    l17Button: newShuffleButton('l17Button', 'g', 'L', '', sideLeft='4', extraParams={ swipeUpAction: { character: '4' } }),
-    d17Button: newShuffleButton('d17Button', 'h', 'D', '', sideLeft='5', extraParams={ swipeUpAction: { character: '5' } }),
-    y17Button: newShuffleButton('y17Button', 'i', 'Y', '', sideLeft='6', extraParams={ swipeUpAction: { character: '6' } }),
-    wzButton: newShuffleButton('wzButton', 'j', 'W Z', '', sideLeft='0', extraParams={
+    l17Button: newShuffleButton('l17Button', 'g', 'L', 'ai ue', topSymbol='4', extraParams={ swipeUpAction: { character: '4' } }),
+    d17Button: newShuffleButton('d17Button', 'h', 'D', 'u', topSymbol='5', extraParams={ swipeUpAction: { character: '5' } }),
+    y17Button: newShuffleButton('y17Button', 'i', 'Y', 'eng ing', topSymbol='6', extraParams={ swipeUpAction: { character: '6' } }),
+    wzButton: newShuffleButton('wzButton', 'j', 'W Z', 'e', topSymbol='0', extraParams={
       swipeUpAction: { character: '0' },
       swipeDownAction: { shortcut: '#showPasteboardView' },
     }),
-    jkButton: newShuffleButton('jkButton', 'k', 'J K', '', sideLeft='%', extraParams={ swipeUpAction: { character: '%' } }),
-    rnButton: newShuffleButton('rnButton', 'l', 'N R', '', sideLeft='&', extraParams={ swipeUpAction: { character: '&' } }),
+    jkButton: newShuffleButton('jkButton', 'k', 'J K', 'i', topSymbol='%', extraParams={ swipeUpAction: { character: '%' } }),
+    rnButton: newShuffleButton('rnButton', 'l', 'N R', 'an', topSymbol='&', extraParams={ swipeUpAction: { character: '&' } }),
 
-    ch17Button: newShuffleButton('ch17Button', 'm', 'Ch', '', sideLeft='7', extraParams={ swipeUpAction: { character: '7' } }),
-    qGuideButton: newShuffleButton('qGuideButton', 'n', 'Q~', '', sideLeft='8', extraParams={ swipeUpAction: { character: '8' } }),
-    g17Button: newShuffleButton('g17Button', 'o', 'G', '', sideLeft='9', extraParams={ swipeUpAction: { character: '9' } }),
-    cfButton: newShuffleButton('cfButton', 'p', 'C F', '', sideLeft='!', extraParams={ swipeUpAction: { character: '!' } }),
-    t17Button: newShuffleButton('t17Button', 'q', 'T', '', sideLeft='?', extraParams={ swipeUpAction: { character: '?' } }),
+    ch17Button: newShuffleButton('ch17Button', 'm', 'Ch', 'iang ui', topSymbol='7', extraParams={ swipeUpAction: { character: '7' } }),
+    qGuideButton: newShuffleButton('qGuideButton', 'n', 'Q~', 'ian uang', topSymbol='8', extraParams={ swipeUpAction: { character: '8' } }),
+    g17Button: newShuffleButton('g17Button', 'o', 'G', 'ei un', topSymbol='9', extraParams={ swipeUpAction: { character: '9' } }),
+    cfButton: newShuffleButton('cfButton', 'p', 'C F', 'iu ou', topSymbol='!', extraParams={ swipeUpAction: { character: '!' } }),
+    t17Button: newShuffleButton('t17Button', 'q', 'T', 'er ong', topSymbol='?', extraParams={ swipeUpAction: { character: '?' } }),
 
     // 数字键
     oneButton: {

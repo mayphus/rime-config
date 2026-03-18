@@ -42,10 +42,11 @@ local hintStyle = {
 };
 
 local legendCenter = {
-  sideLeft: { x: 0.24, y: 0.22 },
-  sideRight: { x: 0.76, y: 0.22 },
+  sideLeft: { x: 0.24, y: 0.50 },
+  sideRight: { x: 0.76, y: 0.50 },
   main: { x: 0.50, y: 0.50 },
   finalSingle: { x: 0.50, y: 0.77 },
+  topSymbol: { x: 0.50, y: 0.22 },
 };
 
 local primaryLegendColor = {
@@ -63,14 +64,18 @@ local mainLegendParams = {
   fontWeight: 'medium',
 } + primaryLegendColor;
 
-local sideLegendParams = {
+local sideLeftLegendParams = {
   center: legendCenter.sideLeft,
   fontSize: 9.5,
 } + secondaryLegendColor;
 
-local sideLeftLegendParams = sideLegendParams;
 local sideRightLegendParams = {
   center: legendCenter.sideRight,
+  fontSize: 9.5,
+} + secondaryLegendColor;
+
+local topLegendParams = {
+  center: legendCenter.topSymbol,
   fontSize: 9.5,
 } + secondaryLegendColor;
 
@@ -88,18 +93,21 @@ local newMarkedAlphabeticButton(button, isDark=false, extraParams={}) =
     + {
       foregroundStyleName: [
         button.name + 'MainForegroundStyle',
+        button.name + 'TopSymbolForegroundStyle',
         button.name + 'SideLeftForegroundStyle',
         button.name + 'SideRightForegroundStyle',
         button.name + 'FinalForegroundStyle',
       ],
       uppercasedStateForegroundStyle: [
         button.name + 'MainUppercaseForegroundStyle',
+        button.name + 'TopSymbolForegroundStyle',
         button.name + 'SideLeftForegroundStyle',
         button.name + 'SideRightForegroundStyle',
         button.name + 'FinalForegroundStyle',
       ],
       capsLockedStateForegroundStyle: [
         button.name + 'MainUppercaseForegroundStyle',
+        button.name + 'TopSymbolForegroundStyle',
         button.name + 'SideLeftForegroundStyle',
         button.name + 'SideRightForegroundStyle',
         button.name + 'FinalForegroundStyle',
@@ -109,6 +117,11 @@ local newMarkedAlphabeticButton(button, isDark=false, extraParams={}) =
           basicStyle.newAlphabeticButtonForegroundStyle(isDark, mainLegendParams + button.params),
         [button.name + 'MainUppercaseForegroundStyle']:
           basicStyle.newAlphabeticButtonForegroundStyle(isDark, mainLegendParams + button.params),
+        [button.name + 'TopSymbolForegroundStyle']:
+          basicStyle.newAlphabeticButtonSwipeForegroundStyle(
+            isDark,
+            topLegendParams + { text: button.legend.topSymbol }
+          ),
         [button.name + 'SideLeftForegroundStyle']:
           basicStyle.newAlphabeticButtonSwipeForegroundStyle(
             isDark,

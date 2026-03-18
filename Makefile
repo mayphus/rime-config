@@ -176,7 +176,9 @@ $(PROFILE_OUT)/default.custom.yaml: $(PROFILE_FILE)
 	done
 
 # Skin compilation rule
-$(PROFILE_SKINS_OUT)/%.cskin: $(SKINS_DIR)/% $(SKINS_DIR)/%/jsonnet/main.jsonnet
+JSONNET_DEPS := $(shell find $(SKINS_DIR) -type f -name '*.jsonnet' -o -name '*.libsonnet')
+
+$(PROFILE_SKINS_OUT)/%.cskin: $(SKINS_DIR)/% $(JSONNET_DEPS)
 	@echo "Building skin for $(PROFILE): $*"
 	@mkdir -p $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/dark $(OUTPUT_DIR)/tmp-$(PROFILE)/build-$*/light $(OUTPUT_DIR)/tmp-$(PROFILE)/$* $(PROFILE_SKINS_OUT)
 	@cp -R $(SKINS_DIR)/$*/* $(OUTPUT_DIR)/tmp-$(PROFILE)/$*/
