@@ -385,7 +385,38 @@ local newShuffleButton(name, code, label, finals, sideLeft='', sideRight='', ext
       },
     },
 
-    // 特殊功能键
+    // Stroke Filter Buttons (5 distinct buttons)
+    strokeHButton: {
+      name: 'strokeHButton',
+      params: {
+        text: '-', action: { character: '-' }, preeditStateText: '一', preeditStateAction: { text: ';h' }, fontSize: 16
+      },
+    },
+    strokeSButton: {
+      name: 'strokeSButton',
+      params: {
+        text: ':', action: { character: ':' }, preeditStateText: '丨', preeditStateAction: { text: ';s' }, fontSize: 16
+      },
+    },
+    strokePButton: {
+      name: 'strokePButton',
+      params: {
+        text: '…', action: { symbol: '…' }, preeditStateText: '丿', preeditStateAction: { text: ';p' }, fontSize: 16
+      },
+    },
+    strokeNButton: {
+      name: 'strokeNButton',
+      params: {
+        text: '。', action: { symbol: '。' }, preeditStateText: '丶', preeditStateAction: { text: ';n' }, fontSize: 16
+      },
+    },
+    strokeZButton: {
+      name: 'strokeZButton',
+      params: {
+        text: '，', action: { symbol: '，' }, preeditStateText: '乙', preeditStateAction: { text: ';z' }, fontSize: 16
+      },
+    },
+
     spaceButton: {
       name: 'spaceButton',
       params: {

@@ -17,6 +17,24 @@ local bottomSystemButtonSize = {
   size: { width: '280/1125' },
 };
 
+local numericSmallButtonSize = {
+  size: { width: '125/1125' },
+};
+
+local shortSpaceButtonSize = {
+  size: { width: '300/1125' },
+};
+
+local shortEnterButtonSize = {
+  size: { width: '200/1125' },
+};
+
+local stroke1ButtonSize = { size: { width: '100/1125' } };
+local stroke2ButtonSize = { size: { width: '100/1125' } };
+local stroke3ButtonSize = { size: { width: '100/1125' } };
+local stroke4ButtonSize = { size: { width: '100/1125' } };
+local stroke5ButtonSize = { size: { width: '100/1125' } };
+
 local hintStyle = {
   hintStyle: {
     size: { width: 50, height: 50 },
@@ -42,6 +60,7 @@ local secondaryLegendColor = {
 
 local mainLegendParams = {
   center: legendCenter.main,
+  fontWeight: 'medium',
 } + primaryLegendColor;
 
 local sideLegendParams = {
@@ -147,8 +166,13 @@ local shuffle17KeyboardLayout = {
     {
       HStack: {
         subviews: [
-          { Cell: params.keyboard.numericButton.name },
+          { Cell: params.keyboard.strokeHButton.name },
+          { Cell: params.keyboard.strokeSButton.name },
+          { Cell: params.keyboard.strokePButton.name },
+          { Cell: params.keyboard.strokeNButton.name },
+          { Cell: params.keyboard.strokeZButton.name },
           { Cell: params.keyboard.spaceButton.name },
+          { Cell: params.keyboard.numericButton.name },
           { Cell: params.keyboard.enterButton.name },
         ],
       },
@@ -192,21 +216,26 @@ local newKeyLayout(isDark=false, isPortrait=true) =
   )
 
   // Fourth Row
-  + basicStyle.newSystemButton(
-    params.keyboard.numericButton.name,
-    isDark,
-    bottomSystemButtonSize + params.keyboard.numericButton.params,
-  )
+  + basicStyle.newSystemButton(params.keyboard.strokeHButton.name, isDark, stroke1ButtonSize + params.keyboard.strokeHButton.params + { insets: { top: 4, bottom: 4, left: 3, right: 0 } })
+  + basicStyle.newSystemButton(params.keyboard.strokeSButton.name, isDark, stroke2ButtonSize + params.keyboard.strokeSButton.params + { insets: { top: 4, bottom: 4, left: 0, right: 0 } })
+  + basicStyle.newSystemButton(params.keyboard.strokePButton.name, isDark, stroke3ButtonSize + params.keyboard.strokePButton.params + { insets: { top: 4, bottom: 4, left: 0, right: 0 } })
+  + basicStyle.newSystemButton(params.keyboard.strokeNButton.name, isDark, stroke4ButtonSize + params.keyboard.strokeNButton.params + { insets: { top: 4, bottom: 4, left: 0, right: 0 } })
+  + basicStyle.newSystemButton(params.keyboard.strokeZButton.name, isDark, stroke5ButtonSize + params.keyboard.strokeZButton.params + { insets: { top: 4, bottom: 4, left: 0, right: 3 } })
   + basicStyle.newAlphabeticButton(
     params.keyboard.spaceButton.name,
     isDark,
-    params.keyboard.spaceButton.params,
+    shortSpaceButtonSize + params.keyboard.spaceButton.params,
     needHint=false,
+  )
+  + basicStyle.newSystemButton(
+    params.keyboard.numericButton.name,
+    isDark,
+    numericSmallButtonSize + params.keyboard.numericButton.params + { text: '12', fontSize: 16 },
   )
   + basicStyle.newSystemButton(
     params.keyboard.enterButton.name,
     isDark,
-    bottomSystemButtonSize
+    shortEnterButtonSize
     + {
       backgroundStyle: basicStyle.enterButtonBackgroundStyle,
       foregroundStyle: basicStyle.enterButtonForegroundStyle,
