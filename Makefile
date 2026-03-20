@@ -14,6 +14,8 @@ endif
 
 include $(PROFILE_FILE)
 
+INCLUDE_DEFAULT_CUSTOM ?= 1
+
 # Setup output directory for this profile
 PROFILE_OUT := $(OUTPUT_DIR)/$(PROFILE)
 PROFILE_SKINS_OUT := $(PROFILE_OUT)/skins
@@ -60,7 +62,7 @@ endif
 
 # Flypy
 ifneq (,$(findstring flypy,$(YUANSHU_SCHEMAS)))
-	ROOT_YAML_FILES += flypy.yaml
+	ROOT_YAML_FILES += flypy.yaml luna_pinyin.dict.yaml
 endif
 
 # Luna Pinyin
@@ -112,7 +114,12 @@ YUANSHU_SKINS := $(sort $(YUANSHU_SKINS))
 
 SKIN_CSKINS := $(patsubst %,$(PROFILE_SKINS_OUT)/%.cskin,$(YUANSHU_SKINS))
 
-BUILD_DEPS := copy-files $(SKIN_CSKINS) $(PROFILE_OUT)/default.custom.yaml
+BUILD_DEPS := copy-files $(SKIN_CSKINS)
+ifeq ($(INCLUDE_DEFAULT_CUSTOM),1)
+BUILD_DEPS += $(PROFILE_OUT)/default.custom.yaml
+else
+BUILD_DEPS += $(PROFILE_OUT)/.no-default-custom
+endif
 ifneq (,$(findstring cangjie5,$(YUANSHU_SCHEMAS)))
 BUILD_DEPS += $(PROFILE_OUT)/cangjie5.dict.yaml
 endif
@@ -174,6 +181,11 @@ $(PROFILE_OUT)/default.custom.yaml: $(PROFILE_FILE)
 	@for schema in $(YUANSHU_SCHEMAS); do \
 		echo "    - schema: $$schema" >> $@; \
 	done
+
+$(PROFILE_OUT)/.no-default-custom:
+	@mkdir -p $(PROFILE_OUT)
+	@rm -f $(PROFILE_OUT)/default.custom.yaml
+	@touch $@
 
 # Skin compilation rule
 JSONNET_DEPS := $(shell find $(SKINS_DIR) -type f -name '*.jsonnet' -o -name '*.libsonnet')
