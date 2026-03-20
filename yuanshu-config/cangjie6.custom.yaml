@@ -3,6 +3,7 @@ patch:
     第六代蒼頡檢字法
     精簡版，適合移動端匯入
   translator/dictionary: cangjie6.extended
+  flypy_reverse_lookup/dictionary: cangjie6.extended
   translator/enable_user_dict: true
   translator/enable_sentence: true
   translator/enable_encoder: true
