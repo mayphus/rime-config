@@ -20,7 +20,7 @@ jobs:
     env:
       IMAGE_NAME: ghcr.io/mayphus/rime-config-engine
       IMAGE_TAG: ${{ github.sha }}
-      K8S_API_SERVER: https://pb62.tailae38.ts.net:6443
+      K8S_API_SERVER: https://100.116.247.67:6443
     steps:
       - name: Checkout rime-config
         uses: actions/checkout@v6.0.2
