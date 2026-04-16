@@ -16,6 +16,8 @@ spec:
       labels:
         app: rime-config-engine
     spec:
+      imagePullSecrets:
+        - name: ghcr-pull
       containers:
         - name: engine
           image: ghcr.io/mayphus/rime-config-engine:latest

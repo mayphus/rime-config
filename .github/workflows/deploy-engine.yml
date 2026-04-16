@@ -64,6 +64,16 @@ jobs:
           perl -0pi -e 's|server: https://[^\s]+:6443|server: $ENV{K8S_API_SERVER}|g' "$HOME/.kube/config"
           chmod 600 "$HOME/.kube/config"
 
+      - name: Sync GHCR pull secret
+        shell: bash
+        run: |
+          kubectl apply -f deploy/k8s/namespace.yaml
+          kubectl -n rime-config create secret docker-registry ghcr-pull \
+            --docker-server=ghcr.io \
+            --docker-username=mayphus \
+            --docker-password='${{ secrets.GHCR_PULL_TOKEN }}' \
+            --dry-run=client -o yaml | kubectl apply -f -
+
       - name: Deploy manifests
         shell: bash
         run: |

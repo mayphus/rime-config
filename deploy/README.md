@@ -17,6 +17,7 @@ to k3s on `pb62`.
 - `TAILSCALE_OAUTH_CLIENT_ID`
 - `TAILSCALE_OAUTH_SECRET`
 - `KUBECONFIG_PB62`
+- `GHCR_PULL_TOKEN`
 
 ### Notes
 
@@ -25,6 +26,9 @@ to k3s on `pb62`.
   `KUBECONFIG_PB62` secret can keep the original cluster/user/certificate data.
 - If `pb62` gets a different Tailscale IP, update `K8S_API_SERVER` in
   `.github/workflows/deploy-engine.yml` to match the new address.
+- `GHCR_PULL_TOKEN` should be a GitHub personal access token for `mayphus`
+  with at least `read:packages`, so the workflow can create the `ghcr-pull`
+  image pull secret in Kubernetes before deploying.
 - The ingress manifest assumes `api-rime.mayphus.org` should terminate in the
   cluster.
 - The cert-manager issuer name is currently `letsencrypt`.
