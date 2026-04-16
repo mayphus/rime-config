@@ -1,0 +1,634 @@
+#lang racket/base
+
+;;; build.rkt — Racket build system for rime-config
+;;;
+;;; Usage:
+;;;   racket build.rkt build [-p <profile>]            build + zip one profile (default: all)
+;;;   racket build.rkt all                             build + zip every profile (desktop + mobile)
+;;;   racket build.rkt clean                           delete repo-local output/rime/
+;;;   racket build.rkt skins                           build standalone skin previews
+;;;   racket build.rkt deploy [--rime-dir <path>] [--no-rime-deploy]   build desktop profile + sync to ~/Library/Rime
+;;;   racket build.rkt upload [-p <profile>]           build then upload
+;;;   racket build.rkt upload-dry-run                  dry-run upload (no build)
+
+(require racket/cmdline
+         racket/file
+         racket/hash
+         racket/list
+         racket/path
+         racket/port
+         racket/runtime-path
+         racket/set
+         racket/string
+         racket/system
+         json
+         "profile.rkt")
+
+(provide (all-defined-out))
+
+;; ---- Paths -----------------------------------------------------------------
+
+(define-runtime-path root-dir ".")
+(define schema-dir   (build-path root-dir "schema"))
+(define data-dir     (build-path root-dir "data"))
+(define skins-dir    (build-path root-dir "skin"))
+(define profiles-dir (build-path root-dir "profiles"))
+(define output-dir   (build-path root-dir ".." ".." "output" "rime"))
+(define upload-helper  (build-path root-dir "tools" "yuanshu_sync.py"))
+
+(define zip-exe    (find-executable-path "zip"))
+(define python-exe (find-executable-path "python3"))
+
+;; ---- Known generated IDs ---------------------------------------------------
+
+(define generated-schema-ids '("flypy_18" "flypy_18_alt" "flypy_ice" "shuffle_17"))
+(define generated-custom-ids '("cangjie6" "flypy" "jyut6ping3"))
+(define generated-config-ids (append generated-schema-ids generated-custom-ids))
+
+;; ---- Schema module helpers -------------------------------------------------
+
+;; Safely dynamic-require a binding from a generated schema module.
+;; Returns default if the module does not exist or does not export the binding.
+(define (schema-module-ref schema prop [default #f])
+  (define rkt (build-path schema-dir (string-append schema ".rkt")))
+  (if (file-exists? rkt)
+      (dynamic-require rkt prop (lambda () default))
+      default))
+
+;; ---- Utilities -------------------------------------------------------------
+
+(define (run! prog . args)
+  (define str-args (map (lambda (a) (if (path? a) (path->string a) (~a a))) args))
+  (unless (apply system* prog str-args)
+    (error 'build "Command failed: ~a ~a" prog str-args)))
+
+(define (~a x) (if (string? x) x (format "~a" x)))
+
+(define (delete-file* p)
+  (when (file-exists? p) (delete-file p)))
+
+(define (copy-file! src dst)
+  (make-directory* (path-only dst))
+  (copy-file src dst #t))
+
+(define (copy-dir! src dst)
+  (when (directory-exists? dst) (delete-directory/files dst))
+  (copy-directory/files src dst))
+
+;; ---- Recursive file listing ------------------------------------------------
+
+(define (list-files-relative dir)
+  ;; Returns a list of relative path strings for all files under dir.
+  (let loop ([base dir] [prefix ""])
+    (append-map
+     (lambda (entry)
+       (define full (build-path base entry))
+       (define rel  (if (string=? prefix "")
+                        (path->string entry)
+                        (string-append prefix "/" (path->string entry))))
+       (cond
+         [(file-exists?      full) (list rel)]
+         [(directory-exists? full) (loop full rel)]
+         [else '()]))
+     (directory-list base))))
+
+;; ---- Profile loading -------------------------------------------------------
+
+(define yuanshu-profiles-dir (build-path profiles-dir "yuanshu"))
+
+(define (find-profile-path name)
+  (for/or ([base (list profiles-dir
+                       yuanshu-profiles-dir
+                       (build-path profiles-dir "customer")
+                       (build-path yuanshu-profiles-dir "customer"))])
+    (define p (build-path base (string-append name ".rkt")))
+    (and (file-exists? p) p)))
+
+(define (load-profile name)
+  (define path (or (find-profile-path name)
+                   (error 'build "Profile '~a' not found" name)))
+  (dynamic-require path 'profile))
+
+(define (named-rime-profile name)
+  (if (equal? name "desktop")
+      default-desktop-profile
+      (load-profile name)))
+
+(define (list-all-profiles)
+  ;; Lists all profiles from all known profile directories.
+  (define search-dirs
+    (list profiles-dir
+          yuanshu-profiles-dir
+          (build-path profiles-dir "customer")
+          (build-path yuanshu-profiles-dir "customer")))
+  (remove-duplicates
+   (append-map
+    (lambda (dir)
+      (if (directory-exists? dir)
+          (filter-map
+           (lambda (f)
+             (and (equal? (path-get-extension f) #".rkt")
+                  (path->string (path-replace-extension f #""))))
+           (directory-list dir))
+          '()))
+    search-dirs)))
+
+;; ---- Schema dependency expansion -------------------------------------------
+
+(define (read-schema-deps-from-yaml schema)
+  (define yaml-path
+    (for/or ([base (list data-dir root-dir)])
+      (define p (build-path base (string-append schema ".schema.yaml")))
+      (and (file-exists? p) p)))
+  (if (not yaml-path)
+      '()
+      (call-with-input-file yaml-path
+        (lambda (in)
+          (let loop ([in-deps? #f] [acc '()])
+            (define line (read-line in))
+            (cond
+              [(eof-object? line) (reverse acc)]
+              [(regexp-match? #rx"^  dependencies:" line)
+               (loop #t acc)]
+              [(and in-deps? (regexp-match #rx"^    - (.+)" line))
+               => (lambda (m) (loop #t (cons (string-trim (cadr m)) acc)))]
+              [in-deps? (reverse acc)]
+              [else (loop #f acc)]))))))
+
+(define (read-schema-name-from-yaml schema)
+  (define yaml-path
+    (for/or ([base (list data-dir root-dir)])
+      (define p (build-path base (string-append schema ".schema.yaml")))
+      (and (file-exists? p) p)))
+  (if (not yaml-path)
+      #f
+      (call-with-input-file yaml-path
+        (lambda (in)
+          (let loop ()
+            (define line (read-line in))
+            (cond
+              [(eof-object? line) #f]
+              [(regexp-match #rx"^  name: \"?([^\"]+)\"?" line)
+               => (lambda (m) (string-trim (cadr m)))]
+              [else (loop)]))))))
+
+;; For generated schemas, read deps from the module; fall back to YAML for static ones.
+(define (read-schema-deps schema)
+  (schema-module-ref schema 'schema-deps
+                     (read-schema-deps-from-yaml schema)))
+
+(define (expand-schema-deps schemas)
+  (let loop ([queue schemas] [resolved '()])
+    (if (null? queue)
+        (reverse resolved)
+        (let ([s (car queue)])
+          (if (member s resolved)
+              (loop (cdr queue) resolved)
+              (loop (append (cdr queue)
+                            (filter (lambda (d) (not (member d resolved)))
+                                    (read-schema-deps s)))
+                    (cons s resolved)))))))
+
+;; ---- Input validation ------------------------------------------------------
+
+(define (valid-schema-id? s)
+  (and (string? s) (regexp-match? #rx"^[a-zA-Z0-9_-]+$" s)))
+
+;; ---- Resolve schemas from profile ------------------------------------------
+
+(define (resolve-schemas profile)
+  (define raw
+    (let ([s (hash-ref profile 'schemas '())])
+      (define lst (if (list? s) s (list s)))
+      (if (member "all" lst)
+          (append generated-config-ids
+                  (filter-map
+                   (lambda (f)
+                     (define name (path->string f))
+                     (and (regexp-match? #rx"\\.schema\\.yaml$" name)
+                          (regexp-replace #rx"\\.schema\\.yaml$" name "")))
+                   (directory-list data-dir)))
+          (begin
+            (for ([id lst])
+              (unless (valid-schema-id? id)
+                (error 'resolve-schemas "Invalid schema id: ~v" id)))
+            lst))))
+
+  (define expanded (expand-schema-deps raw))
+
+  (define desktop? (hash-ref profile 'desktop? #f))
+  (define filtered
+    (if desktop?
+        (filter (lambda (s) (not (schema-module-ref s 'mobile-only? #f))) expanded)
+        expanded))
+
+  (remove-duplicates filtered))
+
+;; ---- Compute file lists from schemas ---------------------------------------
+;; Returns: gen-yaml (built by build-configs!, already in profile-out)
+;;          data-yaml (static files to copy from data-dir)
+;;          data-dirs (static dirs to copy from data-dir)
+;;          skins
+
+(define (compute-assets schemas profile)
+  (define extra-data  (hash-ref profile 'extra-src-files  '()))
+  (define extra-skins (hash-ref profile 'extra-skins      '()))
+
+  (define gen-yaml  '())
+  (define data-yaml '())
+  (define data-dirs '())
+  (define skins     '())
+
+  (define (add-gen!       f) (set! gen-yaml  (cons f gen-yaml)))
+  (define (add-data-yaml! f) (set! data-yaml (cons f data-yaml)))
+  (define (add-data-dir!  d) (set! data-dirs (cons d data-dirs)))
+  (define (add-skin!      s) (set! skins     (cons s skins)))
+
+  ;; Per-schema: schema file + custom file
+  (for ([schema schemas])
+    (cond
+      [(member schema generated-schema-ids)
+       (add-gen! (string-append schema ".schema.yaml"))]
+      [(file-exists? (build-path data-dir (string-append schema ".schema.yaml")))
+       (add-data-yaml! (string-append schema ".schema.yaml"))])
+    (cond
+      [(member schema generated-config-ids)
+       (add-gen! (string-append schema ".custom.yaml"))]
+      [(file-exists? (build-path data-dir (string-append schema ".custom.yaml")))
+       (add-data-yaml! (string-append schema ".custom.yaml"))]))
+
+  ;; Schema-specific static extras: generated schemas declare their own deps.
+  (for ([schema schemas])
+    (for ([f (schema-module-ref schema 'static-dep-files '())]) (add-data-yaml! f))
+    (for ([d (schema-module-ref schema 'static-dep-dirs  '())]) (add-data-dir!  d)))
+
+  ;; Static-only schemas (no .rkt) declare their deps here.
+  (when (member "luna_pinyin"  schemas) (add-data-yaml! "luna_pinyin.dict.yaml")
+                                        (add-data-yaml! "zhuyin.yaml"))
+  (when (member "terra_pinyin" schemas) (add-data-yaml! "terra_pinyin.dict.yaml"))
+  (when (member "bopomofo"     schemas) (add-data-yaml! "terra_pinyin.dict.yaml")
+                                        (add-data-yaml! "zhuyin.yaml"))
+
+  ;; yuanshu_shared is generated by build-configs!
+  (add-gen! "yuanshu_shared.yaml")
+
+  ;; Extra static files from profile (e.g. squirrel.custom.yaml)
+  (for ([f extra-data]) (add-data-yaml! f))
+
+  ;; Skins: auto-discover from skins-dir via each skin's trigger-schemas export.
+  (unless (hash-ref profile 'desktop? #f)
+    (for ([skin-file (sort (directory-list skins-dir #:build? #t) path<?)]
+          #:when (equal? (path-get-extension skin-file) #".rkt"))
+      (define skin-name
+        (path->string (path-replace-extension (file-name-from-path skin-file) #"")))
+      (define trigger
+        (dynamic-require skin-file 'trigger-schemas (lambda () '())))
+      (define include?
+        (cond
+          [(eq? trigger 'default)  #t]
+          [(list? trigger) (ormap (lambda (s) (member s schemas)) trigger)]
+          [else #f]))
+      (when include? (add-skin! skin-name)))
+    (for ([s extra-skins]) (add-skin! s)))
+
+  (values (remove-duplicates (reverse gen-yaml))
+          (remove-duplicates (reverse data-yaml))
+          (remove-duplicates (reverse data-dirs))
+          (remove-duplicates (reverse skins))))
+
+;; ---- Write files from a module's exported hash ----------------------------
+
+(define (write-module-files! rkt-path out-dir export-sym)
+  (define files
+    (let ([v (dynamic-require rkt-path export-sym)])
+      (unless (hash? v)
+        (error 'write-module-files!
+               "~a: expected ~a to be a hash, got ~v" rkt-path export-sym v))
+      v))
+  (for ([(rel-path content) (in-hash files)])
+    (define target (build-path out-dir (string->path rel-path)))
+    (make-directory* (path-only target))
+    (call-with-output-file target #:exists 'truncate/replace
+      (lambda (out)
+        (cond
+          [(string? content) (display content out)]
+          [(bytes?  content) (write-bytes content out)]
+          [else (error 'write-module-files!
+                       "~a: expected string or bytes for ~a, got ~v"
+                       rkt-path rel-path content)])))))
+
+;; ---- Build schemas ---------------------------------------------------------
+
+(define (build-schemas! schemas profile-out)
+  (define needed
+    (list->set
+     (cons "yuanshu_shared.rkt"
+           (map (lambda (s) (string-append s ".rkt")) schemas))))
+  (define entrypoints
+    (sort
+     (filter (lambda (p)
+               (set-member? needed (path->string (file-name-from-path p))))
+             (directory-list schema-dir #:build? #t))
+     path<?))
+  (for ([f entrypoints])
+    (write-module-files! f profile-out 'config-files)))
+
+;; ---- Build skins -----------------------------------------------------------
+
+(define (build-one-skin! skin profile-name profile-out)
+  (define skin-rkt (build-path skins-dir (string-append skin ".rkt")))
+  (define safe-profile-name
+    (regexp-replace* #rx"[^a-zA-Z0-9._-]+" profile-name "_"))
+  (define tmp-dir  (build-path (path-only profile-out) (string-append "tmp-" safe-profile-name)))
+  (define tmp-skin (build-path tmp-dir skin))
+  (define cskin    (build-path profile-out "skins" (string-append skin ".cskin")))
+  (printf "Building skin: ~a\n" skin)
+  (delete-directory/files tmp-dir #:must-exist? #f)
+  (make-directory* tmp-skin)
+  (write-module-files! skin-rkt tmp-skin 'skin-files)
+  (delete-file* cskin)
+  (parameterize ([current-directory tmp-dir])
+    (run! zip-exe "-qr" (path->string cskin) skin))
+  (delete-directory/files tmp-dir))
+
+(define (build-skins! skins profile-name profile-out)
+  (unless (null? skins)
+    (make-directory* (build-path profile-out "skins"))
+    (for ([skin skins])
+      (build-one-skin! skin profile-name profile-out))))
+
+;; ---- Build one profile -----------------------------------------------------
+
+(define (build-profile-from-hash! profile profile-name profile-out)
+  (delete-directory/files profile-out #:must-exist? #f)
+  (make-directory* profile-out)
+
+  (define schemas (resolve-schemas profile))
+  (printf "Building '~a': ~a\n" profile-name (string-join schemas " "))
+
+  (build-schemas! schemas profile-out)
+
+  (define-values (_gen-yaml data-yaml data-dirs skins)
+    (compute-assets schemas profile))
+
+  ;; Copy static YAML files from data-dir
+  (for ([f data-yaml])
+    (define src (build-path data-dir f))
+    (when (file-exists? src)
+      (copy-file! src (build-path profile-out f))))
+
+  ;; Copy static directories from data-dir
+  (for ([d data-dirs])
+    (define src (build-path data-dir d))
+    (when (directory-exists? src)
+      (copy-dir! src (build-path profile-out d))))
+
+  ;; default.custom.yaml
+  (define default-custom (build-path profile-out "default.custom.yaml"))
+  (if (not (hash-ref profile 'skip-default-custom #f))
+      (let* ([raw (hash-ref profile 'schemas '())]
+             [display-schemas
+              (if (or (equal? raw "all")
+                      (and (list? raw) (member "all" raw)))
+                  schemas
+                  (if (list? raw) raw (list raw)))])
+        (call-with-output-file default-custom #:exists 'truncate/replace
+          (lambda (out)
+            (displayln "patch:" out)
+            (displayln "  schema_list:" out)
+            (for ([s display-schemas])
+              (fprintf out "    - schema: ~a\n" s)))))
+      (delete-file* default-custom))
+
+  (build-skins! skins profile-name profile-out))
+
+(define (build-profile! profile-name)
+  (define profile     (named-rime-profile profile-name))
+  (define profile-out (build-path output-dir profile-name))
+  (build-profile-from-hash! profile profile-name profile-out))
+
+(define (build-rime-profile! profile profile-name)
+  (define profile-out (build-path output-dir profile-name))
+  (build-profile-from-hash! profile profile-name profile-out)
+  (zip-profile-path! profile-name profile-out (build-path output-dir (string-append profile-name ".zip"))))
+
+;; ---- Zip -------------------------------------------------------------------
+
+(define (zip-profile-path! profile-name profile-out zip-path)
+  (delete-file* zip-path)
+  (make-directory* (path-only zip-path))
+  (parameterize ([current-directory (path-only zip-path)])
+    (run! zip-exe "-qr"
+          (path->string (file-name-from-path zip-path))
+          (path->string (file-name-from-path profile-out))))
+  (printf "Packaged: ~a\n" zip-path))
+
+(define (zip-profile! profile-name)
+  (define zip-path (build-path output-dir (string-append profile-name ".zip")))
+  (define profile-out (build-path output-dir profile-name))
+  (zip-profile-path! profile-name profile-out zip-path))
+
+
+;; ---- Upload ----------------------------------------------------------------
+
+(define (do-upload! src-dir
+                    #:remote-root     [remote-root "/RimeUserData/rime/"]
+                    #:base-url        [base-url #f]
+                    #:allow-delete    [allow-delete #f]
+                    #:include-big-dicts [include-big-dicts #t]
+                    #:dry-run         [dry-run #f])
+  (define exclude-dirs
+    (if include-big-dicts '() '("jyut6ping3_dicts" "rime_ice_dicts")))
+  (apply run!
+         python-exe
+         (path->string upload-helper)
+         "--source" (~a src-dir)
+         "--remote-root" remote-root
+         (append
+          (if dry-run       '("--dry-run")      '())
+          (if allow-delete  '("--allow-delete")  '())
+          (if base-url      (list "--base-url" base-url) '())
+          (append-map (lambda (d) (list "--exclude-dir" d)) exclude-dirs))))
+
+;; ---- Deploy desktop config -------------------------------------------------
+;; Builds the desktop profile then syncs to the live Rime directory.
+;; Never touches *.userdb, user.yaml, installation.yaml, *.bin, sync/.
+
+(define default-rime-dir
+  (build-path (find-system-path 'home-dir) "Library" "Rime"))
+
+(define squirrel-binary
+  "/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel")
+
+;; Patterns of files/dirs in ~/Library/Rime that we must never touch.
+(define rime-protected-rx
+  (list #rx"\\.userdb(/|$)"       ; learned word databases
+        #rx"(^|/)user\\.yaml$"    ; rime session state
+        #rx"(^|/)installation\\.yaml$" ; rime installation config
+        #rx"\\.bin$"              ; compiled binary data
+        #rx"(^|/)sync(/|$)"       ; rime sync directory
+        #rx"(^|/)build(/|$)"))
+
+(define (rime-protected? rel-path)
+  (define s (if (path? rel-path) (path->string rel-path) rel-path))
+  (ormap (lambda (rx) (regexp-match? rx s)) rime-protected-rx))
+
+;; Extensions we own and may delete when syncing.
+(define rime-managed-exts '(".yaml" ".txt"))
+
+(define (rime-managed? rel-path)
+  (define s (if (path? rel-path) (path->string rel-path) rel-path))
+  (ormap (lambda (ext) (string-suffix? s ext)) rime-managed-exts))
+
+(define (sync-to-dir! build-out target-dir)
+  (define deploy-set (list->set (list-files-relative build-out)))
+
+  ;; Delete managed files in target that are no longer in our build output.
+  (for ([rel (list-files-relative target-dir)])
+    (when (and (rime-managed? rel)
+               (not (rime-protected? rel))
+               (not (set-member? deploy-set rel)))
+      (define victim (build-path target-dir rel))
+      (printf "Removing stale: ~a\n" rel)
+      (delete-file victim)))
+
+  ;; Copy all build-output files to target.
+  (for ([rel (set->list deploy-set)])
+    (copy-file! (build-path build-out rel)
+                (build-path target-dir rel))))
+
+(define (rime-deploy!)
+  (cond
+    [(file-exists? squirrel-binary)
+     (printf "Triggering Rime deployment...\n")
+     (unless (system* squirrel-binary "--reload")
+       (eprintf "Warning: Rime deploy command exited with error\n"))]
+    [else
+     (eprintf "Warning: Squirrel not found at ~a — skipping Rime deploy\n" squirrel-binary)]))
+
+(define (deploy-desktop! target-dir #:rime-deploy? [rime-deploy? #t])
+  (when (equal? (normalize-path root-dir)
+                (normalize-path target-dir))
+    (error 'deploy "target is the same as the repo root — aborting"))
+
+  ;; Build desktop profile into build/desktop/
+  (build-rime-profile! default-desktop-profile "desktop")
+  (define build-out (build-path output-dir "desktop"))
+
+  (make-directory* target-dir)
+  (sync-to-dir! build-out target-dir)
+  (printf "Deployed to ~a\n" (path->string target-dir))
+
+  (when rime-deploy? (rime-deploy!)))
+
+(define (deploy-rime-profile! profile profile-name target-dir #:rime-deploy? [rime-deploy? #t])
+  (when (equal? (normalize-path root-dir)
+                (normalize-path target-dir))
+    (error 'deploy "target is the same as the repo root — aborting"))
+
+  (build-rime-profile! profile profile-name)
+  (define build-out (build-path output-dir profile-name))
+
+  (make-directory* target-dir)
+  (sync-to-dir! build-out target-dir)
+  (printf "Deployed to ~a\n" (path->string target-dir))
+
+  (when rime-deploy? (rime-deploy!)))
+
+;; ---- Standalone skin previews ----------------------------------------------
+
+(define (build-preview-skins!)
+  (for ([skin-file (sort (directory-list skins-dir #:build? #t) path<?)]
+        #:when (equal? (path-get-extension skin-file) #".rkt"))
+    (define skin (path->string (path-replace-extension (file-name-from-path skin-file) #"")))
+    (define out  (build-path output-dir "compiled-skins" skin))
+    (printf "Building preview skin: ~a\n" skin)
+    (delete-directory/files out #:must-exist? #f)
+    (make-directory* out)
+    (write-module-files! skin-file out 'skin-files)))
+
+;; ---- CLI -------------------------------------------------------------------
+
+(module+ main
+  (define profile-name        (make-parameter "all"))
+  (define rime-dir            (make-parameter default-rime-dir))
+  (define upload-src          (make-parameter #f))
+  (define upload-remote-root  (make-parameter "/RimeUserData/rime/"))
+  (define upload-base-url     (make-parameter #f))
+  (define upload-allow-delete (make-parameter #f))
+  (define upload-big-dicts    (make-parameter #t))
+  (define do-rime-deploy      (make-parameter #t))
+
+  (define-values (cmd rest-args)
+    (command-line
+     #:program "build.rkt"
+     #:once-each
+     [("-p" "--profile")  p  "Profile name (default: all)"                (profile-name p)]
+     [("--rime-dir")      d  "Deploy target (default: ~/Library/Rime)"    (rime-dir (string->path d))]
+     [("--upload-src")    d  "Override upload source directory"           (upload-src d)]
+     [("--remote-root")   r  "Upload remote root path"                    (upload-remote-root r)]
+     [("--base-url")      u  "Upload base URL"                            (upload-base-url u)]
+     [("--allow-delete")     "Allow deletes during upload"                (upload-allow-delete #t)]
+     [("--no-big-dicts")     "Exclude big dicts from upload"              (upload-big-dicts #f)]
+     [("--no-rime-deploy")   "Skip triggering Rime deployment after deploy" (do-rime-deploy #f)]
+     #:args (command . rest) (values command rest)))
+
+  (case cmd
+    [("build")
+     (build-profile! (profile-name))
+     (zip-profile! (profile-name))]
+
+    [("clean")
+     (delete-directory/files output-dir #:must-exist? #f)
+     (printf "Cleaned.\n")]
+
+    [("all")
+     (for ([p (list-all-profiles)])
+       (build-profile! p)
+       (zip-profile! p))]
+
+    [("skins")
+     (build-preview-skins!)]
+
+    [("deploy")
+     (deploy-desktop! (rime-dir) #:rime-deploy? (do-rime-deploy))]
+
+    [("upload")
+     (define src
+       (or (upload-src)
+           (begin (build-profile! (profile-name))
+                  (zip-profile! (profile-name))
+                  (path->string (build-path output-dir (profile-name))))))
+     (do-upload! src
+                 #:remote-root      (upload-remote-root)
+                 #:base-url         (upload-base-url)
+                 #:allow-delete     (upload-allow-delete)
+                 #:include-big-dicts (upload-big-dicts))]
+
+    [("upload-dry-run")
+     (define src
+       (or (upload-src)
+           (path->string (build-path output-dir (profile-name)))))
+     (do-upload! src
+                 #:remote-root      (upload-remote-root)
+                 #:base-url         (upload-base-url)
+                 #:allow-delete     (upload-allow-delete)
+                 #:include-big-dicts (upload-big-dicts)
+                 #:dry-run #t)]
+
+    [("custom-build")
+     (define out-dir-str (car rest-args))
+     (define profile-json (car (cdr rest-args)))
+     (define profile (string->jsexpr profile-json))
+     (define profile-name "custom")
+     (define profile-out (build-path (string->path out-dir-str) profile-name))
+     (define zip-path (build-path (string->path out-dir-str) (string-append profile-name ".zip")))
+
+     (build-profile-from-hash! profile profile-name profile-out)
+     (zip-profile-path! profile-name profile-out zip-path)
+     (printf "ZIP_PATH: ~a\n" (path->string zip-path))]
+
+    [else
+     (eprintf "Unknown command: ~a\n" cmd)
+     (eprintf "Available: build  all  clean  skins  deploy  upload  upload-dry-run\n")
+     (exit 1)]))

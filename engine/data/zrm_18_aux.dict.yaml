@@ -1,0 +1,9 @@
+# Rime dictionary
+# encoding: utf-8
+---
+name: zrm_18_aux
+version: "2026-03-29"
+import_tables:
+  - rime_ice
+  - zrm_aux
+...

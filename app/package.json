@@ -1,0 +1,25 @@
+{
+  "name": "@mayphus/rime-config-app",
+  "private": true,
+  "packageManager": "bun@1.3.6",
+  "type": "module",
+  "scripts": {
+    "build": "clojure -M:shadow release app",
+    "compile:app": "clojure -M:shadow release app",
+    "dev": "bun run scripts/dev.mjs",
+    "dev:app": "bun run scripts/server.mjs",
+    "dev:server": "bun run scripts/server.mjs",
+    "watch": "clojure -M:shadow watch app",
+    "serve": "RIME_CONFIG_STATIC=1 bun run scripts/server.mjs",
+    "test:unit": "clojure -M:test",
+    "test": "bun run test:unit"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "scheduler": "^0.23.2"
+  },
+  "devDependencies": {
+    "shadow-cljs": "^2.28.21"
+  }
+}
