@@ -71,7 +71,7 @@ jobs:
           kubectl -n rime-config create secret docker-registry ghcr-pull \
             --docker-server=ghcr.io \
             --docker-username=mayphus \
-            --docker-password='${{ secrets.GHCR_PULL_TOKEN }}' \
+            --docker-password='${{ secrets.TOKEN }}' \
             --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy manifests
