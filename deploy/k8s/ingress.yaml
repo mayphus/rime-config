@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rime-config-engine
+  namespace: rime-config
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  tls:
+    - hosts:
+        - api-rime.mayphus.org
+      secretName: api-rime-mayphus-org-tls
+  rules:
+    - host: api-rime.mayphus.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rime-config-engine
+                port:
+                  number: 80

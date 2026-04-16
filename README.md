@@ -14,6 +14,11 @@ The product should remain publicly reachable at `mayphus.org/rime-config`.
 `mayphus-sites` should eventually serve only as the outer router or proxy for
 that path, while the actual product code lives here.
 
+Current standalone deployment work also supports:
+
+- frontend on `rime-config.mayphus.org`
+- engine on k3s behind `api-rime.mayphus.org`
+
 ## Migration status
 
 The first extraction pass is complete:
