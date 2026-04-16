@@ -62,14 +62,6 @@ jobs:
           printf '%s' '${{ secrets.KUBECONFIG_PB62 }}' > "$HOME/.kube/config"
           chmod 600 "$HOME/.kube/config"
 
-      - name: Debug cluster reachability
-        shell: bash
-        run: |
-          tailscale status || true
-          ping -c 3 192.168.36.237 || true
-          nc -vz 192.168.36.237 6443 || true
-          curl -k -I --connect-timeout 5 https://192.168.36.237:6443/healthz || true
-
       - name: Deploy manifests
         shell: bash
         run: |

@@ -20,10 +20,9 @@ to k3s on `pb62`.
 
 ### Notes
 
-- `KUBECONFIG_PB62` must point the cluster `server:` at a Tailscale-reachable
-  endpoint for `pb62` such as its tailnet IP or MagicDNS name, not a LAN
-  address like `192.168.x.x`. GitHub-hosted runners cannot reach your home LAN
-  directly unless you have Tailscale subnet routing set up.
+- `pb62` now runs Tailscale directly. `KUBECONFIG_PB62` should point the
+  cluster `server:` at the node's tailnet address, for example
+  `https://100.116.247.67:6443` or `https://pb62.tailae38.ts.net:6443`.
 - The deploy workflow uses `kubectl apply --validate=false` because client-side
   schema validation downloads the cluster OpenAPI spec before applying and can
   fail even when a normal API request would succeed.
