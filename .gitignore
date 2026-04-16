@@ -1,6 +1,7 @@
-app/node_modules/
-app/dist/
-app/.cpcache/
+node_modules/
+dist/
+.cpcache/
+.shadow-cljs/
 .DS_Store
 engine/.DS_Store
 engine/.idea/
