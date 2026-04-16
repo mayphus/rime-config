@@ -2,7 +2,7 @@ const API_BASE = "/api/rime-config";
 
 async function serveAsset(request, env, pathname) {
   const url = new URL(request.url);
-  url.pathname = pathname === "/" ? "/index.html" : pathname;
+  url.pathname = pathname;
   return env.ASSETS.fetch(new Request(url.toString(), request));
 }
 
