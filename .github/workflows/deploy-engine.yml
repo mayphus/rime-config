@@ -20,6 +20,7 @@ jobs:
     env:
       IMAGE_NAME: ghcr.io/mayphus/rime-config-engine
       IMAGE_TAG: ${{ github.sha }}
+      K8S_API_SERVER: https://pb62.tailae38.ts.net:6443
     steps:
       - name: Checkout rime-config
         uses: actions/checkout@v6.0.2
@@ -60,11 +61,12 @@ jobs:
         run: |
           mkdir -p "$HOME/.kube"
           printf '%s' '${{ secrets.KUBECONFIG_PB62 }}' > "$HOME/.kube/config"
+          perl -0pi -e 's|server: https://[^\s]+:6443|server: $ENV{K8S_API_SERVER}|g' "$HOME/.kube/config"
           chmod 600 "$HOME/.kube/config"
 
       - name: Deploy manifests
         shell: bash
         run: |
-          kubectl apply --validate=false -k deploy/k8s
+          kubectl apply -k deploy/k8s
           kubectl -n rime-config set image deployment/rime-config-engine engine=${IMAGE_NAME}:${IMAGE_TAG}
           kubectl -n rime-config rollout status deployment/rime-config-engine --timeout=180s

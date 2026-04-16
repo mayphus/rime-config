@@ -20,12 +20,11 @@ to k3s on `pb62`.
 
 ### Notes
 
-- `pb62` now runs Tailscale directly. `KUBECONFIG_PB62` should point the
-  cluster `server:` at the node's tailnet address, for example
-  `https://100.116.247.67:6443` or `https://pb62.tailae38.ts.net:6443`.
-- The deploy workflow uses `kubectl apply --validate=false` because client-side
-  schema validation downloads the cluster OpenAPI spec before applying and can
-  fail even when a normal API request would succeed.
+- The deploy workflow rewrites the kubeconfig `server:` to
+  `https://pb62.tailae38.ts.net:6443` before running `kubectl`, so the stored
+  `KUBECONFIG_PB62` secret can keep the original cluster/user/certificate data.
+- If you rotate the node name or tailnet domain, update `K8S_API_SERVER` in
+  `.github/workflows/deploy-engine.yml` to match.
 - The ingress manifest assumes `api-rime.mayphus.org` should terminate in the
   cluster.
 - The cert-manager issuer name is currently `letsencrypt`.
