@@ -62,9 +62,17 @@ jobs:
           printf '%s' '${{ secrets.KUBECONFIG_PB62 }}' > "$HOME/.kube/config"
           chmod 600 "$HOME/.kube/config"
 
+      - name: Debug cluster reachability
+        shell: bash
+        run: |
+          tailscale status || true
+          ping -c 3 192.168.36.237 || true
+          nc -vz 192.168.36.237 6443 || true
+          curl -k -I --connect-timeout 5 https://192.168.36.237:6443/healthz || true
+
       - name: Deploy manifests
         shell: bash
         run: |
-          kubectl apply -k deploy/k8s
+          kubectl apply --validate=false -k deploy/k8s
           kubectl -n rime-config set image deployment/rime-config-engine engine=${IMAGE_NAME}:${IMAGE_TAG}
           kubectl -n rime-config rollout status deployment/rime-config-engine --timeout=180s
