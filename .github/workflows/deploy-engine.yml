@@ -51,7 +51,7 @@ jobs:
           oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
           hostname: github-actions-rime-config
-          tags: tag:ci
+          ping: 100.116.247.67
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v4
