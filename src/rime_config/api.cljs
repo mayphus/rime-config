@@ -12,7 +12,7 @@
       (.then (fn [payload]
                (on-success (js->clj payload :keywordize-keys true))))
       (.catch (fn [_]
-                (on-error "無法載入可用方案與皮膚。")))
+                (on-error :metadata-load-failed)))
       (.finally on-complete)))
 
 (defn fetch-blob! [response]
@@ -40,8 +40,7 @@
       (.then (fn [payload]
                (if (instance? js/Blob payload)
                  (trigger-download! payload "rime-config.zip")
-                 (on-error (or (aget payload "error")
-                               "配置生成失敗。")))))
+                 (on-error [:build-failed (aget payload "error")]))))
       (.catch (fn [_]
-                (on-error "無法連接 Rime 配置 API。")))
+                (on-error :api-unreachable)))
       (.finally on-complete)))

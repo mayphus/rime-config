@@ -22,7 +22,7 @@ html, body {
     radial-gradient(circle at top, rgba(159, 79, 44, 0.08), transparent 32rem),
     linear-gradient(180deg, #fbf7f0 0%, var(--background) 100%);
   color: var(--foreground);
-  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  font-family: "Avenir Next", "Segoe UI", "Noto Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 }
 
 body {
@@ -64,6 +64,13 @@ body {
 
 .rime-config-shell {
   gap: 1.5rem;
+}
+
+.rime-hero-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .rime-hero-card,
@@ -127,7 +134,8 @@ body {
 
 .rime-platform-button,
 .rime-build-button,
-.rime-option-card {
+.rime-option-card,
+.rime-language-button {
   border: 1px solid var(--line);
   border-radius: 0.9rem;
   background: var(--surface-strong);
@@ -139,6 +147,28 @@ body {
 .rime-build-button {
   appearance: none;
   padding: 0.95rem 1rem;
+  cursor: pointer;
+}
+
+.rime-language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.86);
+}
+
+.rime-language-button {
+  appearance: none;
+  min-width: 2.5rem;
+  padding: 0.32rem 0.6rem;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   cursor: pointer;
 }
 
@@ -158,13 +188,15 @@ body {
 
 .rime-platform-button:hover,
 .rime-build-button:hover,
-.rime-option-card:hover {
+.rime-option-card:hover,
+.rime-language-button:hover {
   border-color: var(--line-strong);
   transform: translateY(-1px);
 }
 
 .rime-platform-button.is-active,
-.rime-option-card.is-selected {
+.rime-option-card.is-selected,
+.rime-language-button.is-active {
   border-color: rgba(159, 79, 44, 0.3);
   background: var(--accent-soft);
 }
@@ -256,6 +288,25 @@ body {
 
 .keyboard-preview-space {
   width: 8.4rem;
+}
+
+@media (max-width: 720px) {
+  .rime-config-grid,
+  .rime-skin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .rime-hero-head {
+    flex-direction: column;
+  }
+
+  .rime-summary-column {
+    position: static;
+  }
+
+  .rime-language-toggle {
+    align-self: flex-start;
+  }
 }
 
 .rime-build-button {
