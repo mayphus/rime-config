@@ -234,16 +234,6 @@
         [:div {:class "keyboard-preview-space-row"}
          [:div {:class "keyboard-preview-space"}]])]]))
 
-(defn printable-preview? [preview]
-  (boolean
-   (some (fn [row]
-           (some (fn [key]
-                   (or (seq (:layers key))
-                       (seq (:label key))
-                       (seq (:icon key))))
-                 row))
-         (:rows preview))))
-
 (defn build-request-body [platform selected-schemas active-skins]
   {:schemas (vec (sort selected-schemas))
    :extra-skins active-skins
@@ -281,12 +271,7 @@
         skin-count (count (or (:skins metadata) []))
         preview-skin-id (or preview-skin-id (some-> visible-skins first :id))
         preview-skin (first (filter #(= preview-skin-id (:id %)) visible-skins))
-        preview-layout-key (get state/skin-layout preview-skin-id :qwerty)
-        fallback-layout (merge {:layout-key preview-layout-key}
-                               (get state/keyboard-layouts preview-layout-key))
-        preview-layout (if (printable-preview? (:preview preview-skin))
-                         (:preview preview-skin)
-                         fallback-layout)
+        preview-layout (:preview preview-skin)
         build-disabled? (or (zero? (count selected-schemas)) is-building?)]
     [:div {:class "rime-config-shell"}
      [:section {:class "rime-hero-card"}
@@ -349,7 +334,8 @@
                #(on-skin-preview skin)
                #(on-skin-toggle skin)])]
            [:div {:class "rime-preview-panel"}
-            [keyboard-preview preview-layout]]]])]
+            (when preview-layout
+              [keyboard-preview preview-layout])]]])]
       [:aside {:class "rime-summary-column"}
        [:div {:class "rime-summary-card"}
         [:div {:class "rime-summary-intro"}
