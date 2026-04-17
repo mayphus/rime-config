@@ -160,24 +160,79 @@
    [:span {:class "rime-hero-metric-label"} label]
    [:strong {:class "rime-hero-metric-value"} value]])
 
-(defn keyboard-preview [{:keys [label offsets rows]}]
+(def special-preview-label
+  {"shift" "⇧"
+   "backspace" "⌫"
+   "enter" "↵"
+   "space" "space"
+   "numeric" "123"})
+
+(defn preview-key-label [{:keys [label kind icon]}]
+  (cond
+    (and (string? label) (not= label "")) label
+    (and (string? kind) (contains? special-preview-label kind)) (get special-preview-label kind)
+    (and (string? icon) (not= icon "")) icon
+    :else ""))
+
+(defn rich-preview-key [key]
+  [:div {:class (str "keyboard-preview-key is-rich"
+                     (when (contains? #{"shift" "backspace" "enter" "numeric"} (:kind key))
+                       " is-special")
+                     (when (= "space" (:kind key))
+                       " is-space"))
+         :style {:flex (str (or (:width key) 1) " 1 0%")
+                 :background (:background key)}}
+   (if (seq (:layers key))
+     (into
+      [:<>]
+      (for [[layer-index layer] (map-indexed vector (:layers key))]
+        ^{:key (str (:id key) "-layer-" layer-index)}
+        [:span {:class (str "keyboard-preview-layer"
+                            (when (= layer-index 0) " is-primary"))
+                :style {:left (str (* 100 (or (:x layer) 0.5)) "%")
+                        :top (str (* 100 (or (:y layer) 0.5)) "%")
+                        :font-size (str (max 9 (* 0.72 (or (:font-size layer) 14))) "px")
+                        :font-weight (or (:font-weight layer) "400")
+                        :color (:color layer)
+                        :transform "translate(-50%, -50%)"}}
+         (:text layer)]))
+     [:span {:class "keyboard-preview-fallback-label"}
+      (preview-key-label key)])])
+
+(defn rich-keyboard-preview [{:keys [background rows]}]
   [:div {:class "keyboard-preview"}
-   [:p {:class "keyboard-preview-label"} label]
-   [:div {:class "keyboard-preview-grid"}
-    (for [[row-index row] (map-indexed vector rows)]
-      ^{:key (str "row-" row-index)}
-      [:div {:class "keyboard-preview-row"
-             :style {:padding-left (str (nth offsets row-index 0) "rem")}}
-       (for [keycap row]
-         ^{:key (str row-index "-" keycap)}
-         [:div {:class (str "keyboard-preview-key"
-                            (when (> (count keycap) 2) " is-wide")
-                            (when (= "　　　　　" keycap) " is-blank"))}
-          (when-not (= "　　　　　" keycap)
-            keycap)])])
-    (when (not-any? #{"⌫"} (flatten rows))
-      [:div {:class "keyboard-preview-space-row"}
-       [:div {:class "keyboard-preview-space"}]])]])
+   [:div {:class "keyboard-preview-shell"
+          :style {:background background}}
+    [:div {:class "keyboard-preview-grid is-rich"}
+     (for [[row-index row] (map-indexed vector rows)]
+       ^{:key (str "rich-row-" row-index)}
+       [:div {:class "keyboard-preview-row is-rich"}
+        (for [key row
+              :when key]
+          ^{:key (:id key)}
+          [rich-preview-key key])])]]])
+
+(defn keyboard-preview [{:keys [label background offsets rows]}]
+  (if (and (seq rows) (map? (first (first rows))))
+    [rich-keyboard-preview {:background background
+                            :rows rows}]
+    [:div {:class "keyboard-preview"}
+     [:p {:class "keyboard-preview-label"} label]
+     [:div {:class "keyboard-preview-grid"}
+      (for [[row-index row] (map-indexed vector rows)]
+        ^{:key (str "row-" row-index)}
+        [:div {:class "keyboard-preview-row"
+               :style {:padding-left (str (nth offsets row-index 0) "rem")}}
+         (for [keycap row]
+           ^{:key (str row-index "-" keycap)}
+           [:div {:class (str "keyboard-preview-key"
+                              (when (> (count keycap) 2) " is-wide")
+                              (when (= "　　　　　" keycap) " is-blank"))}
+            (when-not (= "　　　　　" keycap)
+              keycap)])])
+      (when (not-any? #{"⌫"} (flatten rows))
+        [:div {:class "keyboard-preview-space-row"}
+         [:div {:class "keyboard-preview-space"}]])]]))
 
 (defn build-request-body [platform selected-schemas active-skins]
   {:schemas (vec (sort selected-schemas))
@@ -215,9 +270,11 @@
         schema-count (count (:schemas metadata))
         skin-count (count (or (:skins metadata) []))
         preview-skin-id (or preview-skin-id (some-> visible-skins first :id))
+        preview-skin (first (filter #(= preview-skin-id (:id %)) visible-skins))
         preview-layout-key (get state/skin-layout preview-skin-id :qwerty)
-        preview-layout (merge {:layout-key preview-layout-key}
-                              (get state/keyboard-layouts preview-layout-key))
+        preview-layout (or (:preview preview-skin)
+                           (merge {:layout-key preview-layout-key}
+                                  (get state/keyboard-layouts preview-layout-key)))
         build-disabled? (or (zero? (count selected-schemas)) is-building?)]
     [:div {:class "rime-config-shell"}
      [:section {:class "rime-hero-card"}

@@ -411,9 +411,20 @@
 
      (define phone-expr (if phone-cl (expand-phone phone-cl) #'(hash)))
      (define ipad-expr  (if ipad-cl  (expand-ipad  ipad-cl)  #'(hash)))
+     (define preview-bundle-expr
+       #`(bundle (make-standard-skin-files -phone- -ipad-)))
      (define bundle-expr
-       #`(bundle (make-standard-skin-files -phone- -ipad-)
+       #`(bundle #,preview-bundle-expr
                  (if -meta- (make-skin-doc-files -meta-) (hash))))
+     (define skin-preview-files-expr
+       (if theme-cl
+           #`(let ([-phone- #,phone-expr]
+                   [-ipad-  #,ipad-expr])
+               (parameterize (#,@(expand-theme-bindings theme-cl))
+                 #,preview-bundle-expr))
+           #`(let ([-phone- #,phone-expr]
+                   [-ipad-  #,ipad-expr])
+               #,preview-bundle-expr)))
      (define skin-files-expr
        (if theme-cl
            #`(let ([-phone- #,phone-expr]
@@ -429,5 +440,6 @@
            #,(if meta-cl (expand-meta meta-cl slug-str) #'#f))
          (define chinese-name (if -meta- (skin-meta-chinese-name -meta-) ""))
          (define english-name (if -meta- (skin-meta-english-name -meta-) ""))
+         (define skin-preview-files #,skin-preview-files-expr)
          (define skin-files #,skin-files-expr)
-         (provide skin-files trigger-schemas chinese-name english-name))]))
+         (provide skin-preview-files skin-files trigger-schemas chinese-name english-name))]))

@@ -75,5 +75,11 @@
         (delete-file tmp-path)))))
 
 (define (make-skin-doc-files meta)
-  (hash "README.md" (render-readme meta)
-        "demo.png" (render-demo-png meta)))
+  (define readme (render-readme meta))
+  (if (string=? (or (getenv "RIME_RENDER_SKIN_DOCS") "") "1")
+      (with-handlers ([exn:fail?
+                       (lambda (_)
+                         (hash "README.md" readme))])
+        (hash "README.md" readme
+              "demo.png" (render-demo-png meta)))
+      (hash "README.md" readme)))

@@ -456,12 +456,20 @@ body::before {
   gap: 0.45rem;
 }
 
+.keyboard-preview-grid.is-rich {
+  gap: 0.55rem;
+}
+
 .keyboard-preview-row,
 .keyboard-preview-space-row {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.35rem;
+}
+
+.keyboard-preview-row.is-rich {
+  gap: 0.42rem;
 }
 
 .keyboard-preview-key,
@@ -477,6 +485,53 @@ body::before {
   box-shadow: inset 0 -2px 0 rgba(32, 23, 20, 0.04);
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.82rem;
+}
+
+.keyboard-preview-shell {
+  padding: 0.65rem;
+  border: 1px solid rgba(32, 23, 20, 0.08);
+  border-radius: 1.05rem;
+}
+
+.keyboard-preview-key.is-rich {
+  position: relative;
+  min-width: 0;
+  height: 3.15rem;
+  padding: 0;
+  overflow: hidden;
+  box-shadow:
+    inset 0 -2px 0 rgba(32, 23, 20, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.keyboard-preview-key.is-rich.is-special {
+  background: rgba(230, 230, 230, 0.9);
+}
+
+.keyboard-preview-key.is-rich.is-space {
+  min-width: 7rem;
+}
+
+.keyboard-preview-layer,
+.keyboard-preview-fallback-label {
+  position: absolute;
+  font-family: "Avenir Next", "Segoe UI", "Noto Sans", "Noto Sans TC", sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.keyboard-preview-layer.is-primary {
+  letter-spacing: 0.01em;
+}
+
+.keyboard-preview-fallback-label {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: lowercase;
 }
 
 .keyboard-preview-key.is-wide {
