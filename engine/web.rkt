@@ -2,6 +2,7 @@
 
 (require web-server/servlet
          web-server/servlet-env
+         web-server/http
          racket/file
          racket/path
          racket/list
@@ -15,6 +16,9 @@
 
 (define (valid-id? s)
   (and (string? s) (regexp-match? #rx"^[a-zA-Z0-9_-]+$" s)))
+
+(define (skin-demo-path skin-id)
+  (build-path output-dir "compiled-skins" skin-id "demo.png"))
 
 (define (skin-preview-spec skin-rkt)
   (with-handlers ([exn:fail? (lambda (_) #f)])
@@ -115,15 +119,33 @@
            (define triggers (cadr item))
            (define zh-name (caddr item))
            (define preview (cadddr item))
+           (define demo-path (skin-demo-path name))
            (hash 'id name
                  'name (if (string=? zh-name "") name zh-name)
                  'triggers (if (eq? triggers 'default) "default" triggers)
-                 'preview preview))
+                 'preview preview
+                 'preview-image-url (and (file-exists? demo-path)
+                                         (string-append "/skins/" name "/demo.png"))))
          precomputed-skin-items))
 
   (response/full
    200 #"OK" (current-seconds) #"application/json" '()
    (list (jsexpr->bytes (hash 'schemas schemas 'skins skins)))))
+
+(define (handle-skin-demo req skin-id)
+  (cond
+    [(not (valid-id? skin-id))
+     (json-error "Invalid skin id")]
+    [else
+     (define demo-path (skin-demo-path skin-id))
+     (if (file-exists? demo-path)
+         (response/full
+          200 #"OK" (current-seconds) #"image/png"
+          (list (make-header #"Cache-Control" #"public, max-age=300"))
+          (list (file->bytes demo-path)))
+         (response/full
+          404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
+          (list #"Preview image not found")))]))
 
 (define (handle-build req)
   (define body-bytes (request-post-data/raw req))
@@ -167,6 +189,7 @@
 (define-values (dispatch url)
   (dispatch-rules
    [("metadata") handle-metadata]
+   [("skins" (string-arg) "demo.png") handle-skin-demo]
    [("build") #:method "post" handle-build]))
 
 (define (start)

@@ -136,18 +136,18 @@
              :disabled auto?
              :on-change on-toggle}]]])
 
-(defn skin-card [locale {:keys [id name]} checked? previewing? on-hover-start on-hover-end on-toggle]
+(defn skin-card [locale {:keys [id name]} checked? previewing? on-preview on-toggle]
   [:div {:class (str "rime-option-card rime-skin-card"
                      (when checked? " is-selected")
                      (when previewing? " is-previewing"))
-         :on-mouse-enter on-hover-start
-         :on-mouse-leave on-hover-end}
+         :on-click on-preview}
    [:label {:class "rime-option-card-head"}
     [:div {:class "rime-option-copy"}
      [:span {:class "rime-option-title"} name]
      [:span {:class "rime-option-id"} id]]
     [:input {:type "checkbox"
              :checked checked?
+             :on-click #(.stopPropagation %)
              :on-change on-toggle}]]
    (when previewing?
      [:span {:class "rime-preview-hint"} (t locale :previewing)])])
@@ -234,6 +234,16 @@
         [:div {:class "keyboard-preview-space-row"}
          [:div {:class "keyboard-preview-space"}]])]]))
 
+(defn printable-preview? [preview]
+  (boolean
+   (some (fn [row]
+           (some (fn [key]
+                   (or (seq (:layers key))
+                       (seq (:label key))
+                       (seq (:icon key))))
+                 row))
+         (:rows preview))))
+
 (defn build-request-body [platform selected-schemas active-skins]
   {:schemas (vec (sort selected-schemas))
    :extra-skins active-skins
@@ -261,7 +271,7 @@
 (defn rime-ready-view
   [{:keys [locale metadata platform selected-schemas manually-unchecked-skins
            preview-skin-id is-building? error on-platform-change on-schema-toggle
-           on-skin-preview-start on-skin-preview-end on-skin-toggle on-build
+           on-skin-preview on-skin-toggle on-build
            on-locale-change]}]
   (let [auto-deps (state/auto-deps metadata selected-schemas)
         active-schema-ids (state/all-active-schemas metadata selected-schemas)
@@ -272,9 +282,11 @@
         preview-skin-id (or preview-skin-id (some-> visible-skins first :id))
         preview-skin (first (filter #(= preview-skin-id (:id %)) visible-skins))
         preview-layout-key (get state/skin-layout preview-skin-id :qwerty)
-        preview-layout (or (:preview preview-skin)
-                           (merge {:layout-key preview-layout-key}
-                                  (get state/keyboard-layouts preview-layout-key)))
+        fallback-layout (merge {:layout-key preview-layout-key}
+                               (get state/keyboard-layouts preview-layout-key))
+        preview-layout (if (printable-preview? (:preview preview-skin))
+                         (:preview preview-skin)
+                         fallback-layout)
         build-disabled? (or (zero? (count selected-schemas)) is-building?)]
     [:div {:class "rime-config-shell"}
      [:section {:class "rime-hero-card"}
@@ -334,8 +346,7 @@
               [skin-card locale skin
                (not (contains? manually-unchecked-skins (:id skin)))
                (= preview-skin-id (:id skin))
-               #(on-skin-preview-start skin)
-               on-skin-preview-end
+               #(on-skin-preview skin)
                #(on-skin-toggle skin)])]
            [:div {:class "rime-preview-panel"}
             [keyboard-preview preview-layout]]]])]
@@ -430,8 +441,7 @@
                        (if (contains? selected (:id schema))
                          (disj selected (:id schema))
                          (conj selected (:id schema))))))
-            :on-skin-preview-start #(reset! preview-skin-id* (:id %))
-            :on-skin-preview-end #(reset! preview-skin-id* nil)
+            :on-skin-preview #(reset! preview-skin-id* (:id %))
             :on-skin-toggle
             (fn [skin]
               (swap! manually-unchecked-skins*
@@ -453,7 +463,8 @@
                  api-url
                  (build-request-body platform selected-schemas active-skins)
                  #(reset! error* %)
-                 #(reset! is-building* false))))}]
+                 #(reset! is-building* false))))
+            }]
           [rime-loading-view @locale* @metadata-loading?* @error*
            (fn [next-locale]
              (reset! locale* next-locale)
