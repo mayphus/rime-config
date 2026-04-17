@@ -317,6 +317,18 @@
                        "~a: expected string or bytes for ~a, got ~v"
                        rkt-path rel-path content)])))))
 
+(define (with-skin-doc-rendering enabled? thunk)
+  (define previous (getenv "RIME_RENDER_SKIN_DOCS"))
+  (dynamic-wind
+    (lambda ()
+      (when enabled?
+        (putenv "RIME_RENDER_SKIN_DOCS" "1")))
+    thunk
+    (lambda ()
+      (if previous
+          (putenv "RIME_RENDER_SKIN_DOCS" previous)
+          (putenv "RIME_RENDER_SKIN_DOCS" "")))))
+
 ;; ---- Build schemas ---------------------------------------------------------
 
 (define (build-schemas! schemas profile-out)
@@ -537,15 +549,20 @@
 
 ;; ---- Standalone skin previews ----------------------------------------------
 
-(define (build-preview-skins!)
+(define (build-preview-skins! #:render-docs? [render-docs? #f])
   (for ([skin-file (sort (directory-list skins-dir #:build? #t) path<?)]
         #:when (equal? (path-get-extension skin-file) #".rkt"))
     (define skin (path->string (path-replace-extension (file-name-from-path skin-file) #"")))
     (define out  (build-path output-dir "compiled-skins" skin))
-    (printf "Building preview skin: ~a\n" skin)
+    (printf "Building preview skin: ~a~a\n" skin (if render-docs? " (with docs)" ""))
     (delete-directory/files out #:must-exist? #f)
     (make-directory* out)
-    (write-module-files! skin-file out 'skin-files)))
+    (with-skin-doc-rendering
+     render-docs?
+     (lambda ()
+       (write-module-files! skin-file
+                            out
+                            (if render-docs? 'skin-files 'skin-preview-files))))))
 
 ;; ---- CLI -------------------------------------------------------------------
 
@@ -590,6 +607,9 @@
     [("skins")
      (build-preview-skins!)]
 
+    [("skin-docs")
+     (build-preview-skins! #:render-docs? #t)]
+
     [("deploy")
      (deploy-desktop! (rime-dir) #:rime-deploy? (do-rime-deploy))]
 
@@ -630,5 +650,5 @@
 
     [else
      (eprintf "Unknown command: ~a\n" cmd)
-     (eprintf "Available: build  all  clean  skins  deploy  upload  upload-dry-run\n")
+     (eprintf "Available: build  all  clean  skins  skin-docs  deploy  upload  upload-dry-run\n")
      (exit 1)]))

@@ -72,6 +72,7 @@
 (require racket/hash
          "core/dsl.rkt"
          "core/docs.rkt"
+         "core/preview.rkt"
          "presets/standard.rkt"
          "keysets/pinyin-common.rkt"
          "layouts/base-page.rkt"
@@ -98,6 +99,7 @@
          (all-from-out racket/hash
                        "core/dsl.rkt"
                        "core/docs.rkt"
+                       "core/preview.rkt"
                        "presets/standard.rkt"
                        "keysets/pinyin-common.rkt"
                        "layouts/base-page.rkt"
@@ -415,7 +417,7 @@
        #`(bundle (make-standard-skin-files -phone- -ipad-)))
      (define bundle-expr
        #`(bundle #,preview-bundle-expr
-                 (if -meta- (make-skin-doc-files -meta-) (hash))))
+                 (if -meta- (make-skin-doc-files -meta- skin-preview-spec) (hash))))
      (define skin-preview-files-expr
        (if theme-cl
            #`(let ([-phone- #,phone-expr]
@@ -425,6 +427,8 @@
            #`(let ([-phone- #,phone-expr]
                    [-ipad-  #,ipad-expr])
                #,preview-bundle-expr)))
+     (define skin-preview-spec-expr
+       #`(preview-spec-from-files skin-preview-files))
      (define skin-files-expr
        (if theme-cl
            #`(let ([-phone- #,phone-expr]
@@ -441,5 +445,6 @@
          (define chinese-name (if -meta- (skin-meta-chinese-name -meta-) ""))
          (define english-name (if -meta- (skin-meta-english-name -meta-) ""))
          (define skin-preview-files #,skin-preview-files-expr)
+         (define skin-preview-spec #,skin-preview-spec-expr)
          (define skin-files #,skin-files-expr)
-         (provide skin-preview-files skin-files trigger-schemas chinese-name english-name))]))
+         (provide skin-preview-files skin-preview-spec skin-files trigger-schemas chinese-name english-name))]))

@@ -20,7 +20,8 @@ racket build.rkt deploy                # build desktop profile → sync to ~/Lib
 racket build.rkt -p <profile> build    # build + zip a profile
 racket build.rkt all                   # build + zip all profiles
 racket build.rkt clean                 # delete build cache
-racket build.rkt skins                 # build standalone skin previews
+racket build.rkt skins                 # build standalone skin preview pages only
+racket build.rkt skin-docs             # build skin previews plus README.md/demo.png
 racket build.rkt -p <profile> upload   # build + upload to Yuanshu server
 ```
 
@@ -46,3 +47,5 @@ Visit `http://localhost:5001` to select your platform, schemas, and skins.
 Each schema in `schema/` exports `config-files` — a hash of relative paths to YAML content. Skins in `skin/` export `skin-files` — a hash of relative paths to JSON content, zipped into `.cskin` bundles.
 
 Schema modules declare their own dependencies (`schema-deps`, `static-dep-files`, `static-dep-dirs`) and mobile-only status (`mobile-only?`). Skin modules declare which schemas trigger their inclusion (`trigger-schemas`). The build system discovers everything from these exports — no central dispatch table.
+
+`demo.png` generation is a build-time concern. Production/runtime services should serve prebuilt skin docs/assets instead of rendering them on demand.

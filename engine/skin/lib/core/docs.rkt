@@ -7,7 +7,8 @@
          racket/port
          racket/runtime-path
          racket/string
-         racket/system)
+         racket/system
+         json)
 
 (provide (struct-out skin-meta)
          make-skin-meta
@@ -16,9 +17,13 @@
 (struct skin-meta (slug english-name chinese-name summary features) #:transparent)
 
 (define-runtime-path render-skin-demo-script "../../../tools/render_skin_demo.py")
+(define-runtime-path render-skin-demo-swift "../../../tools/render_skin_demo.swift")
 (define python3-exe
   (or (find-executable-path "python3")
       (error 'make-skin-doc-files "python3 not found in PATH")))
+(define swift-exe
+  (or (find-executable-path "swift")
+      (error 'make-skin-doc-files "swift not found in PATH")))
 
 (define (make-skin-meta #:slug slug
                         #:english-name english-name
@@ -48,21 +53,34 @@
         "\n\n"))
    "This README and `demo.png` are generated from the skin metadata.\n"))
 
-(define (render-demo-png meta)
+(define (render-demo-png meta preview-spec)
   (define tmp-path
     (make-temporary-file
      (~a (path->string (find-system-path 'temp-dir))
          "/yuanshu-skin-demo-"
          (skin-meta-slug meta)
          "-~a.png")))
+  (define payload-path
+    (make-temporary-file
+     (~a (path->string (find-system-path 'temp-dir))
+         "/yuanshu-skin-demo-"
+         (skin-meta-slug meta)
+         "-~a.json")))
   (dynamic-wind
     void
     (lambda ()
+      (call-with-output-file payload-path
+        #:exists 'truncate/replace
+        (lambda (out)
+          (write-json
+           (hasheq 'title (skin-meta-chinese-name meta)
+                   'preview preview-spec)
+           out)))
       (define status
-        (system* python3-exe
-                 render-skin-demo-script
-                 "--title"
-                 (skin-meta-chinese-name meta)
+        (system* swift-exe
+                 render-skin-demo-swift
+                 "--payload"
+                 (path->string payload-path)
                  "--output"
                  (path->string tmp-path)))
       (unless status
@@ -71,15 +89,18 @@
                (skin-meta-slug meta)))
       (file->bytes tmp-path))
     (lambda ()
+      (when (file-exists? payload-path)
+        (delete-file payload-path))
       (when (file-exists? tmp-path)
         (delete-file tmp-path)))))
 
-(define (make-skin-doc-files meta)
+(define (make-skin-doc-files meta preview-spec)
   (define readme (render-readme meta))
-  (if (string=? (or (getenv "RIME_RENDER_SKIN_DOCS") "") "1")
+  (if (and preview-spec
+           (string=? (or (getenv "RIME_RENDER_SKIN_DOCS") "") "1"))
       (with-handlers ([exn:fail?
                        (lambda (_)
                          (hash "README.md" readme))])
         (hash "README.md" readme
-              "demo.png" (render-demo-png meta)))
+              "demo.png" (render-demo-png meta preview-spec)))
       (hash "README.md" readme)))
