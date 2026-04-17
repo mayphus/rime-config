@@ -1,52 +1,76 @@
 :root {
-  --background: #f6f1e8;
-  --surface: rgba(255, 252, 247, 0.72);
-  --surface-strong: rgba(255, 252, 247, 0.9);
-  --foreground: #1f1a17;
-  --muted-foreground: #6c5b52;
-  --line: rgba(31, 26, 23, 0.12);
-  --line-strong: rgba(31, 26, 23, 0.2);
-  --accent: #9f4f2c;
-  --accent-soft: rgba(159, 79, 44, 0.12);
-  --error: #a53d2f;
+  --background: #efe3cf;
+  --background-deep: #d8bd93;
+  --panel: rgba(255, 250, 243, 0.94);
+  --panel-soft: rgba(255, 247, 235, 0.72);
+  --panel-strong: #fffaf3;
+  --ink: #201714;
+  --muted: #6c5648;
+  --line: rgba(32, 23, 20, 0.12);
+  --line-strong: rgba(32, 23, 20, 0.22);
+  --accent: #be5a2c;
+  --accent-deep: #8b3719;
+  --accent-soft: rgba(190, 90, 44, 0.12);
+  --accent-glow: rgba(190, 90, 44, 0.2);
+  --success: #275c47;
+  --error: #9f392c;
+  --shadow: 0 1.5rem 4rem rgba(62, 36, 22, 0.12);
 }
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   min-height: 100%;
-  background:
-    radial-gradient(circle at top, rgba(159, 79, 44, 0.08), transparent 32rem),
-    linear-gradient(180deg, #fbf7f0 0%, var(--background) 100%);
-  color: var(--foreground);
-  font-family: "Avenir Next", "Segoe UI", "Noto Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 }
 
 body {
-  padding: 2rem 1rem 3rem;
+  padding: 2rem 1rem 3.5rem;
+  background:
+    radial-gradient(circle at top left, rgba(255, 241, 216, 0.95), transparent 22rem),
+    radial-gradient(circle at top right, rgba(190, 90, 44, 0.14), transparent 20rem),
+    linear-gradient(180deg, #f7eddf 0%, var(--background) 46%, #ead8b8 100%);
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", "Noto Sans", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(32, 23, 20, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32, 23, 20, 0.02) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 90%);
 }
 
 #app {
-  width: min(100%, 72rem);
+  position: relative;
+  width: min(100%, 74rem);
   margin: 0 auto;
 }
 
 .page-title {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", serif;
-  font-size: clamp(2.2rem, 6vw, 4rem);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: clamp(2.8rem, 5.8vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
 }
 
 .page-description,
 .rime-section-copy,
-.rime-help-text {
+.rime-help-text,
+.rime-hero-note,
+.rime-empty-state {
   margin: 0;
-  color: var(--muted-foreground);
+  color: var(--muted);
 }
 
 .rime-config-shell,
@@ -54,10 +78,11 @@ body {
 .rime-primary-column,
 .rime-summary-column,
 .rime-section-header,
+.rime-option-copy,
+.keyboard-preview,
 .rime-summary-card,
 .rime-summary-block,
-.rime-option-copy,
-.keyboard-preview {
+.rime-summary-intro {
   display: flex;
   flex-direction: column;
 }
@@ -66,30 +91,145 @@ body {
   gap: 1.5rem;
 }
 
-.rime-hero-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
 .rime-hero-card,
 .rime-section,
 .rime-summary-card,
 .rime-notes-card,
 .rime-preview-panel {
-  padding: 1.3rem 1.35rem;
+  position: relative;
   border: 1px solid var(--line);
+  border-radius: 1.75rem;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.rime-hero-card {
+  padding: 1.5rem;
+  background:
+    radial-gradient(circle at top right, rgba(190, 90, 44, 0.18), transparent 18rem),
+    linear-gradient(135deg, rgba(255, 249, 240, 0.98), rgba(251, 236, 212, 0.96));
+}
+
+.rime-hero-card::after {
+  content: "";
+  position: absolute;
+  right: -2rem;
+  top: -2rem;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.58), transparent 70%);
+}
+
+.rime-section,
+.rime-summary-card,
+.rime-notes-card,
+.rime-preview-panel {
+  padding: 1.25rem;
+}
+
+.rime-hero-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.rime-hero-copy {
+  gap: 0.75rem;
+  max-width: 42rem;
+}
+
+.rime-hero-eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.rime-hero-note {
+  max-width: 34rem;
+  font-size: 0.95rem;
+}
+
+.rime-hero-metrics {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.rime-hero-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(32, 23, 20, 0.08);
   border-radius: 1.2rem;
-  background: var(--surface);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 1.4rem 3rem rgba(81, 57, 46, 0.08);
+  background: rgba(255, 252, 247, 0.78);
+}
+
+.rime-hero-metric-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.rime-hero-metric-value {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.1;
+}
+
+.rime-language-toggle {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(32, 23, 20, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 250, 243, 0.88);
+}
+
+.rime-language-button {
+  appearance: none;
+  min-width: 2.65rem;
+  padding: 0.4rem 0.68rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.rime-language-button:hover {
+  transform: translateY(-1px);
+}
+
+.rime-language-button.is-active {
+  background: var(--ink);
+  color: #fffaf3;
 }
 
 .rime-config-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(18rem, 0.95fr);
-  gap: 1.2rem;
+  grid-template-columns: minmax(0, 1.65fr) minmax(20rem, 0.95fr);
+  gap: 1.25rem;
+  align-items: start;
 }
 
 .rime-primary-column {
@@ -97,25 +237,26 @@ body {
 }
 
 .rime-summary-column {
-  gap: 0.7rem;
+  gap: 0.85rem;
   position: sticky;
-  top: 2rem;
+  top: 1.5rem;
   align-self: start;
 }
 
 .rime-section-header,
 .rime-summary-block,
+.rime-summary-intro,
 .rime-option-copy,
 .keyboard-preview {
-  gap: 0.7rem;
+  gap: 0.55rem;
 }
 
 .rime-section-title {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", serif;
-  font-size: 1.45rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 1.55rem;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
 
 .rime-platform-grid,
@@ -127,56 +268,46 @@ body {
 
 .rime-skin-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
-  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1.08fr) minmax(17rem, 0.92fr);
+  gap: 1rem;
   align-items: start;
 }
 
 .rime-platform-button,
-.rime-build-button,
 .rime-option-card,
-.rime-language-button {
+.rime-build-button {
   border: 1px solid var(--line);
-  border-radius: 0.9rem;
-  background: var(--surface-strong);
-  color: var(--foreground);
-  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  border-radius: 1.2rem;
+  color: var(--ink);
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .rime-platform-button,
 .rime-build-button {
   appearance: none;
-  padding: 0.95rem 1rem;
   cursor: pointer;
 }
 
-.rime-language-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.22rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 252, 247, 0.86);
-}
-
-.rime-language-button {
-  appearance: none;
-  min-width: 2.5rem;
-  padding: 0.32rem 0.6rem;
-  border-radius: 999px;
-  background: transparent;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  cursor: pointer;
+.rime-platform-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 1rem 1.05rem;
+  background: linear-gradient(180deg, #fffaf4, #f6eadb);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
 }
 
 .rime-option-card {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  padding: 0.9rem 0.95rem;
+  padding: 0.95rem 1rem;
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.95), rgba(247, 236, 219, 0.84));
 }
 
 .rime-option-card-head {
@@ -187,32 +318,34 @@ body {
 }
 
 .rime-platform-button:hover,
-.rime-build-button:hover,
 .rime-option-card:hover,
-.rime-language-button:hover {
+.rime-build-button:hover {
+  transform: translateY(-2px);
   border-color: var(--line-strong);
-  transform: translateY(-1px);
+  box-shadow: 0 0.8rem 1.8rem rgba(77, 48, 30, 0.08);
 }
 
 .rime-platform-button.is-active,
-.rime-option-card.is-selected,
-.rime-language-button.is-active {
-  border-color: rgba(159, 79, 44, 0.3);
-  background: var(--accent-soft);
+.rime-option-card.is-selected {
+  border-color: rgba(139, 55, 25, 0.28);
+  background:
+    linear-gradient(180deg, rgba(255, 245, 233, 0.98), rgba(246, 222, 198, 0.92));
+  box-shadow: 0 0 0 3px rgba(190, 90, 44, 0.08);
 }
 
 .rime-option-card.is-auto {
-  opacity: 0.82;
+  border-style: dashed;
 }
 
 .rime-skin-card.is-previewing {
-  border-color: rgba(159, 79, 44, 0.34);
-  background: rgba(109, 75, 62, 0.08);
+  border-color: rgba(139, 55, 25, 0.36);
+  box-shadow: 0 0 0 3px rgba(190, 90, 44, 0.1);
 }
 
 .rime-platform-label,
 .rime-option-title {
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .rime-platform-hint,
@@ -220,16 +353,78 @@ body {
 .rime-inline-note,
 .rime-preview-hint {
   font-size: 0.82rem;
-  color: var(--muted-foreground);
+  color: var(--muted);
+}
+
+.rime-option-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rime-inline-note {
+  padding: 0.14rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(32, 23, 20, 0.06);
+}
+
+.rime-summary-card {
+  gap: 1rem;
+  background:
+    linear-gradient(180deg, rgba(31, 24, 20, 0.96), rgba(56, 37, 25, 0.96)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+  color: #fff7ef;
+}
+
+.rime-summary-card .rime-section-copy,
+.rime-summary-card .rime-summary-label,
+.rime-summary-card .rime-help-text,
+.rime-summary-card .rime-empty-state {
+  color: rgba(255, 247, 239, 0.72);
+}
+
+.rime-summary-kicker {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 247, 239, 0.7);
+}
+
+.rime-summary-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  align-self: flex-start;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid rgba(255, 247, 239, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 247, 239, 0.06);
+}
+
+.rime-summary-status-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #7ed9b2;
+  box-shadow: 0 0 0 0.3rem rgba(126, 217, 178, 0.18);
+}
+
+.rime-summary-status-text {
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .rime-summary-label,
 .keyboard-preview-label {
   margin: 0;
-  font-size: 0.78rem;
-  color: var(--muted-foreground);
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 .rime-summary-pills {
@@ -242,11 +437,17 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.26rem 0.62rem;
+  padding: 0.34rem 0.68rem;
   border-radius: 999px;
-  background: rgba(31, 26, 23, 0.06);
-  font-size: 0.74rem;
+  background: rgba(255, 247, 239, 0.12);
+  color: #fff7ef;
+  font-size: 0.76rem;
   line-height: 1.2;
+}
+
+.rime-preview-panel {
+  background:
+    linear-gradient(180deg, rgba(250, 241, 228, 0.9), rgba(241, 224, 197, 0.86));
 }
 
 .keyboard-preview-grid {
@@ -268,11 +469,12 @@ body {
   display: grid;
   place-items: center;
   min-width: 2.1rem;
-  height: 2.2rem;
+  height: 2.3rem;
   padding: 0 0.45rem;
-  border: 1px solid rgba(31, 26, 23, 0.1);
-  border-radius: 0.65rem;
-  background: rgba(31, 26, 23, 0.05);
+  border: 1px solid rgba(32, 23, 20, 0.09);
+  border-radius: 0.7rem;
+  background: rgba(255, 251, 246, 0.75);
+  box-shadow: inset 0 -2px 0 rgba(32, 23, 20, 0.04);
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.82rem;
 }
@@ -284,47 +486,39 @@ body {
 .keyboard-preview-key.is-blank {
   background: transparent;
   border-color: transparent;
+  box-shadow: none;
 }
 
 .keyboard-preview-space {
   width: 8.4rem;
 }
 
-@media (max-width: 720px) {
-  .rime-config-grid,
-  .rime-skin-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .rime-hero-head {
-    flex-direction: column;
-  }
-
-  .rime-summary-column {
-    position: static;
-  }
-
-  .rime-language-toggle {
-    align-self: flex-start;
-  }
-}
-
 .rime-build-button {
   width: 100%;
   justify-content: center;
-  font-weight: 600;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(180deg, #ff8a52, var(--accent));
+  color: #fffaf3;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow: 0 0.85rem 1.7rem var(--accent-glow);
 }
 
 .rime-build-button.is-disabled,
 .rime-build-button:disabled {
   cursor: not-allowed;
-  opacity: 0.55;
+  opacity: 0.52;
   transform: none;
+  box-shadow: none;
 }
 
 .rime-error-text {
   margin: 0;
   color: var(--error);
+}
+
+.rime-empty-state {
+  font-size: 0.92rem;
 }
 
 @media (max-width: 1120px) {
@@ -339,13 +533,24 @@ body {
 
 @media (max-width: 860px) {
   body {
-    padding: 1.2rem 1rem 2.5rem;
+    padding: 1.2rem 0.9rem 2.8rem;
   }
 
+  .rime-hero-metrics,
   .rime-platform-grid,
   .rime-option-grid,
   .rime-skin-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .rime-hero-head {
+    flex-direction: column;
+  }
+
+  .rime-language-toggle {
+    align-self: flex-start;
   }
 }
 
@@ -356,5 +561,6 @@ body {
   .rime-notes-card,
   .rime-preview-panel {
     padding: 1rem;
+    border-radius: 1.3rem;
   }
 }

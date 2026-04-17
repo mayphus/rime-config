@@ -6,12 +6,20 @@
 (def copy
   {:en {:locale-en "EN"
         :locale-zh "繁"
+        :eyebrow "Rime Config Studio"
         :title "Rime Config Builder"
         :loading-description "Loading the latest schema and skin metadata from api-rime.mayphus.org."
+        :loading-note "Fresh metadata is pulled before you export."
         :status "Status"
         :loading-metadata "Fetching metadata..."
         :metadata-missing "Metadata has not been loaded yet."
         :hero-description "Choose your platform, input schemas, and skins, then generate a downloadable Rime config ZIP from mayphus.org."
+        :hero-note "Dependencies are resolved automatically, so the exported bundle stays usable."
+        :hero-metric-schemas "Schemas available"
+        :hero-metric-skins "Skins available"
+        :hero-metric-build "Export format"
+        :hero-format-value "ZIP"
+        :hero-mobile-preview "Live mobile preview"
         :platform "Platform"
         :platform-description "Desktop exports schemas only. Mobile automatically shows available skins."
         :desktop "Desktop"
@@ -28,6 +36,10 @@
         :summary-mobile "Mobile (Yuanshu IME)"
         :summary-schemas "Schemas"
         :summary-skins "Skins"
+        :summary-selection "Current selection"
+        :summary-empty "Nothing selected yet."
+        :summary-ready "Ready to export"
+        :summary-ready-copy "Review the package contents, then generate the archive."
         :auto "Auto"
         :previewing "Previewing"
         :building "Building..."
@@ -38,12 +50,20 @@
         :api-unreachable "Could not reach the Rime config API."}
    :zh-Hant {:locale-en "EN"
              :locale-zh "繁"
+             :eyebrow "Rime Config Studio"
              :title "Rime 配置生成器"
              :loading-description "正在從 api-rime.mayphus.org 載入最新方案與皮膚資料。"
+             :loading-note "匯出前會先抓取最新 metadata。"
              :status "狀態"
              :loading-metadata "正在取得 metadata…"
              :metadata-missing "尚未取得 metadata。"
              :hero-description "選擇平台、輸入方案與皮膚，直接從 mayphus.org 生成可下載的 Rime 配置壓縮包。"
+             :hero-note "依賴項目會自動補齊，避免匯出的配置缺件。"
+             :hero-metric-schemas "可用方案"
+             :hero-metric-skins "可用皮膚"
+             :hero-metric-build "輸出格式"
+             :hero-format-value "ZIP"
+             :hero-mobile-preview "行動端即時預覽"
              :platform "平台"
              :platform-description "桌面端只生成方案，移動端會自動顯示可用皮膚。"
              :desktop "桌面"
@@ -60,6 +80,10 @@
              :summary-mobile "移動端 (元書輸入法)"
              :summary-schemas "方案"
              :summary-skins "皮膚"
+             :summary-selection "目前選擇"
+             :summary-empty "目前尚未選擇。"
+             :summary-ready "可以匯出"
+             :summary-ready-copy "確認打包內容後即可生成壓縮檔。"
              :auto "自動"
              :previewing "目前預覽"
              :building "編譯中…"
@@ -131,6 +155,11 @@
 (defn summary-pill [label]
   [:span {:class "rime-summary-pill"} label])
 
+(defn hero-metric [label value]
+  [:div {:class "rime-hero-metric"}
+   [:span {:class "rime-hero-metric-label"} label]
+   [:strong {:class "rime-hero-metric-value"} value]])
+
 (defn keyboard-preview [{:keys [label offsets rows]}]
   [:div {:class "keyboard-preview"}
    [:p {:class "keyboard-preview-label"} label]
@@ -160,8 +189,10 @@
    [:section {:class "rime-hero-card"}
     [:div {:class "rime-hero-head"}
      [:div {:class "rime-hero-copy"}
+      [:p {:class "rime-hero-eyebrow"} (t locale :eyebrow)]
       [:h1 {:class "page-title"} (t locale :title)]
-      [:p {:class "page-description"} (t locale :loading-description)]]
+      [:p {:class "page-description"} (t locale :loading-description)]
+      [:p {:class "rime-hero-note"} (t locale :loading-note)]]
      [language-toggle locale on-locale-change]]]
    [:section {:class "rime-notes-card"}
     [:h2 {:class "rime-section-title"} (t locale :status)]
@@ -181,6 +212,8 @@
         active-schema-ids (state/all-active-schemas metadata selected-schemas)
         visible-skins (vec (state/visible-skins metadata platform active-schema-ids))
         active-skins (state/active-skins metadata platform selected-schemas manually-unchecked-skins)
+        schema-count (count (:schemas metadata))
+        skin-count (count (or (:skins metadata) []))
         preview-skin-id (or preview-skin-id (some-> visible-skins first :id))
         preview-layout-key (get state/skin-layout preview-skin-id :qwerty)
         preview-layout (merge {:layout-key preview-layout-key}
@@ -190,10 +223,18 @@
      [:section {:class "rime-hero-card"}
       [:div {:class "rime-hero-head"}
        [:div {:class "rime-hero-copy"}
+        [:p {:class "rime-hero-eyebrow"} (t locale :eyebrow)]
         [:h1 {:class "page-title"} (t locale :title)]
-        [:p {:class "page-description"} (t locale :hero-description)]]
-       [language-toggle locale on-locale-change]]]
-
+        [:p {:class "page-description"} (t locale :hero-description)]
+        [:p {:class "rime-hero-note"} (t locale :hero-note)]]
+       [language-toggle locale on-locale-change]]
+      [:div {:class "rime-hero-metrics"}
+       [hero-metric (t locale :hero-metric-schemas) schema-count]
+       [hero-metric (t locale :hero-metric-skins) skin-count]
+       [hero-metric (t locale :hero-metric-build)
+        (if (= platform :mobile)
+          (t locale :hero-mobile-preview)
+          (t locale :hero-format-value))]]]
      [:div {:class "rime-config-grid"}
       [:div {:class "rime-primary-column"}
        [:section {:class "rime-section"}
@@ -211,7 +252,6 @@
                    :on-click #(on-platform-change :mobile)}
           [:span {:class "rime-platform-label"} (t locale :mobile)]
           [:span {:class "rime-platform-hint"} (t locale :mobile-hint)]]]]
-
        [:section {:class "rime-section"}
         [:div {:class "rime-section-header"}
          [:h2 {:class "rime-section-title"} (t locale :schemas)]
@@ -225,7 +265,6 @@
             (contains? active-schema-ids (:id schema))
             (contains? auto-deps (:id schema))
             #(on-schema-toggle schema)])]]
-
        (when (and (= platform :mobile) (seq visible-skins))
          [:section {:class "rime-section"}
           [:div {:class "rime-section-header"}
@@ -243,29 +282,37 @@
                #(on-skin-toggle skin)])]
            [:div {:class "rime-preview-panel"}
             [keyboard-preview preview-layout]]]])]
-
       [:aside {:class "rime-summary-column"}
        [:div {:class "rime-summary-card"}
-        [:div {:class "rime-section-header"}
-         [:h2 {:class "rime-section-title"} (t locale :summary)]]
+        [:div {:class "rime-summary-intro"}
+         [:p {:class "rime-summary-kicker"} (t locale :summary-selection)]
+         [:h2 {:class "rime-section-title"} (t locale :summary)]
+         [:p {:class "rime-section-copy"} (t locale :summary-ready-copy)]]
+        [:div {:class "rime-summary-status"}
+         [:span {:class "rime-summary-status-dot"}]
+         [:span {:class "rime-summary-status-text"} (t locale :summary-ready)]]
         [:div {:class "rime-summary-block"}
          [:p {:class "rime-summary-label"} (t locale :summary-platform)]
          [summary-pill (if (= platform :desktop)
                          (t locale :summary-desktop)
                          (t locale :summary-mobile))]]
         [:div {:class "rime-summary-block"}
-         [:p {:class "rime-summary-label"} (str (t locale :summary-schemas) " (" (count active-schema-ids) ")")]
-         [:div {:class "rime-summary-pills"}
-          (for [schema-id active-schema-ids
-                :let [schema (state/schema-by-id metadata schema-id)]]
-            ^{:key schema-id}
-            [summary-pill
-             (str (:name schema schema-id)
-                  (when (contains? auto-deps schema-id)
-                    (str " · " (t locale :auto))))])]]
+         [:p {:class "rime-summary-label"}
+          (str (t locale :summary-schemas) " (" (count active-schema-ids) ")")]
+         (if (seq active-schema-ids)
+           [:div {:class "rime-summary-pills"}
+            (for [schema-id active-schema-ids
+                  :let [schema (state/schema-by-id metadata schema-id)]]
+              ^{:key schema-id}
+              [summary-pill
+               (str (:name schema schema-id)
+                    (when (contains? auto-deps schema-id)
+                      (str " · " (t locale :auto))))])]
+           [:p {:class "rime-empty-state"} (t locale :summary-empty)])]
         (when (and (= platform :mobile) (seq active-skins))
           [:div {:class "rime-summary-block"}
-           [:p {:class "rime-summary-label"} (str (t locale :summary-skins) " (" (count active-skins) ")")]
+           [:p {:class "rime-summary-label"}
+            (str (t locale :summary-skins) " (" (count active-skins) ")")]
            [:div {:class "rime-summary-pills"}
             (for [skin-id active-skins
                   :let [skin (first (filter #(= skin-id (:id %)) (:skins metadata)))]]
