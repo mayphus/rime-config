@@ -19,12 +19,10 @@
 
 (define-runtime-path render-skin-demo-script "../../../tools/render_skin_demo.py")
 (define-runtime-path render-skin-demo-swift "../../../tools/render_skin_demo.swift")
-(define python3-exe
-  (or (find-executable-path "python3")
-      (error 'make-skin-doc-files "python3 not found in PATH")))
-(define swift-exe
-  (or (find-executable-path "swift")
-      (error 'make-skin-doc-files "swift not found in PATH")))
+
+(define (require-executable name who)
+  (or (find-executable-path name)
+      (error who "~a not found in PATH" name)))
 
 (define (make-skin-meta #:slug slug
                         #:english-name english-name
@@ -55,6 +53,8 @@
    "This README and `demo.png` are generated from the skin metadata.\n"))
 
 (define (render-demo-png meta preview-spec)
+  (define swift-exe
+    (require-executable "swift" 'make-skin-doc-files))
   (define tmp-path
     (make-temporary-file
      (~a (path->string (find-system-path 'temp-dir))
