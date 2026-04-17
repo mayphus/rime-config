@@ -11,8 +11,5 @@
       "Standard phone and iPad pinyin pages"
       "Generated README.md and demo.png bundle assets"))
 
-  (phone-layout
-    (layers bopomofo)
-    (fonts [bopomofo 25 #:weight medium])
-    (centers [bopomofo 0.5 0.54]))
+  (phone-layout bopomofo)
 )
