@@ -298,9 +298,15 @@
 
 ;; ---- Write files from a module's exported hash ----------------------------
 
-(define (write-module-files! rkt-path out-dir export-sym)
+(define (module-export-ref rkt-path export-sym #:fresh? [fresh? #f])
+  (if fresh?
+      (parameterize ([current-namespace (make-base-namespace)])
+        (dynamic-require rkt-path export-sym))
+      (dynamic-require rkt-path export-sym)))
+
+(define (write-module-files! rkt-path out-dir export-sym #:fresh? [fresh? #f])
   (define files
-    (let ([v (dynamic-require rkt-path export-sym)])
+    (let ([v (module-export-ref rkt-path export-sym #:fresh? fresh?)])
       (unless (hash? v)
         (error 'write-module-files!
                "~a: expected ~a to be a hash, got ~v" rkt-path export-sym v))
@@ -357,7 +363,13 @@
   (printf "Building skin: ~a\n" skin)
   (delete-directory/files tmp-dir #:must-exist? #f)
   (make-directory* tmp-skin)
-  (write-module-files! skin-rkt tmp-skin 'skin-files)
+  (with-skin-doc-rendering
+   #t
+   (lambda ()
+     (write-module-files! skin-rkt
+                          tmp-skin
+                          'skin-preview-build-files
+                          #:fresh? #t)))
   (delete-file* cskin)
   (parameterize ([current-directory tmp-dir])
     (run! zip-exe "-qr" (path->string cskin) skin))
