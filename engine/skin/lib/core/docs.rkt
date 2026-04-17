@@ -12,6 +12,7 @@
 
 (provide (struct-out skin-meta)
          make-skin-meta
+         make-skin-demo-files
          make-skin-doc-files)
 
 (struct skin-meta (slug english-name chinese-name summary features) #:transparent)
@@ -93,6 +94,15 @@
         (delete-file payload-path))
       (when (file-exists? tmp-path)
         (delete-file tmp-path)))))
+
+(define (make-skin-demo-files meta preview-spec)
+  (if (and preview-spec
+           (string=? (or (getenv "RIME_RENDER_SKIN_DOCS") "") "1"))
+      (with-handlers ([exn:fail?
+                       (lambda (_)
+                         (hash))])
+        (hash "demo.png" (render-demo-png meta preview-spec)))
+      (hash)))
 
 (define (make-skin-doc-files meta preview-spec)
   (define readme (render-readme meta))

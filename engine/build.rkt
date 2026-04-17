@@ -558,11 +558,11 @@
     (delete-directory/files out #:must-exist? #f)
     (make-directory* out)
     (with-skin-doc-rendering
-     render-docs?
+     #t
      (lambda ()
        (write-module-files! skin-file
                             out
-                            (if render-docs? 'skin-files 'skin-preview-files))))))
+                            (if render-docs? 'skin-files 'skin-preview-build-files))))))
 
 ;; ---- CLI -------------------------------------------------------------------
 

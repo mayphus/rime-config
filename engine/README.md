@@ -20,7 +20,7 @@ racket build.rkt deploy                # build desktop profile → sync to ~/Lib
 racket build.rkt -p <profile> build    # build + zip a profile
 racket build.rkt all                   # build + zip all profiles
 racket build.rkt clean                 # delete build cache
-racket build.rkt skins                 # build standalone skin preview pages only
+racket build.rkt skins                 # build standalone skin preview pages plus demo.png
 racket build.rkt skin-docs             # build skin previews plus README.md/demo.png
 racket build.rkt -p <profile> upload   # build + upload to Yuanshu server
 ```
