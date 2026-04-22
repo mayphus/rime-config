@@ -7,3 +7,4 @@ engine/.DS_Store
 engine/.idea/
 engine/.racket/
 engine/output/
+output/
