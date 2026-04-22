@@ -24,10 +24,10 @@
   (object ["width" "187.5/1125"]))
 
 (define numeric-small-size
-  (object ["width" "100/1125"]))
+  (object ["width" "90/1125"]))
 
 (define short-space-size
-  (object ["width" "325/1125"]))
+  (object ["width" "335/1125"]))
 
 (define short-enter-size
   (object ["width" "200/1125"]))
@@ -283,4 +283,3 @@
 (define shuffle-17-pinyin-files
   (bundle (make-pinyin-bundle "pinyinPortrait" "pinyinLandscape" phone-page)
           shuffle17-ipad-files))
-
