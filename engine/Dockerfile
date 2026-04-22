@@ -2,9 +2,6 @@ FROM docker.io/alpine:3.23
 
 RUN apk add --no-cache \
     ca-certificates \
-    font-noto-cjk \
-    py3-pillow \
-    python3 \
     racket \
     zip
 

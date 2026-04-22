@@ -346,13 +346,11 @@
   (printf "Building skin: ~a\n" skin)
   (delete-directory/files tmp-dir #:must-exist? #f)
   (make-directory* tmp-skin)
-  (with-skin-doc-rendering
-   #t
-   (lambda ()
-     (write-module-files! skin-rkt
-                          tmp-skin
-                          'skin-preview-build-files
-                          #:fresh? #t)))
+  ;; Profile bundles only need runtime skin files; preview docs are prebuilt separately.
+  (write-module-files! skin-rkt
+                       tmp-skin
+                       'skin-preview-files
+                       #:fresh? #t)
   (delete-file* cskin)
   (parameterize ([current-directory tmp-dir])
     (run! zip-exe "-qr" (path->string cskin) skin))
