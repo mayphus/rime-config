@@ -24,6 +24,9 @@
   (or (find-executable-path name)
       (error who "~a not found in PATH" name)))
 
+(define (optional-executable name)
+  (find-executable-path name))
+
 (define (make-skin-meta #:slug slug
                         #:english-name english-name
                         #:chinese-name chinese-name
@@ -53,8 +56,6 @@
    "This README and `demo.png` are generated from the skin metadata.\n"))
 
 (define (render-demo-png meta preview-spec)
-  (define swift-exe
-    (require-executable "swift" 'make-skin-doc-files))
   (define tmp-path
     (make-temporary-file
      (~a (path->string (find-system-path 'temp-dir))
@@ -77,13 +78,28 @@
            (hasheq 'title (skin-meta-chinese-name meta)
                    'preview preview-spec)
            out)))
+      (define swift-exe (optional-executable "swift"))
+      (define python-exe (optional-executable "python3"))
       (define status
-        (system* swift-exe
-                 render-skin-demo-swift
-                 "--payload"
-                 (path->string payload-path)
-                 "--output"
-                 (path->string tmp-path)))
+        (cond
+          [swift-exe
+           (system* swift-exe
+                    render-skin-demo-swift
+                    "--payload"
+                    (path->string payload-path)
+                    "--output"
+                    (path->string tmp-path))]
+          [python-exe
+           (system* python-exe
+                    render-skin-demo-script
+                    "--title"
+                    (skin-meta-chinese-name meta)
+                    "--output"
+                    (path->string tmp-path))]
+          [else
+           (error 'make-skin-doc-files
+                  "neither swift nor python3 is available to render demo image for ~a"
+                  (skin-meta-slug meta))]))
       (unless status
         (error 'make-skin-doc-files
                "failed to render demo image for ~a"
