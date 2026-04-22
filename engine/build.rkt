@@ -33,7 +33,7 @@
 (define data-dir     (build-path root-dir "data"))
 (define skins-dir    (build-path root-dir "skin"))
 (define profiles-dir (build-path root-dir "profiles"))
-(define output-dir   (build-path root-dir ".." ".." "output" "rime"))
+(define output-dir   (build-path root-dir ".." "output" "rime"))
 (define upload-helper  (build-path root-dir "tools" "yuanshu_sync.py"))
 
 (define zip-exe    (find-executable-path "zip"))
