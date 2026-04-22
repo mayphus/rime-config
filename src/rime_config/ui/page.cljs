@@ -37,6 +37,11 @@
         :building "Building..."
         :build "Build and Download"
         :zip-help "Output is a ZIP archive."
+        :yuanshu-help "Use in Yuanshu"
+        :yuanshu-step-download "1. Install Yuanshu IME on iPhone or iPad."
+        :yuanshu-step-import "2. Open the ZIP in Yuanshu, or use Input Schemas -> ... -> Import."
+        :yuanshu-app-link "Download app"
+        :yuanshu-guide-link "Import guide"
         :support "Support"
         :metadata-load-failed "Could not load the available schemas and skins."
         :build-failed "Failed to generate the config."
@@ -74,6 +79,11 @@
              :building "編譯中…"
              :build "編譯並下載"
              :zip-help "輸出為 ZIP 壓縮包。"
+             :yuanshu-help "如何在元書中使用"
+             :yuanshu-step-download "1. 先在 iPhone 或 iPad 安裝元書輸入法。"
+             :yuanshu-step-import "2. 用元書打開這個 ZIP，或在「輸入方案」->「...」->「導入方案」中導入。"
+             :yuanshu-app-link "下載應用"
+             :yuanshu-guide-link "導入說明"
              :support "支持"
              :metadata-load-failed "無法載入可用方案與皮膚。"
              :build-failed "配置生成失敗。"
@@ -363,6 +373,21 @@
                   :on-click on-build}
          (if is-building? (t locale :building) (t locale :build))]
         [:p {:class "rime-help-text"} (t locale :zip-help)]
+        [:div {:class "rime-help-block"}
+         [:p {:class "rime-summary-label"} (t locale :yuanshu-help)]
+         [:p {:class "rime-help-text"} (t locale :yuanshu-step-download)]
+         [:p {:class "rime-help-text"} (t locale :yuanshu-step-import)]
+         [:div {:class "rime-help-links"}
+          [:a {:class "rime-help-link"
+               :href "https://apps.apple.com/cn/app/%E5%85%83%E4%B9%A6%E8%BE%93%E5%85%A5%E6%B3%95/id6744464701"
+               :target "_blank"
+               :rel "noreferrer"}
+           (t locale :yuanshu-app-link)]
+          [:a {:class "rime-help-link"
+               :href "https://ihsiao.com/apps/hamster/v3/docs/guides/schema/"
+               :target "_blank"
+               :rel "noreferrer"}
+           (t locale :yuanshu-guide-link)]]]
         [:div {:class "rime-support-block"}
          [:p {:class "rime-summary-label"} (t locale :support)]
          [:div {:class "rime-support-image-frame"}

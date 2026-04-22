@@ -386,6 +386,25 @@ input {
   opacity: 0.5;
 }
 
+.rime-help-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.rime-help-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.rime-help-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
 .rime-support-block {
   padding-top: 0.4rem;
 }
