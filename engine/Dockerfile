@@ -11,8 +11,7 @@ RUN apk add --no-cache \
 WORKDIR /app
 COPY . .
 
-RUN raco make web.rkt \
- && adduser -D -H -s /sbin/nologin rime \
+RUN adduser -D -H -s /sbin/nologin rime \
  && chown -R rime:rime /app
 
 USER rime
