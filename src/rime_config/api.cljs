@@ -3,17 +3,35 @@
 (defn json-text [value]
   (.stringify js/JSON (clj->js value)))
 
-(defn fetch-metadata! [api-url on-success on-error on-complete]
-  (-> (js/fetch (str api-url "/metadata"))
+(defn wait! [ms]
+  (js/Promise.
+   (fn [resolve _]
+     (js/setTimeout resolve ms))))
+
+(defn fetch-json! [url]
+  (-> (js/fetch url)
       (.then (fn [response]
                (if (.-ok response)
                  (.json response)
-                 (throw (js/Error. "Metadata request failed")))))
-      (.then (fn [payload]
-               (on-success (js->clj payload :keywordize-keys true))))
-      (.catch (fn [_]
-                (on-error :metadata-load-failed)))
-      (.finally on-complete)))
+                 (throw (js/Error. (str "Request failed: " (.-status response)))))))))
+
+(defn fetch-metadata!
+  ([api-url on-success on-error on-complete]
+   (fetch-metadata! api-url on-success on-error on-complete 6 400))
+  ([api-url on-success on-error on-complete attempts delay-ms]
+   (letfn [(attempt! [remaining]
+             (-> (fetch-json! (str api-url "/metadata"))
+                 (.then (fn [payload]
+                          (on-success (js->clj payload :keywordize-keys true))))
+                 (.catch (fn [_]
+                           (if (> remaining 1)
+                             (-> (wait! delay-ms)
+                                 (.then (fn [] (attempt! (dec remaining)))))
+                             (do
+                               (on-error :metadata-load-failed)
+                               (js/Promise.resolve nil)))))))]
+     (-> (attempt! attempts)
+         (.finally on-complete)))))
 
 (defn fetch-blob! [response]
   (.blob response))

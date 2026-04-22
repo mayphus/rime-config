@@ -13,6 +13,7 @@
         :status "Status"
         :loading-metadata "Fetching metadata..."
         :metadata-missing "Metadata has not been loaded yet."
+        :retry "Retry"
         :hero-description "Choose your platform, input schemas, and skins, then generate a downloadable Rime config ZIP from mayphus.org."
         :hero-note "Dependencies are resolved automatically, so the exported bundle stays usable."
         :hero-metric-schemas "Schemas available"
@@ -57,6 +58,7 @@
              :status "狀態"
              :loading-metadata "正在取得 metadata…"
              :metadata-missing "尚未取得 metadata。"
+             :retry "重新載入"
              :hero-description "選擇平台、輸入方案與皮膚，直接從 mayphus.org 生成可下載的 Rime 配置壓縮包。"
              :hero-note "依賴項目會自動補齊，避免匯出的配置缺件。"
              :hero-metric-schemas "可用方案"
@@ -239,7 +241,7 @@
    :extra-skins active-skins
    :desktop? (= platform :desktop)})
 
-(defn rime-loading-view [locale metadata-loading? error on-locale-change]
+(defn rime-loading-view [locale metadata-loading? error on-locale-change on-retry]
   [:div {:class "rime-config-shell"}
    [:section {:class "rime-hero-card"}
     [:div {:class "rime-hero-head"}
@@ -256,7 +258,12 @@
        (t locale :loading-metadata)
        (t locale :metadata-missing))]
     (when error
-      [:p {:class "rime-error-text"} (localize-error locale error)])]])
+      [:<>
+       [:p {:class "rime-error-text"} (localize-error locale error)]
+       [:button {:class "rime-build-button"
+                 :type "button"
+                 :on-click on-retry}
+        (t locale :retry)]])]])
 
 (defn rime-ready-view
   [{:keys [locale metadata platform selected-schemas manually-unchecked-skins
@@ -391,19 +398,21 @@
         preview-skin-id* (r/atom nil)
         is-building* (r/atom false)
         error* (r/atom nil)]
+    (letfn [(load-metadata! []
+              (reset! metadata-loading?* true)
+              (api/fetch-metadata!
+               api-url
+               #(do (reset! metadata* %)
+                    (reset! error* nil))
+               #(reset! error* %)
+               #(reset! metadata-loading?* false)))]
     (r/create-class
      {:display-name "RimeConfigApp"
      :component-did-mount
       (fn [_]
         (set-document-lang! :en)
         (when-not @metadata*
-          (reset! metadata-loading?* true)
-          (api/fetch-metadata!
-           api-url
-           #(do (reset! metadata* %)
-                (reset! error* nil))
-           #(reset! error* %)
-           #(reset! metadata-loading?* false))))
+          (load-metadata!)))
       :reagent-render
       (fn [{:keys [api-url]}]
         (if-let [metadata @metadata*]
@@ -454,4 +463,5 @@
           [rime-loading-view @locale* @metadata-loading?* @error*
            (fn [next-locale]
              (reset! locale* next-locale)
-             (set-document-lang! next-locale))]))})))
+             (set-document-lang! next-locale))
+           load-metadata!]))}))))
