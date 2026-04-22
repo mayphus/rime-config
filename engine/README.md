@@ -6,6 +6,7 @@ Rime input method config and Yuanshu app skin/config generator, managed with a R
 
 ``` 
 build-lib.rkt   — shared build library
+default-profile.rkt — built-in desktop/default profile
 schema/         — Racket generators for schema YAML and shared config
 skin/           — Racket generators for .cskin skin bundles
 data/           — static YAML: schemas, dictionaries, data files

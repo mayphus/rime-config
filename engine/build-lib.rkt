@@ -13,7 +13,7 @@
          racket/set
          racket/string
          racket/system
-         "profile.rkt")
+         "default-profile.rkt")
 
 (provide data-dir
          skins-dir
