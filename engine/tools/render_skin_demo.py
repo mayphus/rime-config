@@ -21,8 +21,8 @@ ROW_GAP = 14
 KEY_GAP = 8
 
 OUTER_RECT = (40, 40, WIDTH - 40, HEIGHT - 40)
-KEYBOARD_RECT = (84, 104, WIDTH - 84, 104 + 386)
-TITLE_RECT = (84, 540, WIDTH - 84, 540 + 120)
+SWIFT_KEYBOARD_RECT = (84, 104, WIDTH - 84, 104 + 386)
+SWIFT_TITLE_RECT = (84, 540, WIDTH - 84, 540 + 120)
 
 REGULAR_FONT_CANDIDATES = [
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
@@ -35,9 +35,16 @@ REGULAR_FONT_CANDIDATES = [
 BOLD_FONT_CANDIDATES = [
     "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
     "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc",
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
     "/System/Library/Fonts/Hiragino Sans GB.ttc",
     "/System/Library/Fonts/PingFang.ttc",
     "/Library/Fonts/Arial Unicode.ttf",
+]
+
+SYMBOL_FONT_CANDIDATES = [
+    "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+    "/Library/Fonts/Arial Unicode.ttf",
+    "/System/Library/Fonts/Apple Symbols.ttf",
 ]
 
 
@@ -53,11 +60,32 @@ def pick_font(size: int | float, weight: str | None = None) -> ImageFont.FreeTyp
     return ImageFont.load_default()
 
 
+def pick_symbol_font(size: int | float) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
+    for candidate in SYMBOL_FONT_CANDIDATES:
+        path = Path(candidate)
+        if path.exists():
+            try:
+                return ImageFont.truetype(str(path), size=int(round(size)))
+            except OSError:
+                continue
+    return pick_font(size, "semibold")
+
+
 def hex_color(value: str, default: str) -> tuple[int, int, int]:
     try:
-        return ImageColor.getrgb(value)
+        color = ImageColor.getrgb(value)
     except ValueError:
-        return ImageColor.getrgb(default)
+        color = ImageColor.getrgb(default)
+    return color[:3]
+
+
+def flip_rect(rect: tuple[float, float, float, float]) -> tuple[float, float, float, float]:
+    left, bottom, right, top = rect
+    return (left, HEIGHT - top, right, HEIGHT - bottom)
+
+
+KEYBOARD_RECT = flip_rect(SWIFT_KEYBOARD_RECT)
+TITLE_RECT = flip_rect(SWIFT_TITLE_RECT)
 
 
 def text_box(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.ImageFont) -> tuple[float, float]:
@@ -117,7 +145,7 @@ def draw_key(draw: ImageDraw.ImageDraw, rect: tuple[float, float, float, float],
             font = pick_font(float(layer.get("font-size", 14)) * 1.12, layer.get("font-weight"))
             text_width, text_height = text_box(draw, text, font)
             x = left + float(layer.get("x", 0.5)) * width - text_width / 2
-            y = top + (1 - float(layer.get("y", 0.5))) * height - text_height / 2
+            y = top + float(layer.get("y", 0.5)) * height - text_height / 2
             draw.text((x, y), text, font=font, fill=hex_color(layer.get("color", "#000000"), "#000000"))
         return
 
@@ -125,7 +153,7 @@ def draw_key(draw: ImageDraw.ImageDraw, rect: tuple[float, float, float, float],
     if not fallback:
         return
     font_size = 18 if key.get("kind") == "space" else 22
-    font = pick_font(font_size, "semibold")
+    font = pick_symbol_font(font_size) if key.get("kind") in {"backspace", "enter", "shift"} else pick_font(font_size, "semibold")
     draw_centered_text(draw, rect, fallback, font, hex_color(FALLBACK_TEXT, FALLBACK_TEXT))
 
 
@@ -138,7 +166,7 @@ def draw_keyboard(draw: ImageDraw.ImageDraw, preview: dict) -> None:
     key_height = ((KEYBOARD_RECT[3] - KEYBOARD_RECT[1]) - (row_count + 1) * ROW_GAP) / row_count
 
     for row_index, row in enumerate(rows):
-        y = KEYBOARD_RECT[3] - ROW_GAP - (row_index + 1) * key_height - row_index * ROW_GAP
+        y = KEYBOARD_RECT[1] + ROW_GAP + row_index * (key_height + ROW_GAP)
         total_units = max(sum(float(key.get("width", 1)) for key in row), 1.0)
         available_width = (KEYBOARD_RECT[2] - KEYBOARD_RECT[0]) - max(len(row) - 1, 0) * KEY_GAP - 24
         x = KEYBOARD_RECT[0] + 12
