@@ -85,6 +85,10 @@ jobs:
           kubectl -n rime-config set image deployment/rime-config-engine engine=${IMAGE_NAME}:${IMAGE_TAG}
           if ! kubectl -n rime-config rollout status deployment/rime-config-engine --timeout=600s; then
             kubectl -n rime-config get pods -l app=rime-config-engine -o wide
+            for pod in $(kubectl -n rime-config get pods -l app=rime-config-engine -o name); do
+              kubectl -n rime-config logs "$pod" --all-containers=true --tail=200 || true
+              kubectl -n rime-config logs "$pod" --all-containers=true --previous --tail=200 || true
+            done
             kubectl -n rime-config describe deployment/rime-config-engine
             kubectl -n rime-config describe pods -l app=rime-config-engine
             exit 1

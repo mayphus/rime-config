@@ -1,15 +1,20 @@
-FROM docker.io/alpine:3.23
+FROM docker.io/debian:bookworm-slim
 
-RUN apk add --no-cache \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
     ca-certificates \
+    fonts-noto-cjk \
+    python3 \
+    python3-pil \
     racket \
-    zip
+    zip \
+ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY . .
 
-RUN adduser -D -H -s /sbin/nologin rime \
- && chown -R rime:rime /app
+RUN useradd -r -s /sbin/nologin rime \
+ && chown -R rime /app
 
 USER rime
 
