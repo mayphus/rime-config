@@ -31,7 +31,6 @@
         :summary-schemas "Schemas"
         :summary-skins "Skins"
         :summary-empty "Nothing selected yet."
-        :summary-ready "Ready to export"
         :summary-ready-copy "Review the package contents, then generate the archive."
         :auto "Auto"
         :previewing "Previewing"
@@ -69,7 +68,6 @@
              :summary-schemas "方案"
              :summary-skins "皮膚"
              :summary-empty "目前尚未選擇。"
-             :summary-ready "可以匯出"
              :summary-ready-copy "確認打包內容後即可生成壓縮檔。"
              :auto "自動"
              :previewing "目前預覽"
@@ -332,9 +330,6 @@
         [:div {:class "rime-summary-intro"}
          [:h2 {:class "rime-section-title"} (t locale :summary)]
          [:p {:class "rime-section-copy"} (t locale :summary-ready-copy)]]
-        [:div {:class "rime-summary-status"}
-         [:span {:class "rime-summary-status-dot"}]
-         [:span {:class "rime-summary-status-text"} (t locale :summary-ready)]]
         [:div {:class "rime-summary-block"}
          [:p {:class "rime-summary-label"} (t locale :summary-platform)]
          [summary-pill (if (= platform :desktop)

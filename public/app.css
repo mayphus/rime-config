@@ -348,29 +348,6 @@ input {
   color: var(--accent);
 }
 
-.rime-summary-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  align-self: flex-start;
-  padding: 0.35rem 0.62rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: transparent;
-}
-
-.rime-summary-status-dot {
-  width: 0.52rem;
-  height: 0.52rem;
-  border-radius: 999px;
-  background: #6b8f65;
-}
-
-.rime-summary-status-text {
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
 .rime-summary-label,
 .keyboard-preview-label {
   color: var(--muted);
