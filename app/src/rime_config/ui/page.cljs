@@ -41,6 +41,7 @@
         :yuanshu-help "Use in Yuanshu"
         :yuanshu-step-download "1. Install Yuanshu IME on iPhone or iPad."
         :yuanshu-step-import "2. Open the ZIP in Yuanshu, or use Input Schemas -> ... -> Import."
+        :yuanshu-step-skin "3. Skins are managed separately from schemas. Remove any old skin with the same name before importing."
         :yuanshu-app-link "Import in Yuanshu"
         :yuanshu-guide-link "See official guide"
         :support "Support"
@@ -83,6 +84,7 @@
              :yuanshu-help "如何在元書中使用"
              :yuanshu-step-download "1. 先在 iPhone 或 iPad 安裝元書輸入法。"
              :yuanshu-step-import "2. 用元書打開這個 ZIP，或在「輸入方案」->「...」->「導入方案」中導入。"
+             :yuanshu-step-skin "3. 皮膚與方案是分開管理的。導入前請先刪除同名舊皮膚。"
              :yuanshu-app-link "在元書中導入"
              :yuanshu-guide-link "查看官方說明"
              :support "支持"
@@ -397,6 +399,7 @@
          [:p {:class "rime-summary-label"} (t locale :yuanshu-help)]
          [:p {:class "rime-help-text"} (t locale :yuanshu-step-download)]
          [:p {:class "rime-help-text"} (t locale :yuanshu-step-import)]
+         [:p {:class "rime-help-text"} (t locale :yuanshu-step-skin)]
          [:div {:class "rime-help-links"}
           [:a {:class "rime-help-link"
                :href "https://apps.apple.com/cn/app/%E5%85%83%E4%B9%A6%E8%BE%93%E5%85%A5%E6%B3%95/id6744464701"
