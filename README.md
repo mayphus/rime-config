@@ -4,7 +4,7 @@ Standalone Rime Config product.
 
 ## Layout
 
-- repo root holds the standalone product frontend and top-level commands
+- repo root holds the standalone product frontend and small public entrypoints
 - `engine/` holds the Rime config generation and export engine internals
 - `docs/` tracks migration and deployment notes
 
@@ -26,6 +26,7 @@ The first extraction pass is complete:
 - engine code copied from `orchestrator/apps/rime`
 - Rime frontend logic copied from `mayphus-sites`
 - frontend flattened to repo root
-- root `build.rkt` and `web.rkt` now delegate to the engine
+- root `build.rkt` is the public callable build API
+- root `web.rkt` still delegates to the engine
 
 Remaining cutover work is documented in `docs/migration.md`.

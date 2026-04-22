@@ -1,30 +1,34 @@
 #lang racket/base
 
-;;; build.rkt — Racket build system for rime-config
+;;; build.rkt — shared build helpers for rime-config
 ;;;
-;;; Usage:
-;;;   racket build.rkt build [-p <profile>]            build + zip one profile (default: all)
-;;;   racket build.rkt all                             build + zip every profile (desktop + mobile)
-;;;   racket build.rkt clean                           delete repo-local output/rime/
-;;;   racket build.rkt skins                           build standalone skin previews
-;;;   racket build.rkt deploy [--rime-dir <path>] [--no-rime-deploy]   build desktop profile + sync to ~/Library/Rime
-;;;   racket build.rkt upload [-p <profile>]           build then upload
-;;;   racket build.rkt upload-dry-run                  dry-run upload (no build)
+;;; This module is a callable library. External callers should require the
+;;; repo-root build.rkt shim and invoke the functions they need.
 
-(require racket/cmdline
-         racket/file
-         racket/hash
+(require racket/file
+         racket/format
          racket/list
          racket/path
-         racket/port
          racket/runtime-path
          racket/set
          racket/string
          racket/system
-         json
          "profile.rkt")
 
-(provide (all-defined-out))
+(provide data-dir
+         skins-dir
+         output-dir
+         generated-config-ids
+         schema-module-ref
+         read-schema-deps
+         read-schema-name-from-yaml
+         build-profile!
+         build-profile-from-hash!
+         zip-profile-path!
+         zip-profile!
+         do-upload!
+         deploy-desktop!
+         build-preview-skins!)
 
 ;; ---- Paths -----------------------------------------------------------------
 
@@ -61,8 +65,6 @@
   (define str-args (map (lambda (a) (if (path? a) (path->string a) (~a a))) args))
   (unless (apply system* prog str-args)
     (error 'build "Command failed: ~a ~a" prog str-args)))
-
-(define (~a x) (if (string? x) x (format "~a" x)))
 
 (define (delete-file* p)
   (when (file-exists? p) (delete-file p)))
@@ -113,25 +115,6 @@
   (if (equal? name "desktop")
       default-desktop-profile
       (load-profile name)))
-
-(define (list-all-profiles)
-  ;; Lists all profiles from all known profile directories.
-  (define search-dirs
-    (list profiles-dir
-          yuanshu-profiles-dir
-          (build-path profiles-dir "customer")
-          (build-path yuanshu-profiles-dir "customer")))
-  (remove-duplicates
-   (append-map
-    (lambda (dir)
-      (if (directory-exists? dir)
-          (filter-map
-           (lambda (f)
-             (and (equal? (path-get-extension f) #".rkt")
-                  (path->string (path-replace-extension f #""))))
-           (directory-list dir))
-          '()))
-    search-dirs)))
 
 ;; ---- Schema dependency expansion -------------------------------------------
 
@@ -431,11 +414,6 @@
   (define profile-out (build-path output-dir profile-name))
   (build-profile-from-hash! profile profile-name profile-out))
 
-(define (build-rime-profile! profile profile-name)
-  (define profile-out (build-path output-dir profile-name))
-  (build-profile-from-hash! profile profile-name profile-out)
-  (zip-profile-path! profile-name profile-out (build-path output-dir (string-append profile-name ".zip"))))
-
 ;; ---- Zip -------------------------------------------------------------------
 
 (define (zip-profile-path! profile-name profile-out zip-path)
@@ -477,9 +455,6 @@
 ;; ---- Deploy desktop config -------------------------------------------------
 ;; Builds the desktop profile then syncs to the live Rime directory.
 ;; Never touches *.userdb, user.yaml, installation.yaml, *.bin, sync/.
-
-(define default-rime-dir
-  (build-path (find-system-path 'home-dir) "Library" "Rime"))
 
 (define squirrel-binary
   "/Library/Input Methods/Squirrel.app/Contents/MacOS/Squirrel")
@@ -536,22 +511,8 @@
     (error 'deploy "target is the same as the repo root — aborting"))
 
   ;; Build desktop profile into build/desktop/
-  (build-rime-profile! default-desktop-profile "desktop")
   (define build-out (build-path output-dir "desktop"))
-
-  (make-directory* target-dir)
-  (sync-to-dir! build-out target-dir)
-  (printf "Deployed to ~a\n" (path->string target-dir))
-
-  (when rime-deploy? (rime-deploy!)))
-
-(define (deploy-rime-profile! profile profile-name target-dir #:rime-deploy? [rime-deploy? #t])
-  (when (equal? (normalize-path root-dir)
-                (normalize-path target-dir))
-    (error 'deploy "target is the same as the repo root — aborting"))
-
-  (build-rime-profile! profile profile-name)
-  (define build-out (build-path output-dir profile-name))
+  (build-profile-from-hash! default-desktop-profile "desktop" build-out)
 
   (make-directory* target-dir)
   (sync-to-dir! build-out target-dir)
@@ -575,92 +536,3 @@
        (write-module-files! skin-file
                             out
                             (if render-docs? 'skin-files 'skin-preview-build-files))))))
-
-;; ---- CLI -------------------------------------------------------------------
-
-(module+ main
-  (define profile-name        (make-parameter "all"))
-  (define rime-dir            (make-parameter default-rime-dir))
-  (define upload-src          (make-parameter #f))
-  (define upload-remote-root  (make-parameter "/RimeUserData/rime/"))
-  (define upload-base-url     (make-parameter #f))
-  (define upload-allow-delete (make-parameter #f))
-  (define upload-big-dicts    (make-parameter #t))
-  (define do-rime-deploy      (make-parameter #t))
-
-  (define-values (cmd rest-args)
-    (command-line
-     #:program "build.rkt"
-     #:once-each
-     [("-p" "--profile")  p  "Profile name (default: all)"                (profile-name p)]
-     [("--rime-dir")      d  "Deploy target (default: ~/Library/Rime)"    (rime-dir (string->path d))]
-     [("--upload-src")    d  "Override upload source directory"           (upload-src d)]
-     [("--remote-root")   r  "Upload remote root path"                    (upload-remote-root r)]
-     [("--base-url")      u  "Upload base URL"                            (upload-base-url u)]
-     [("--allow-delete")     "Allow deletes during upload"                (upload-allow-delete #t)]
-     [("--no-big-dicts")     "Exclude big dicts from upload"              (upload-big-dicts #f)]
-     [("--no-rime-deploy")   "Skip triggering Rime deployment after deploy" (do-rime-deploy #f)]
-     #:args (command . rest) (values command rest)))
-
-  (case cmd
-    [("build")
-     (build-profile! (profile-name))
-     (zip-profile! (profile-name))]
-
-    [("clean")
-     (delete-directory/files output-dir #:must-exist? #f)
-     (printf "Cleaned.\n")]
-
-    [("all")
-     (for ([p (list-all-profiles)])
-       (build-profile! p)
-       (zip-profile! p))]
-
-    [("skins")
-     (build-preview-skins!)]
-
-    [("skin-docs")
-     (build-preview-skins! #:render-docs? #t)]
-
-    [("deploy")
-     (deploy-desktop! (rime-dir) #:rime-deploy? (do-rime-deploy))]
-
-    [("upload")
-     (define src
-       (or (upload-src)
-           (begin (build-profile! (profile-name))
-                  (zip-profile! (profile-name))
-                  (path->string (build-path output-dir (profile-name))))))
-     (do-upload! src
-                 #:remote-root      (upload-remote-root)
-                 #:base-url         (upload-base-url)
-                 #:allow-delete     (upload-allow-delete)
-                 #:include-big-dicts (upload-big-dicts))]
-
-    [("upload-dry-run")
-     (define src
-       (or (upload-src)
-           (path->string (build-path output-dir (profile-name)))))
-     (do-upload! src
-                 #:remote-root      (upload-remote-root)
-                 #:base-url         (upload-base-url)
-                 #:allow-delete     (upload-allow-delete)
-                 #:include-big-dicts (upload-big-dicts)
-                 #:dry-run #t)]
-
-    [("custom-build")
-     (define out-dir-str (car rest-args))
-     (define profile-json (car (cdr rest-args)))
-     (define profile (string->jsexpr profile-json))
-     (define profile-name "custom")
-     (define profile-out (build-path (string->path out-dir-str) profile-name))
-     (define zip-path (build-path (string->path out-dir-str) (string-append profile-name ".zip")))
-
-     (build-profile-from-hash! profile profile-name profile-out)
-     (zip-profile-path! profile-name profile-out zip-path)
-     (printf "ZIP_PATH: ~a\n" (path->string zip-path))]
-
-    [else
-     (eprintf "Unknown command: ~a\n" cmd)
-     (eprintf "Available: build  all  clean  skins  skin-docs  deploy  upload  upload-dry-run\n")
-     (exit 1)]))

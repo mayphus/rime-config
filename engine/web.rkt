@@ -4,9 +4,9 @@
          web-server/servlet-env
          web-server/http
          racket/file
+         racket/format
          racket/path
          racket/list
-         racket/string
          json
          "build.rkt")
 

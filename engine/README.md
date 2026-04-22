@@ -4,8 +4,8 @@ Rime input method config and Yuanshu app skin/config generator, managed with a R
 
 ## Structure
 
-```
-build.rkt       — build system entry point
+``` 
+build.rkt       — shared build library
 schema/         — Racket generators for schema YAML and shared config
 skin/           — Racket generators for .cskin skin bundles
 data/           — static YAML: schemas, dictionaries, data files
@@ -13,16 +13,17 @@ profiles/       — build profiles (desktop + Yuanshu mobile)
 tools/          — Python utilities (upload, skin demo renderer)
 ```
 
-## Commands
+## Invocation
 
-```sh
-racket build.rkt deploy                # build desktop profile → sync to ~/Library/Rime
-racket build.rkt -p <profile> build    # build + zip a profile
-racket build.rkt all                   # build + zip all profiles
-racket build.rkt clean                 # delete build cache
-racket build.rkt skins                 # build standalone skin preview pages plus demo.png
-racket build.rkt skin-docs             # build skin previews plus README.md/demo.png
-racket build.rkt -p <profile> upload   # build + upload to Yuanshu server
+From the repo root:
+
+```racket
+(require "build.rkt")
+
+(build-profile! "flypy_18")
+(zip-profile! "flypy_18")
+(build-preview-skins!)
+(build-preview-skins! #:render-docs? #t)
 ```
 
 ## Web Customizer

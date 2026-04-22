@@ -1,9 +1,8 @@
 #lang racket/base
 
-(require racket/runtime-path)
+;;; Public build API shim.
+;;; Require this file from the repo root and call the exported functions.
 
-(define-runtime-path engine-build "engine/build.rkt")
+(require "engine/build.rkt")
 
-(module+ main
-  (parameterize ([current-command-line-arguments (current-command-line-arguments)])
-    (dynamic-require `(submod ,engine-build main) #f)))
+(provide (all-from-out "engine/build.rkt"))
