@@ -1,15 +1,19 @@
-FROM docker.io/debian:bookworm-slim
+FROM docker.io/alpine:3.23
 
-RUN apt-get update \
- && apt-get install -y --no-install-recommends fonts-noto-cjk python3 python3-pil racket zip \
- && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache \
+    ca-certificates \
+    font-noto-cjk \
+    py3-pillow \
+    python3 \
+    racket \
+    zip
 
 WORKDIR /app
 COPY . .
 
 RUN raco make web.rkt \
- && useradd -r -s /sbin/nologin rime \
- && chown -R rime /app
+ && adduser -D -H -s /sbin/nologin rime \
+ && chown -R rime:rime /app
 
 USER rime
 
