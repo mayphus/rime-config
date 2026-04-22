@@ -4,7 +4,7 @@ import path from "node:path";
 
 const cwd = process.cwd();
 const distDir = path.join(cwd, "dist");
-const publicDir = path.join(cwd, "public");
+const publicDir = path.join(cwd, "app", "public");
 
 function run(command, args) {
   return new Promise((resolve, reject) => {

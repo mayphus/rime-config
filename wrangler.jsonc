@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "rime-config",
-  "main": "./worker/index.mjs",
+  "main": "./deploy/worker/index.mjs",
   "compatibility_date": "2026-04-16",
   "compatibility_flags": [
     "nodejs_compat_v2"

@@ -7,7 +7,7 @@ const port = Number(process.env.PORT || 4173);
 const engineBase = (process.env.RIME_CONFIG_API_URL || "http://127.0.0.1:5001").replace(/\/$/, "");
 const staticOnly = process.env.RIME_CONFIG_STATIC === "1";
 
-const publicDir = path.join(cwd, "public");
+const publicDir = path.join(cwd, "app", "public");
 const distDir = path.join(cwd, "dist");
 
 const contentTypes = {
