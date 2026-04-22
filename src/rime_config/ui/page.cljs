@@ -130,19 +130,21 @@
   [:div {:class (str "rime-option-card rime-skin-card"
                      (when checked? " is-selected")
                      (when previewing? " is-previewing"))}
-   [:button {:class "rime-option-preview"
-             :type "button"
-             :on-click on-preview}
+   [:div {:class "rime-skin-row"}
     [:div {:class "rime-option-copy"}
      [:span {:class "rime-option-title"} name]
      [:span {:class "rime-option-id"} id]]
-    [:span {:class "rime-option-action"} (t locale :preview)]]
-   [:label {:class "rime-option-toggle"}
-    [:input {:type "checkbox"
-             :checked checked?
-             :on-change on-toggle}]
-    [:span {:class "rime-option-toggle-label"}
-     (if checked? (t locale :selected) (t locale :include))]]
+    [:div {:class "rime-skin-actions"}
+     [:button {:class "rime-skin-preview-button"
+               :type "button"
+               :on-click on-preview}
+      [:span {:class "rime-option-action"} (t locale :preview)]]
+     [:label {:class "rime-option-toggle rime-skin-toggle"}
+      [:input {:type "checkbox"
+               :checked checked?
+               :on-change on-toggle}]
+      [:span {:class "rime-option-toggle-label"}
+       (if checked? (t locale :selected) (t locale :include))]]]]
    (when previewing?
      [:span {:class "rime-preview-hint"} (t locale :previewing)])])
 
@@ -188,10 +190,12 @@
      [:span {:class "keyboard-preview-fallback-label"}
       (preview-key-label key)])])
 
-(defn rich-keyboard-preview [{:keys [background rows]}]
+(defn rich-keyboard-preview [{:keys [background rows size]}]
   [:div {:class "keyboard-preview"}
    [:div {:class "keyboard-preview-shell"
-          :style {:background background}}
+          :style (cond-> {:background background}
+                   (and (:width size) (:height size))
+                   (assoc :aspect-ratio (str (:width size) " / " (:height size))))}
     [:div {:class "keyboard-preview-grid is-rich"}
      (for [[row-index row] (map-indexed vector rows)]
        ^{:key (str "rich-row-" row-index)}
@@ -201,9 +205,10 @@
           ^{:key (:id key)}
           [rich-preview-key key])])]]])
 
-(defn keyboard-preview [{:keys [label background offsets rows]}]
+(defn keyboard-preview [{:keys [label background offsets rows size]}]
   (if (and (seq rows) (map? (first (first rows))))
     [rich-keyboard-preview {:background background
+                            :size size
                             :rows rows}]
     [:div {:class "keyboard-preview"}
      [:p {:class "keyboard-preview-label"} label]
@@ -304,8 +309,8 @@
           [:div {:class "rime-section-header"}
            [:h2 {:class "rime-section-title"} (t locale :skins)]
            [:p {:class "rime-section-copy"} (t locale :skins-description)]]
-          [:div {:class "rime-skin-layout"}
-           [:div {:class "rime-option-grid"}
+         [:div {:class "rime-skin-layout"}
+           [:div {:class "rime-skin-picker"}
             (for [skin visible-skins]
               ^{:key (:id skin)}
               [skin-card locale skin
@@ -314,6 +319,12 @@
                #(on-skin-preview skin)
                #(on-skin-toggle skin)])]
            [:div {:class "rime-preview-panel"}
+            (when preview-skin
+              [:div {:class "rime-preview-head"}
+               [:div {:class "rime-option-copy"}
+                [:span {:class "rime-option-title"} (:name preview-skin)]
+                [:span {:class "rime-option-id"} (:id preview-skin)]]
+               [:span {:class "rime-preview-hint"} (t locale :preview)]])
             (when preview-layout
               [keyboard-preview preview-layout])]]])]
       [:aside {:class "rime-summary-column"}

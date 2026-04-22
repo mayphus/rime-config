@@ -7,6 +7,8 @@
 
 (provide preview-spec-from-files)
 
+(define preview-logical-width 375)
+
 (define (page-ref page key [default #f])
   (cond
     [(symbol? key) (hash-ref page key default)]
@@ -26,6 +28,14 @@
              (exact->inexact (/ numerator denominator)))]
        [else (string->number value)])]
     [else #f]))
+
+(define (preview-size page)
+  (define keyboard-height
+    (parse-numberish (page-ref page 'keyboardHeight #f)))
+  (and keyboard-height
+       (positive? keyboard-height)
+       (hash 'width preview-logical-width
+             'height keyboard-height)))
 
 (define (style-color style)
   (or (page-ref style 'normalColor #f)
@@ -135,6 +145,7 @@
                                      (page-ref page (page-ref (page-ref page 'keyboardStyle (hash))
                                                               'backgroundStyle "")
                                                #f))]
+                [size (and (hash? page) (preview-size page))]
                 [rows
                  (and (list? keyboard-layout)
                       (filter values
@@ -147,4 +158,5 @@
                       'background (or (and (hash? keyboard-style)
                                            (page-ref keyboard-style 'normalColor #f))
                                       "#ffffff03")
+                      'size size
                       'rows rows))))))

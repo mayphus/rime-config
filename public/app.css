@@ -23,9 +23,12 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  background: var(--bg-soft);
+  color-scheme: light;
 }
 
 body {
+  background: var(--bg-soft);
   color: var(--ink);
   font-family: "Avenir Next", "Segoe UI", "Noto Sans", "PingFang SC", "PingFang TC", "Microsoft JhengHei", sans-serif;
   text-rendering: optimizeLegibility;
@@ -232,6 +235,10 @@ input {
   background: transparent;
 }
 
+.rime-skin-card {
+  padding: 0.9rem 1rem;
+}
+
 .rime-option-card.is-auto {
   border-style: dashed;
 }
@@ -250,6 +257,41 @@ input {
   text-align: left;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.35);
+}
+
+.rime-skin-row,
+.rime-skin-actions,
+.rime-preview-head {
+  display: flex;
+  align-items: center;
+}
+
+.rime-skin-row,
+.rime-preview-head {
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.rime-skin-actions {
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.rime-skin-preview-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  padding: 0.45rem 0.78rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.rime-skin-toggle {
+  min-height: 2.2rem;
+  padding: 0 0.1rem;
 }
 
 .rime-option-action {
@@ -390,16 +432,26 @@ input {
 }
 
 .rime-skin-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
-  gap: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   margin-top: 0.85rem;
 }
 
+.rime-skin-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.75rem;
+}
+
 .rime-preview-panel {
-  justify-content: center;
-  min-height: 25rem;
-  padding: 0.5rem 0 0;
+  gap: 0.9rem;
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.48);
 }
 
 .keyboard-preview-grid {
@@ -414,11 +466,13 @@ input {
 }
 
 .keyboard-preview {
-  max-width: 42rem;
-  margin: 0 auto;
+  width: min(100%, 44rem);
+  margin: 0;
 }
 
 .keyboard-preview-grid.is-rich {
+  height: 100%;
+  width: 100%;
   gap: 0.55rem;
 }
 
@@ -431,6 +485,8 @@ input {
 }
 
 .keyboard-preview-row.is-rich {
+  flex: 1 1 0;
+  width: 100%;
   gap: 0.42rem;
 }
 
@@ -449,6 +505,7 @@ input {
 }
 
 .keyboard-preview-shell {
+  display: block;
   padding: 0.65rem;
   border: 1px solid rgba(29, 24, 20, 0.08);
   border-radius: 0.85rem;
@@ -457,7 +514,7 @@ input {
 .keyboard-preview-key.is-rich {
   position: relative;
   min-width: 0;
-  height: 3rem;
+  height: 100%;
   padding: 0;
   overflow: hidden;
 }
@@ -527,7 +584,7 @@ input {
 
   .rime-platform-grid,
   .rime-option-grid,
-  .rime-skin-layout {
+  .rime-skin-picker {
     grid-template-columns: 1fr;
   }
 
@@ -605,5 +662,21 @@ input {
 
   .keyboard-preview-fallback-label {
     font-size: 0.72rem;
+  }
+
+  .rime-skin-row,
+  .rime-skin-actions,
+  .rime-preview-head {
+    align-items: flex-start;
+  }
+
+  .rime-skin-row,
+  .rime-preview-head {
+    flex-direction: column;
+  }
+
+  .rime-skin-actions {
+    width: 100%;
+    justify-content: space-between;
   }
 }
