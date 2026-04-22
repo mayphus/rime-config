@@ -36,6 +36,7 @@
         :auto "Auto"
         :previewing "Previewing"
         :building "Building..."
+        :building-note "pb62 mini is packing this for you. Hamster paws at work. 🐹"
         :build "Build and Download"
         :zip-help "Output is a ZIP archive."
         :yuanshu-help "Use in Yuanshu"
@@ -79,6 +80,7 @@
              :auto "自動"
              :previewing "目前預覽"
              :building "編譯中…"
+             :building-note "pb62 mini 正在幫你打包。倉鼠小爪爪開工中。🐹"
              :build "編譯並下載"
              :zip-help "輸出為 ZIP 壓縮包。"
              :yuanshu-help "如何在元書中使用"
@@ -394,6 +396,8 @@
                   :disabled build-disabled?
                   :on-click on-build}
          (if is-building? (t locale :building) (t locale :build))]
+        (when is-building?
+          [:p {:class "rime-build-note"} (t locale :building-note)])
         [:p {:class "rime-help-text"} (t locale :zip-help)]
         [:div {:class "rime-help-block"}
          [:p {:class "rime-summary-label"} (t locale :yuanshu-help)]

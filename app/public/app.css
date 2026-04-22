@@ -386,6 +386,13 @@ input {
   opacity: 0.5;
 }
 
+.rime-build-note {
+  margin: -0.1rem 0 0;
+  color: var(--accent);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
 .rime-help-block {
   display: flex;
   flex-direction: column;
