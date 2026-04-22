@@ -119,14 +119,33 @@ let outputURL = URL(fileURLWithPath: args[outputIndex + 1])
 let payloadData = try Data(contentsOf: payloadURL)
 let payload = try JSONDecoder().decode(Payload.self, from: payloadData)
 
-let width: CGFloat = 1080
-let height: CGFloat = 860
-let outerRect = NSRect(x: 44, y: 44, width: width - 88, height: height - 88)
-let keyboardRect = NSRect(x: 92, y: 112, width: width - 184, height: 430)
-let titleRect = NSRect(x: 92, y: 610, width: width - 184, height: 120)
+let width: CGFloat = 996
+let height: CGFloat = 770
+let outerRect = NSRect(x: 40, y: 40, width: width - 80, height: height - 80)
+let keyboardRect = NSRect(x: 84, y: 104, width: width - 168, height: 386)
+let titleRect = NSRect(x: 84, y: 540, width: width - 168, height: 120)
 
-let image = NSImage(size: NSSize(width: width, height: height))
-image.lockFocusFlipped(false)
+guard let bitmap = NSBitmapImageRep(bitmapDataPlanes: nil,
+                                    pixelsWide: Int(width),
+                                    pixelsHigh: Int(height),
+                                    bitsPerSample: 8,
+                                    samplesPerPixel: 4,
+                                    hasAlpha: true,
+                                    isPlanar: false,
+                                    colorSpaceName: .deviceRGB,
+                                    bytesPerRow: 0,
+                                    bitsPerPixel: 0) else {
+    fputs("Failed to create bitmap context\n", stderr)
+    exit(1)
+}
+
+bitmap.size = NSSize(width: width, height: height)
+NSGraphicsContext.saveGraphicsState()
+guard let context = NSGraphicsContext(bitmapImageRep: bitmap) else {
+    fputs("Failed to create graphics context\n", stderr)
+    exit(1)
+}
+NSGraphicsContext.current = context
 
 color(from: "#F4E9D8").setFill()
 NSBezierPath(rect: NSRect(x: 0, y: 0, width: width, height: height)).fill()
@@ -192,11 +211,9 @@ for (rowIndex, row) in payload.preview.rows.enumerated() {
     }
 }
 
-image.unlockFocus()
+NSGraphicsContext.restoreGraphicsState()
 
-guard let tiff = image.tiffRepresentation,
-      let bitmap = NSBitmapImageRep(data: tiff),
-      let png = bitmap.representation(using: .png, properties: [:]) else {
+guard let png = bitmap.representation(using: .png, properties: [:]) else {
     fputs("Failed to encode PNG\n", stderr)
     exit(1)
 }
