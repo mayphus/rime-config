@@ -1,6 +1,7 @@
 (ns rime-config.ui.page
   (:require [rime-config.api :as api]
             [rime-config.state :as state]
+            [clojure.string :as str]
             [reagent.core :as r]))
 
 (def copy
@@ -115,6 +116,25 @@
 (defn set-document-lang! [locale]
   (set! (.-lang (.-documentElement js/document))
         (if (= locale :zh-Hant) "zh-Hant" "en")))
+
+(defn browser-locales []
+  (let [languages (some-> js/navigator .-languages array-seq)
+        language (some-> js/navigator .-language)]
+    (vec (remove nil? (concat languages (when language [language]))))))
+
+(defn zh-hant-locale? [locale]
+  (let [normalized (some-> locale str/lower-case)]
+    (boolean
+     (and normalized
+          (or (str/includes? normalized "hant")
+              (str/starts-with? normalized "zh-tw")
+              (str/starts-with? normalized "zh-hk")
+              (str/starts-with? normalized "zh-mo"))))))
+
+(defn preferred-locale []
+  (if (some zh-hant-locale? (browser-locales))
+    :zh-Hant
+    :en))
 
 (defn schema-card [locale {:keys [id name]} selected? auto? on-toggle]
   [:div {:class (str "rime-option-card"
@@ -400,7 +420,7 @@
 (defn rime-config-app [{:keys [api-url metadata]}]
   (let [metadata* (r/atom metadata)
         metadata-loading?* (r/atom (nil? metadata))
-        locale* (r/atom :en)
+        locale* (r/atom (preferred-locale))
         platform* (r/atom :desktop)
         selected-schemas* (r/atom #{"flypy"})
         manually-unchecked-skins* (r/atom #{})
@@ -419,7 +439,7 @@
      {:display-name "RimeConfigApp"
      :component-did-mount
       (fn [_]
-        (set-document-lang! :en)
+        (set-document-lang! @locale*)
         (when-not @metadata*
           (load-metadata!)))
       :reagent-render
