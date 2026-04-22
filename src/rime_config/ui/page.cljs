@@ -29,8 +29,18 @@
         :mobile-hint "Yuanshu IME"
         :schemas "Schemas"
         :schemas-description "Dependent schemas are added automatically so the exported config stays complete."
+        :preview "Preview"
+        :include "Include"
+        :selected "Selected"
         :skins "Skins"
         :skins-description "Skins appear automatically based on the selected schemas, and you can still turn them off manually."
+        :schema-preview-title "Schema preview"
+        :schema-preview-description "Inspect dependencies before you include a schema in the package."
+        :schema-preview-empty "Choose a schema to inspect it."
+        :schema-preview-deps "Dependencies"
+        :schema-preview-platform "Availability"
+        :schema-preview-mobile-only "Mobile only"
+        :schema-preview-general "Desktop and mobile"
         :summary "Summary"
         :summary-platform "Platform"
         :summary-desktop "Desktop (rime)"
@@ -46,6 +56,7 @@
         :building "Building..."
         :build "Build and Download"
         :zip-help "Output is a ZIP archive."
+        :support "Support"
         :metadata-load-failed "Could not load the available schemas and skins."
         :build-failed "Failed to generate the config."
         :api-unreachable "Could not reach the Rime config API."}
@@ -74,8 +85,18 @@
              :mobile-hint "元書輸入法"
              :schemas "方案"
              :schemas-description "依賴方案會自動補上，避免導出不完整配置。"
+             :preview "預覽"
+             :include "加入"
+             :selected "已選"
              :skins "皮膚"
              :skins-description "皮膚會根據所選方案自動顯示，你仍然可以手動關閉。"
+             :schema-preview-title "方案預覽"
+             :schema-preview-description "先看依賴與適用範圍，再決定是否加入打包。"
+             :schema-preview-empty "選一個方案來查看。"
+             :schema-preview-deps "依賴"
+             :schema-preview-platform "適用範圍"
+             :schema-preview-mobile-only "僅行動端"
+             :schema-preview-general "桌面與行動端"
              :summary "摘要"
              :summary-platform "平台"
              :summary-desktop "桌面 (rime)"
@@ -91,6 +112,7 @@
              :building "編譯中…"
              :build "編譯並下載"
              :zip-help "輸出為 ZIP 壓縮包。"
+             :support "支持"
              :metadata-load-failed "無法載入可用方案與皮膚。"
              :build-failed "配置生成失敗。"
              :api-unreachable "無法連接 Rime 配置 API。"}})
@@ -122,35 +144,46 @@
   (set! (.-lang (.-documentElement js/document))
         (if (= locale :zh-Hant) "zh-Hant" "en")))
 
-(defn schema-card [locale {:keys [id name]} selected? auto? on-toggle]
-  [:label {:class (str "rime-option-card"
-                       (when selected? " is-selected")
-                       (when auto? " is-auto"))}
-   [:div {:class "rime-option-card-head"}
+(defn schema-card [locale {:keys [id name]} selected? previewing? auto? on-preview on-toggle]
+  [:div {:class (str "rime-option-card"
+                     (when selected? " is-selected")
+                     (when previewing? " is-previewing")
+                     (when auto? " is-auto"))}
+   [:button {:class "rime-option-preview"
+             :type "button"
+             :on-click on-preview}
     [:div {:class "rime-option-copy"}
      [:div {:class "rime-option-title-row"}
       [:span {:class "rime-option-title"} name]
       (when auto?
         [:span {:class "rime-inline-note"} (t locale :auto)])]
      [:span {:class "rime-option-id"} id]]
+    [:span {:class "rime-option-action"} (t locale :preview)]]
+   [:label {:class "rime-option-toggle"}
     [:input {:type "checkbox"
              :checked selected?
              :disabled auto?
-             :on-change on-toggle}]]])
+             :on-change on-toggle}]
+    [:span {:class "rime-option-toggle-label"}
+     (if selected? (t locale :selected) (t locale :include))]]])
 
 (defn skin-card [locale {:keys [id name]} checked? previewing? on-preview on-toggle]
   [:div {:class (str "rime-option-card rime-skin-card"
                      (when checked? " is-selected")
-                     (when previewing? " is-previewing"))
-         :on-click on-preview}
-   [:label {:class "rime-option-card-head"}
+                     (when previewing? " is-previewing"))}
+   [:button {:class "rime-option-preview"
+             :type "button"
+             :on-click on-preview}
     [:div {:class "rime-option-copy"}
      [:span {:class "rime-option-title"} name]
      [:span {:class "rime-option-id"} id]]
+    [:span {:class "rime-option-action"} (t locale :preview)]]
+   [:label {:class "rime-option-toggle"}
     [:input {:type "checkbox"
              :checked checked?
-             :on-click #(.stopPropagation %)
-             :on-change on-toggle}]]
+             :on-change on-toggle}]
+    [:span {:class "rime-option-toggle-label"}
+     (if checked? (t locale :selected) (t locale :include))]]
    (when previewing?
      [:span {:class "rime-preview-hint"} (t locale :previewing)])])
 
@@ -161,6 +194,32 @@
   [:div {:class "rime-hero-metric"}
    [:span {:class "rime-hero-metric-label"} label]
    [:strong {:class "rime-hero-metric-value"} value]])
+
+(defn schema-preview-panel [locale schema]
+  [:div {:class "rime-schema-preview-panel"}
+   [:div {:class "rime-section-header"}
+    [:h3 {:class "rime-section-title"} (t locale :schema-preview-title)]
+    [:p {:class "rime-section-copy"} (t locale :schema-preview-description)]]
+   (if schema
+     [:div {:class "rime-schema-preview-body"}
+      [:div {:class "rime-schema-preview-head"}
+       [:strong {:class "rime-option-title"} (:name schema)]
+       [:span {:class "rime-option-id"} (:id schema)]]
+      [:div {:class "rime-schema-preview-meta"}
+       [:span {:class "rime-summary-label"} (t locale :schema-preview-platform)]
+       [:p {:class "rime-section-copy"}
+        (if (:mobile-only? schema)
+          (t locale :schema-preview-mobile-only)
+          (t locale :schema-preview-general))]]
+      [:div {:class "rime-schema-preview-meta"}
+       [:span {:class "rime-summary-label"} (t locale :schema-preview-deps)]
+       (if (seq (:deps schema))
+         [:div {:class "rime-summary-pills"}
+          (for [dep (:deps schema)]
+            ^{:key dep}
+            [summary-pill dep])]
+         [:p {:class "rime-empty-state"} (t locale :summary-empty)])]]
+     [:p {:class "rime-empty-state"} (t locale :schema-preview-empty)])])
 
 (def special-preview-label
   {"shift" "⇧"
@@ -267,15 +326,23 @@
 
 (defn rime-ready-view
   [{:keys [locale metadata platform selected-schemas manually-unchecked-skins
-           preview-skin-id is-building? error on-platform-change on-schema-toggle
+           preview-skin-id preview-schema-id is-building? error on-platform-change on-schema-toggle
+           on-schema-preview
            on-skin-preview on-skin-toggle on-build
            on-locale-change]}]
   (let [auto-deps (state/auto-deps metadata selected-schemas)
         active-schema-ids (state/all-active-schemas metadata selected-schemas)
+        visible-schemas (vec
+                         (for [schema (:schemas metadata)
+                               :let [mobile-only? (:mobile-only? schema)]
+                               :when (not (and (= platform :desktop) mobile-only?))]
+                           schema))
         visible-skins (vec (state/visible-skins metadata platform active-schema-ids))
         active-skins (state/active-skins metadata platform selected-schemas manually-unchecked-skins)
         schema-count (count (:schemas metadata))
         skin-count (count (or (:skins metadata) []))
+        preview-schema-id (or preview-schema-id (some-> visible-schemas first :id))
+        preview-schema (state/schema-by-id metadata preview-schema-id)
         preview-skin-id (or preview-skin-id (some-> visible-skins first :id))
         preview-skin (first (filter #(= preview-skin-id (:id %)) visible-skins))
         preview-layout (:preview preview-skin)
@@ -317,15 +384,17 @@
         [:div {:class "rime-section-header"}
          [:h2 {:class "rime-section-title"} (t locale :schemas)]
          [:p {:class "rime-section-copy"} (t locale :schemas-description)]]
-        [:div {:class "rime-option-grid"}
-         (for [schema (:schemas metadata)
-               :let [mobile-only? (:mobile-only? schema)]
-               :when (not (and (= platform :desktop) mobile-only?))]
-           ^{:key (:id schema)}
-           [schema-card locale schema
-            (contains? active-schema-ids (:id schema))
-            (contains? auto-deps (:id schema))
-            #(on-schema-toggle schema)])]]
+        [:div {:class "rime-schema-layout"}
+         [:div {:class "rime-option-grid"}
+          (for [schema visible-schemas]
+            ^{:key (:id schema)}
+            [schema-card locale schema
+             (contains? active-schema-ids (:id schema))
+             (= preview-schema-id (:id schema))
+             (contains? auto-deps (:id schema))
+             #(on-schema-preview schema)
+             #(on-schema-toggle schema)])]
+         [schema-preview-panel locale preview-schema]]]
        (when (and (= platform :mobile) (seq visible-skins))
          [:section {:class "rime-section"}
           [:div {:class "rime-section-header"}
@@ -385,6 +454,12 @@
                   :on-click on-build}
          (if is-building? (t locale :building) (t locale :build))]
         [:p {:class "rime-help-text"} (t locale :zip-help)]
+        [:div {:class "rime-support-block"}
+         [:p {:class "rime-summary-label"} (t locale :support)]
+         [:div {:class "rime-support-image-frame"}
+          [:img {:class "rime-support-image"
+                 :src "/support/qr-source.jpg"
+                 :alt "Support QR code"}]]]
         (when error
           [:p {:class "rime-error-text"} (localize-error locale error)])]]]]))
 
@@ -395,6 +470,7 @@
         platform* (r/atom :desktop)
         selected-schemas* (r/atom #{"flypy"})
         manually-unchecked-skins* (r/atom #{})
+        preview-schema-id* (r/atom nil)
         preview-skin-id* (r/atom nil)
         is-building* (r/atom false)
         error* (r/atom nil)]
@@ -422,6 +498,7 @@
             :platform @platform*
             :selected-schemas @selected-schemas*
             :manually-unchecked-skins @manually-unchecked-skins*
+            :preview-schema-id @preview-schema-id*
             :preview-skin-id @preview-skin-id*
             :is-building? @is-building*
             :error @error*
@@ -429,6 +506,7 @@
                                 (reset! locale* next-locale)
                                 (set-document-lang! next-locale))
             :on-platform-change #(reset! platform* %)
+            :on-schema-preview #(reset! preview-schema-id* (:id %))
             :on-schema-toggle
             (fn [schema]
               (swap! selected-schemas*
