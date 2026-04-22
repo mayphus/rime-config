@@ -18,14 +18,10 @@
 (struct skin-meta (slug english-name chinese-name summary features) #:transparent)
 
 (define-runtime-path render-skin-demo-script "../../../tools/render_skin_demo.py")
-(define-runtime-path render-skin-demo-swift "../../../tools/render_skin_demo.swift")
 
 (define (require-executable name who)
   (or (find-executable-path name)
       (error who "~a not found in PATH" name)))
-
-(define (optional-executable name)
-  (find-executable-path name))
 
 (define (make-skin-meta #:slug slug
                         #:english-name english-name
@@ -56,6 +52,8 @@
    "This README and `demo.png` are generated from the skin metadata.\n"))
 
 (define (render-demo-png meta preview-spec)
+  (define python-exe
+    (require-executable "python3" 'make-skin-doc-files))
   (define tmp-path
     (make-temporary-file
      (~a (path->string (find-system-path 'temp-dir))
@@ -78,28 +76,13 @@
            (hasheq 'title (skin-meta-chinese-name meta)
                    'preview preview-spec)
            out)))
-      (define swift-exe (optional-executable "swift"))
-      (define python-exe (optional-executable "python3"))
       (define status
-        (cond
-          [swift-exe
-           (system* swift-exe
-                    render-skin-demo-swift
-                    "--payload"
-                    (path->string payload-path)
-                    "--output"
-                    (path->string tmp-path))]
-          [python-exe
-           (system* python-exe
-                    render-skin-demo-script
-                    "--title"
-                    (skin-meta-chinese-name meta)
-                    "--output"
-                    (path->string tmp-path))]
-          [else
-           (error 'make-skin-doc-files
-                  "neither swift nor python3 is available to render demo image for ~a"
-                  (skin-meta-slug meta))]))
+        (system* python-exe
+                 render-skin-demo-script
+                 "--payload"
+                 (path->string payload-path)
+                 "--output"
+                 (path->string tmp-path)))
       (unless status
         (error 'make-skin-doc-files
                "failed to render demo image for ~a"
