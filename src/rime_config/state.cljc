@@ -34,7 +34,6 @@
 (def skin-layout
   {"flypy" :qwerty
    "flypy_18" :18key
-   "flypy_18_alt" :18key
    "cangjie6" :cangjie6
    "bopomofo" :bopomofo
    "hybrid" :qwerty

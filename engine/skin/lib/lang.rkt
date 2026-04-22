@@ -21,7 +21,6 @@
 ;;     cangjie6      — Cangjie 6 legends on standard QWERTY rows
 ;;     hybrid        — Cangjie + Flypy combined on one phone layout
 ;;     flypy-18      — Flypy 18-key merged layout (7-6-7 rows)
-;;     flypy-18-alt  — Flypy 18-key alternate grouping (6-5-8 rows)
 ;;     zrm-18        — ZRM 18-key merged layout
 ;;     zrm-18-aux    — ZRM 18-key auxiliary layout
 ;;     shuffle-17    — 17-key shuffle layout (includes custom iPad pages) *
@@ -80,7 +79,6 @@
          "layouts/standard-ipad-page.rkt"
          "layouts/hybrid-iphone-pinyin-page.rkt"
          "layouts/flypy-18-page.rkt"
-         "layouts/flypy-18-alt-page.rkt"
          "layouts/zrm-18-page.rkt"
          "layouts/zrm-18-aux-page.rkt"
          "layouts/flypy18-page.rkt"
@@ -107,7 +105,6 @@
                        "layouts/standard-ipad-page.rkt"
                        "layouts/hybrid-iphone-pinyin-page.rkt"
                        "layouts/flypy-18-page.rkt"
-                       "layouts/flypy-18-alt-page.rkt"
                        "layouts/zrm-18-page.rkt"
                        "layouts/zrm-18-aux-page.rkt"
                        "layouts/flypy18-page.rkt"
@@ -235,7 +232,6 @@
          (case t
            [(hybrid)       'iphone-pinyin-files]
            [(flypy-18)     'flypy-18-iphone-pinyin-files]
-           [(flypy-18-alt) 'flypy-18-alt-iphone-pinyin-files]
            [(zrm-18)       'zrm-18-iphone-pinyin-files]
            [(zrm-18-aux)   'zrm-18-aux-iphone-pinyin-files]
            [(shuffle-17)   'shuffle-17-pinyin-files]
@@ -251,7 +247,7 @@
                  [(cangjie6) 'make-cangjie6-phone-files]
                  [else (raise-syntax-error
                         'phone-layout
-                        (format "unknown type '~a'; supported: flypy cangjie6 hybrid flypy-18 flypy-18-alt zrm-18 zrm-18-aux shuffle-17 bopomofo"
+                        (format "unknown type '~a'; supported: flypy cangjie6 hybrid flypy-18 zrm-18 zrm-18-aux shuffle-17 bopomofo"
                                 t)
                         phone-stx)]))
              #`(#,(datum->syntax phone-stx make-fn)

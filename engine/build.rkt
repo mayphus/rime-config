@@ -41,7 +41,7 @@
 
 ;; ---- Known generated IDs ---------------------------------------------------
 
-(define generated-schema-ids '("flypy_18" "flypy_18_alt" "flypy_ice" "shuffle_17"))
+(define generated-schema-ids '("flypy_18" "flypy_ice" "shuffle_17"))
 (define generated-custom-ids '("cangjie6" "flypy" "jyut6ping3"))
 (define generated-config-ids (append generated-schema-ids generated-custom-ids))
 
