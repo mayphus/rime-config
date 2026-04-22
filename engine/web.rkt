@@ -92,6 +92,17 @@
                      (skin-preview-spec f)))))))
    (sort (directory-list skins-dir #:build? #t) path<?)))
 
+(define precomputed-schema-items
+  (for/list ([s (in-list (remove-duplicates (append generated-config-ids
+                                                    (list-static-schemas))))])
+    (define mo? (schema-module-ref s 'mobile-only? #f))
+    (define deps (read-schema-deps s))
+    (define zh-name (schema-module-ref s 'chinese-name (read-schema-name-from-yaml s)))
+    (hash 'id s
+          'name (or zh-name s)
+          'deps deps
+          'mobile-only? mo?)))
+
 ;; ---- Handlers --------------------------------------------------------------
 
 (define (json-error msg)
@@ -100,19 +111,6 @@
    (list (jsexpr->bytes (hash 'error msg)))))
 
 (define (handle-metadata req)
-  (define all-schemas
-    (remove-duplicates (append generated-config-ids (list-static-schemas))))
-
-  (define schemas
-    (for/list ([s all-schemas])
-      (define mo? (schema-module-ref s 'mobile-only? #f))
-      (define deps (read-schema-deps s))
-      (define zh-name (schema-module-ref s 'chinese-name (read-schema-name-from-yaml s)))
-      (hash 'id s
-            'name (or zh-name s)
-            'deps deps
-            'mobile-only? mo?)))
-
   (define skins
     (map (lambda (item)
            (define name (car item))
@@ -130,7 +128,7 @@
 
   (response/full
    200 #"OK" (current-seconds) #"application/json" '()
-   (list (jsexpr->bytes (hash 'schemas schemas 'skins skins)))))
+   (list (jsexpr->bytes (hash 'schemas precomputed-schema-items 'skins skins)))))
 
 (define (handle-skin-demo req skin-id)
   (cond

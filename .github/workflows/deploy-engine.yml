@@ -1,5 +1,9 @@
 name: deploy-engine
 
+concurrency:
+  group: deploy-engine-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
