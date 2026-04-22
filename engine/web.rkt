@@ -8,7 +8,7 @@
          racket/path
          racket/list
          json
-         "build.rkt")
+         "build-lib.rkt")
 
 (provide precomputed-skin-items list-static-schemas)
 
