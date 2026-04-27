@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6.3.0
         with:
-          node-version: 22
+          node-version: 24
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -41,9 +41,6 @@ jobs:
       - name: Deploy production
         env:
           SKIP_WRANGLER_CUSTOM_BUILD: "1"
-        uses: cloudflare/wrangler-action@v3.14.1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --config wrangler.jsonc --env production
-          environment: production
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bun run wrangler deploy --config wrangler.jsonc --env production
