@@ -1,6 +1,6 @@
 :root {
-  --bg: #faf8f4;
-  --bg-soft: #faf8f4;
+  --bg: #fff;
+  --bg-soft: #fff;
   --panel: rgba(255, 255, 255, 0.78);
   --panel-strong: rgba(255, 255, 255, 0.9);
   --ink: #1d1814;
@@ -142,7 +142,7 @@ input {
   padding: 0.2rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 252, 246, 0.86);
+  background: #fff;
 }
 
 .rime-language-button {
