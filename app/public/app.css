@@ -3,16 +3,46 @@
   --bg-soft: #fff;
   --panel: rgba(255, 255, 255, 0.78);
   --panel-strong: rgba(255, 255, 255, 0.9);
+  --surface: rgba(255, 255, 255, 0.48);
+  --surface-strong: rgba(255, 255, 255, 0.82);
   --ink: #1d1814;
+  --ink-inverted: #fffdf9;
   --muted: #746a60;
   --line: rgba(29, 24, 20, 0.08);
   --line-strong: rgba(29, 24, 20, 0.14);
   --accent: #8a5539;
   --accent-soft: rgba(138, 85, 57, 0.05);
+  --selected-line: rgba(138, 85, 57, 0.24);
+  --inline-note-bg: rgba(29, 24, 20, 0.045);
+  --keyboard-special-bg: rgba(232, 232, 232, 0.95);
+  --qr-frame-bg: transparent;
   --error: #a83f2f;
   --radius-lg: 1.1rem;
   --radius-md: 0.85rem;
   --shadow: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #10100f;
+    --bg-soft: #10100f;
+    --panel: rgba(26, 25, 23, 0.78);
+    --panel-strong: rgba(31, 30, 28, 0.92);
+    --surface: rgba(255, 255, 255, 0.055);
+    --surface-strong: rgba(255, 255, 255, 0.1);
+    --ink: #f3eee7;
+    --ink-inverted: #10100f;
+    --muted: #b8ada1;
+    --line: rgba(255, 255, 255, 0.13);
+    --line-strong: rgba(255, 255, 255, 0.22);
+    --accent: #d6a074;
+    --accent-soft: rgba(214, 160, 116, 0.12);
+    --selected-line: rgba(214, 160, 116, 0.38);
+    --inline-note-bg: rgba(255, 255, 255, 0.085);
+    --keyboard-special-bg: rgba(255, 255, 255, 0.16);
+    --qr-frame-bg: #fff;
+    --error: #ff9a88;
+  }
 }
 
 * {
@@ -24,7 +54,7 @@ body {
   margin: 0;
   min-height: 100%;
   background: var(--bg-soft);
-  color-scheme: light;
+  color-scheme: light dark;
 }
 
 body {
@@ -142,7 +172,7 @@ input {
   padding: 0.2rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: #fff;
+  background: var(--bg-soft);
 }
 
 .rime-language-button {
@@ -160,7 +190,7 @@ input {
 
 .rime-language-button.is-active {
   background: var(--ink);
-  color: #fffdf9;
+  color: var(--ink-inverted);
 }
 
 .rime-config-grid {
@@ -225,8 +255,8 @@ input {
 .rime-platform-button.is-active,
 .rime-option-card.is-selected,
 .rime-option-card.is-previewing {
-  border-color: rgba(138, 85, 57, 0.24);
-  background: rgba(138, 85, 57, 0.04);
+  border-color: var(--selected-line);
+  background: var(--accent-soft);
 }
 
 .rime-option-card {
@@ -256,7 +286,7 @@ input {
   padding: 0.8rem 0.9rem;
   text-align: left;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--surface);
 }
 
 .rime-skin-row,
@@ -336,7 +366,7 @@ input {
 .rime-inline-note {
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
-  background: rgba(29, 24, 20, 0.045);
+  background: var(--inline-note-bg);
 }
 
 .rime-summary-card {
@@ -422,14 +452,14 @@ input {
   aspect-ratio: 1 / 1;
   border: 1px solid var(--line);
   border-radius: 0.9rem;
-  background: #fff;
+  background: var(--qr-frame-bg);
   align-self: flex-start;
 }
 
 .rime-support-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center top;
   display: block;
 }
@@ -454,7 +484,7 @@ input {
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.48);
+  background: var(--surface);
 }
 
 .keyboard-preview-grid {
@@ -500,9 +530,9 @@ input {
   min-width: 2.1rem;
   height: 2.3rem;
   padding: 0 0.45rem;
-  border: 1px solid rgba(29, 24, 20, 0.08);
+  border: 1px solid var(--line);
   border-radius: 0.7rem;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--surface-strong);
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.82rem;
 }
@@ -510,7 +540,7 @@ input {
 .keyboard-preview-shell {
   display: block;
   padding: 0.65rem;
-  border: 1px solid rgba(29, 24, 20, 0.08);
+  border: 1px solid var(--line);
   border-radius: 0.85rem;
 }
 
@@ -523,7 +553,7 @@ input {
 }
 
 .keyboard-preview-key.is-rich.is-special {
-  background: rgba(232, 232, 232, 0.95);
+  background: var(--keyboard-special-bg);
 }
 
 .keyboard-preview-key.is-rich.is-space {

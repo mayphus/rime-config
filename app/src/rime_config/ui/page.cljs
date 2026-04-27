@@ -419,7 +419,7 @@
          [:p {:class "rime-summary-label"} (t locale :support)]
          [:div {:class "rime-support-image-frame"}
           [:img {:class "rime-support-image"
-                 :src "/support/qr-source.jpg"
+                 :src "/support/qr-source.svg"
                  :alt "Support QR code"}]]]
         (when error
           [:p {:class "rime-error-text"} (localize-error locale error)])]]]]))
