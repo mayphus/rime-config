@@ -312,11 +312,13 @@
   [:div {:class "rime-config-shell rime-landing-shell"}
    [:section {:class "rime-hero-card rime-landing-hero"}
     [:div {:class "rime-hero-head"}
-     [:div {:class "rime-landing-intro"}
-      [:p {:class "rime-summary-kicker"} "Rime"]
-      [:h1 {:class "page-title"} (t locale :landing-title)]
-      [:p {:class "rime-section-copy"} (t locale :landing-copy)]]
-     [language-toggle locale on-locale-change]]]
+     [:div {:class "rime-tool-head"}
+      [:div {:class "rime-mode-nav"}
+       [:p {:class "rime-summary-kicker"} "Rime"]
+       [language-toggle locale on-locale-change]]
+      [:div {:class "rime-landing-intro"}
+       [:h1 {:class "page-title"} (t locale :landing-title)]
+       [:p {:class "rime-section-copy"} (t locale :landing-copy)]]]]]
    [:section {:class "rime-landing-choices"}
     [landing-card locale :desktop (t locale :desktop) (t locale :landing-desktop-copy) on-navigate]
     [landing-card locale :mobile (t locale :mobile) (t locale :landing-mobile-copy) on-navigate]]])
