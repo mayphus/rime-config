@@ -16,7 +16,8 @@ that path, while the actual product code lives here.
 
 Current standalone deployment work also supports:
 
-- frontend on `rime-config.mayphus.org`
+- frontend on `rime.mayphus.org`
+- redirects from `rime-config.mayphus.org`
 - engine on k3s behind `api-rime.mayphus.org`
 
 ## Migration status

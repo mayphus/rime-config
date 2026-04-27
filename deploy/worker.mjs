@@ -1,4 +1,18 @@
 const API_BASE = "/api/rime-config";
+const CANONICAL_HOST = "rime.mayphus.org";
+const LEGACY_HOST = "rime-config.mayphus.org";
+
+function canonicalRedirect(request) {
+  const url = new URL(request.url);
+
+  if (url.hostname !== LEGACY_HOST) {
+    return null;
+  }
+
+  url.protocol = "https:";
+  url.hostname = CANONICAL_HOST;
+  return Response.redirect(url.toString(), 308);
+}
 
 async function serveAsset(request, env, pathname) {
   const url = new URL(request.url);
@@ -21,6 +35,11 @@ async function proxyEngine(request, env) {
 
 export default {
   async fetch(request, env) {
+    const redirect = canonicalRedirect(request);
+    if (redirect) {
+      return redirect;
+    }
+
     const url = new URL(request.url);
 
     if (url.pathname.startsWith(API_BASE)) {

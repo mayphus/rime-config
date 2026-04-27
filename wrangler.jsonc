@@ -19,6 +19,10 @@
   },
   "routes": [
     {
+      "pattern": "rime.mayphus.org",
+      "custom_domain": true
+    },
+    {
       "pattern": "rime-config.mayphus.org",
       "custom_domain": true
     }
