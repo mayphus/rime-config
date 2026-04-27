@@ -47,6 +47,6 @@ export default {
       return proxyEngine(request, env);
     }
 
-    return serveAsset(request, env, APP_PATHS.has(url.pathname) ? "/index.html" : url.pathname);
+    return serveAsset(request, env, APP_PATHS.has(url.pathname) ? "/" : url.pathname);
   }
 };
