@@ -1,6 +1,7 @@
 const API_BASE = "/api/rime-config";
 const CANONICAL_HOST = "rime.mayphus.org";
 const LEGACY_HOST = "rime-config.mayphus.org";
+const APP_PATHS = new Set(["/", "/desktop", "/mobile"]);
 
 function canonicalRedirect(request) {
   const url = new URL(request.url);
@@ -46,6 +47,6 @@ export default {
       return proxyEngine(request, env);
     }
 
-    return serveAsset(request, env, url.pathname);
+    return serveAsset(request, env, APP_PATHS.has(url.pathname) ? "/index.html" : url.pathname);
   }
 };

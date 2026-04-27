@@ -6,6 +6,7 @@ const cwd = process.cwd();
 const port = Number(process.env.PORT || 4173);
 const engineBase = (process.env.RIME_CONFIG_API_URL || "http://127.0.0.1:5001").replace(/\/$/, "");
 const staticOnly = process.env.RIME_CONFIG_STATIC === "1";
+const appPaths = new Set(["/", "/desktop", "/mobile"]);
 
 const publicDir = path.join(cwd, "app", "public");
 const distDir = path.join(cwd, "dist");
@@ -67,7 +68,7 @@ const server = Bun.serve({
       return proxyToEngine(request, url.pathname);
     }
 
-    const response = await maybeServeStatic(url.pathname);
+    const response = await maybeServeStatic(appPaths.has(url.pathname) ? "/" : url.pathname);
     if (response) return response;
 
     if (!staticOnly) {

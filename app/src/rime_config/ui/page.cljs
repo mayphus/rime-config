@@ -8,6 +8,15 @@
   {:en {:locale-en "EN"
         :locale-zh "繁"
         :title "Rime Config Builder"
+        :landing-title "Rime Config"
+        :landing-copy "Build a small Rime package for the place you type most."
+        :landing-desktop-copy "Export desktop Rime schemas for Squirrel, Weasel, or fcitx-rime."
+        :landing-mobile-copy "Export Yuanshu IME schemas and matching skins for iPhone or iPad."
+        :choose-desktop "Build for desktop"
+        :choose-mobile "Build for mobile"
+        :back-home "Home"
+        :switch-to-desktop "Desktop"
+        :switch-to-mobile "Mobile"
         :status "Status"
         :loading-metadata "Fetching metadata..."
         :metadata-missing "Metadata has not been loaded yet."
@@ -36,7 +45,7 @@
         :auto "Auto"
         :previewing "Previewing"
         :building "Building..."
-        :building-note "pb62 mini is packing this for you. Hamster paws at work. 🐹"
+        :building-note "The package is being prepared."
         :build "Build and Download"
         :zip-help "Output is a ZIP archive."
         :yuanshu-help "Use in Yuanshu"
@@ -52,6 +61,15 @@
    :zh-Hant {:locale-en "EN"
              :locale-zh "繁"
              :title "Rime 配置生成器"
+             :landing-title "Rime 配置"
+             :landing-copy "為你最常輸入的地方生成一份小而完整的 Rime 配置。"
+             :landing-desktop-copy "導出桌面 Rime 方案，可用於鼠鬚管、小狼毫或 fcitx-rime。"
+             :landing-mobile-copy "導出元書輸入法方案與配套皮膚，適合 iPhone 或 iPad。"
+             :choose-desktop "生成桌面版"
+             :choose-mobile "生成移動版"
+             :back-home "首頁"
+             :switch-to-desktop "桌面"
+             :switch-to-mobile "移動端"
              :status "狀態"
              :loading-metadata "正在取得 metadata…"
              :metadata-missing "尚未取得 metadata。"
@@ -80,7 +98,7 @@
              :auto "自動"
              :previewing "目前預覽"
              :building "編譯中…"
-             :building-note "pb62 mini 正在幫你打包。倉鼠小爪爪開工中。🐹"
+             :building-note "正在準備配置包。"
              :build "編譯並下載"
              :zip-help "輸出為 ZIP 壓縮包。"
              :yuanshu-help "如何在元書中使用"
@@ -139,6 +157,18 @@
   (if (some zh-hant-locale? (browser-locales))
     :zh-Hant
     :en))
+
+(defn route-from-path [pathname]
+  (case pathname
+    "/desktop" :desktop
+    "/mobile" :mobile
+    :home))
+
+(defn path-for-route [route]
+  (case route
+    :desktop "/desktop"
+    :mobile "/mobile"
+    "/"))
 
 (defn schema-card [locale {:keys [id name]} selected? auto? on-toggle]
   [:div {:class (str "rime-option-card"
@@ -265,6 +295,36 @@
    :extra-skins active-skins
    :desktop? (= platform :desktop)})
 
+(defn nav-link [label route on-navigate]
+  [:a {:class "rime-nav-link"
+       :href (path-for-route route)
+       :on-click (fn [event]
+                   (.preventDefault event)
+                   (on-navigate route))}
+   label])
+
+(defn landing-card [locale route title copy on-navigate]
+  [:a {:class "rime-landing-choice"
+       :href (path-for-route route)
+       :on-click (fn [event]
+                   (.preventDefault event)
+                   (on-navigate route))}
+   [:span {:class "rime-landing-choice-title"} title]
+   [:span {:class "rime-landing-choice-copy"} copy]])
+
+(defn rime-landing-view [locale on-locale-change on-navigate]
+  [:div {:class "rime-config-shell rime-landing-shell"}
+   [:section {:class "rime-hero-card rime-landing-hero"}
+    [:div {:class "rime-hero-head"}
+     [:div {:class "rime-landing-intro"}
+      [:p {:class "rime-summary-kicker"} "Rime"]
+      [:h1 {:class "page-title"} (t locale :landing-title)]
+      [:p {:class "rime-section-copy"} (t locale :landing-copy)]]
+     [language-toggle locale on-locale-change]]]
+   [:section {:class "rime-landing-choices"}
+    [landing-card locale :desktop (t locale :desktop) (t locale :landing-desktop-copy) on-navigate]
+    [landing-card locale :mobile (t locale :mobile) (t locale :landing-mobile-copy) on-navigate]]])
+
 (defn rime-loading-view [locale metadata-loading? error on-locale-change on-retry]
   [:div {:class "rime-config-shell"}
    [:section {:class "rime-hero-card"}
@@ -289,7 +349,7 @@
   [{:keys [locale metadata platform selected-schemas manually-unchecked-skins
            preview-skin-id is-building? error on-platform-change on-schema-toggle
            on-skin-preview on-skin-toggle on-build
-           on-locale-change]}]
+           on-locale-change on-navigate]}]
   (let [auto-deps (state/auto-deps metadata selected-schemas)
         active-schema-ids (state/all-active-schemas metadata selected-schemas)
         visible-schemas (vec
@@ -306,25 +366,19 @@
     [:div {:class "rime-config-shell"}
      [:section {:class "rime-hero-card"}
       [:div {:class "rime-hero-head"}
-       [:h1 {:class "page-title"} (t locale :title)]
+       [:div {:class "rime-landing-intro"}
+        [:nav {:class "rime-mode-nav"
+               :aria-label "Mode navigation"}
+         [nav-link (t locale :back-home) :home on-navigate]]
+        [:h1 {:class "page-title"} (if (= platform :desktop)
+                                     (t locale :desktop)
+                                     (t locale :mobile))]
+        [:p {:class "rime-section-copy"} (if (= platform :desktop)
+                                           (t locale :landing-desktop-copy)
+                                           (t locale :landing-mobile-copy))]]
        [language-toggle locale on-locale-change]]]
      [:div {:class "rime-config-grid"}
       [:div {:class "rime-primary-column"}
-       [:section {:class "rime-section"}
-        [:div {:class "rime-section-header"}
-         [:h2 {:class "rime-section-title"} (t locale :platform)]
-         [:p {:class "rime-section-copy"} (t locale :platform-description)]]
-        [:div {:class "rime-platform-grid"}
-         [:button {:class (str "rime-platform-button" (when (= platform :desktop) " is-active"))
-                   :type "button"
-                   :on-click #(on-platform-change :desktop)}
-          [:span {:class "rime-platform-label"} (t locale :desktop)]
-          [:span {:class "rime-platform-hint"} (t locale :desktop-hint)]]
-         [:button {:class (str "rime-platform-button" (when (= platform :mobile) " is-active"))
-                   :type "button"
-                   :on-click #(on-platform-change :mobile)}
-          [:span {:class "rime-platform-label"} (t locale :mobile)]
-          [:span {:class "rime-platform-hint"} (t locale :mobile-hint)]]]]
        [:section {:class "rime-section"}
         [:div {:class "rime-section-header"}
          [:h2 {:class "rime-section-title"} (t locale :schemas)]
@@ -399,22 +453,23 @@
         (when is-building?
           [:p {:class "rime-build-note"} (t locale :building-note)])
         [:p {:class "rime-help-text"} (t locale :zip-help)]
-        [:div {:class "rime-help-block"}
-         [:p {:class "rime-summary-label"} (t locale :yuanshu-help)]
-         [:p {:class "rime-help-text"} (t locale :yuanshu-step-download)]
-         [:p {:class "rime-help-text"} (t locale :yuanshu-step-import)]
-         [:p {:class "rime-help-text"} (t locale :yuanshu-step-skin)]
-         [:div {:class "rime-help-links"}
-          [:a {:class "rime-help-link"
-               :href "https://apps.apple.com/cn/app/%E5%85%83%E4%B9%A6%E8%BE%93%E5%85%A5%E6%B3%95/id6744464701"
-               :target "_blank"
-               :rel "noreferrer"}
-           (t locale :yuanshu-app-link)]
-          [:a {:class "rime-help-link"
-               :href "https://ihsiao.com/apps/hamster/v3/docs/guides/schema/"
-               :target "_blank"
-               :rel "noreferrer"}
-           (t locale :yuanshu-guide-link)]]]
+        (when (= platform :mobile)
+          [:div {:class "rime-help-block"}
+           [:p {:class "rime-summary-label"} (t locale :yuanshu-help)]
+           [:p {:class "rime-help-text"} (t locale :yuanshu-step-download)]
+           [:p {:class "rime-help-text"} (t locale :yuanshu-step-import)]
+           [:p {:class "rime-help-text"} (t locale :yuanshu-step-skin)]
+           [:div {:class "rime-help-links"}
+            [:a {:class "rime-help-link"
+                 :href "https://apps.apple.com/cn/app/%E5%85%83%E4%B9%A6%E8%BE%93%E5%85%A5%E6%B3%95/id6744464701"
+                 :target "_blank"
+                 :rel "noreferrer"}
+             (t locale :yuanshu-app-link)]
+            [:a {:class "rime-help-link"
+                 :href "https://ihsiao.com/apps/hamster/v3/docs/guides/schema/"
+                 :target "_blank"
+                 :rel "noreferrer"}
+             (t locale :yuanshu-guide-link)]]])
         [:div {:class "rime-support-block"}
          [:p {:class "rime-summary-label"} (t locale :support)]
          [:div {:class "rime-support-image-frame"}
@@ -428,6 +483,7 @@
   (let [metadata* (r/atom metadata)
         metadata-loading?* (r/atom (nil? metadata))
         locale* (r/atom (preferred-locale))
+        route* (r/atom (route-from-path (.-pathname js/location)))
         platform* (r/atom :desktop)
         selected-schemas* (r/atom #{"flypy"})
         manually-unchecked-skins* (r/atom #{})
@@ -441,17 +497,39 @@
                #(do (reset! metadata* %)
                     (reset! error* nil))
                #(reset! error* %)
-               #(reset! metadata-loading?* false)))]
+               #(reset! metadata-loading?* false)))
+            (navigate! [next-route]
+              (let [next-path (path-for-route next-route)]
+                (when (not= next-path (.-pathname js/location))
+                  (.pushState js/history nil "" next-path))
+                (when (contains? #{:desktop :mobile} next-route)
+                  (reset! platform* next-route))
+                (reset! route* next-route)))]
     (r/create-class
      {:display-name "RimeConfigApp"
      :component-did-mount
       (fn [_]
         (set-document-lang! @locale*)
+        (reset! route* (route-from-path (.-pathname js/location)))
+        (when (contains? #{:desktop :mobile} @route*)
+          (reset! platform* @route*))
+        (.addEventListener js/window "popstate"
+                           (fn []
+                             (let [next-route (route-from-path (.-pathname js/location))]
+                               (reset! route* next-route)
+                               (when (contains? #{:desktop :mobile} next-route)
+                                 (reset! platform* next-route)))))
         (when-not @metadata*
           (load-metadata!)))
       :reagent-render
       (fn [{:keys [api-url]}]
-        (if-let [metadata @metadata*]
+        (if (= @route* :home)
+          [rime-landing-view @locale*
+           (fn [next-locale]
+             (reset! locale* next-locale)
+             (set-document-lang! next-locale))
+           navigate!]
+          (if-let [metadata @metadata*]
           [rime-ready-view
            {:locale @locale*
            :metadata metadata
@@ -464,7 +542,8 @@
             :on-locale-change (fn [next-locale]
                                 (reset! locale* next-locale)
                                 (set-document-lang! next-locale))
-            :on-platform-change #(reset! platform* %)
+            :on-platform-change navigate!
+            :on-navigate navigate!
             :on-schema-toggle
             (fn [schema]
               (swap! selected-schemas*
@@ -500,4 +579,4 @@
            (fn [next-locale]
              (reset! locale* next-locale)
              (set-document-lang! next-locale))
-           load-metadata!]))}))))
+           load-metadata!])))}))))
