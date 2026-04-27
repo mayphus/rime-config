@@ -595,14 +595,14 @@ input {
 }
 
 .keyboard-preview {
-  width: min(100%, 44rem);
+  width: min(100%, 32rem);
   margin: 0;
 }
 
 .keyboard-preview-grid.is-rich {
   height: 100%;
   width: 100%;
-  gap: 0.55rem;
+  gap: clamp(0.32rem, 1.3vw, 0.55rem);
 }
 
 .keyboard-preview-row,
@@ -616,7 +616,7 @@ input {
 .keyboard-preview-row.is-rich {
   flex: 1 1 0;
   width: 100%;
-  gap: 0.42rem;
+  gap: clamp(0.28rem, 1.1vw, 0.48rem);
 }
 
 .keyboard-preview-key,
@@ -635,9 +635,10 @@ input {
 
 .keyboard-preview-shell {
   display: block;
-  padding: 0.65rem;
-  border: 1px solid var(--line);
-  border-radius: 0.85rem;
+  padding: clamp(0.55rem, 1.6vw, 0.8rem);
+  border: 0;
+  border-radius: clamp(1.1rem, 4vw, 1.65rem);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 .keyboard-preview-key.is-rich {
@@ -646,6 +647,11 @@ input {
   height: 100%;
   padding: 0;
   overflow: hidden;
+  border: 0;
+  border-radius: clamp(0.55rem, 2.2vw, 0.95rem);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.06),
+    0 0.04rem 0.12rem rgba(0, 0, 0, 0.1);
 }
 
 .keyboard-preview-key.is-rich.is-special {
@@ -659,7 +665,7 @@ input {
 .keyboard-preview-layer,
 .keyboard-preview-fallback-label {
   position: absolute;
-  font-family: "Avenir Next", "Segoe UI", "Noto Sans", "PingFang TC", sans-serif;
+  font-family: "Avenir Next", "SF Pro Display", "Segoe UI", "Noto Sans", "PingFang TC", sans-serif;
   line-height: 1;
   white-space: nowrap;
 }
@@ -668,10 +674,19 @@ input {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--ink);
+  font-size: clamp(0.98rem, 4.1vw, 1.32rem);
+  font-weight: 500;
+  color: var(--preview-fallback-color, var(--ink));
   text-transform: lowercase;
+}
+
+.keyboard-preview-key.is-space .keyboard-preview-fallback-label {
+  width: 1.8rem;
+  height: 0.72rem;
+  border-right: 0.14rem solid currentColor;
+  border-bottom: 0.14rem solid currentColor;
+  border-left: 0.14rem solid currentColor;
+  font-size: 0;
 }
 
 .keyboard-preview-key.is-wide {
@@ -759,18 +774,18 @@ input {
   }
 
   .keyboard-preview-shell {
-    padding: 0.45rem;
+    padding: 0.5rem;
   }
 
   .keyboard-preview-grid,
   .keyboard-preview-grid.is-rich {
-    gap: 0.32rem;
+    gap: 0.34rem;
   }
 
   .keyboard-preview-row,
   .keyboard-preview-space-row,
   .keyboard-preview-row.is-rich {
-    gap: 0.24rem;
+    gap: 0.28rem;
   }
 
   .keyboard-preview-key,
@@ -783,7 +798,7 @@ input {
   }
 
   .keyboard-preview-key.is-rich {
-    height: 2.5rem;
+    height: 100%;
   }
 
   .keyboard-preview-key.is-rich.is-space {
@@ -795,7 +810,7 @@ input {
   }
 
   .keyboard-preview-fallback-label {
-    font-size: 0.72rem;
+    font-size: 1.02rem;
   }
 
   .rime-skin-row,

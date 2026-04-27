@@ -213,7 +213,7 @@
   {"shift" "⇧"
    "backspace" "⌫"
    "enter" "↵"
-   "space" "space"
+   "space" "␣"
    "numeric" "123"})
 
 (defn preview-key-label [{:keys [label kind icon]}]
@@ -223,6 +223,16 @@
     (and (string? icon) (not= icon "")) icon
     :else ""))
 
+(defn preview-fallback-color [background]
+  (if-let [[_ hex] (and (string? background)
+                        (re-matches #"(?i)#([0-9a-f]{6})(?:[0-9a-f]{2})?" background))]
+    (let [r (js/parseInt (subs hex 0 2) 16)
+          g (js/parseInt (subs hex 2 4) 16)
+          b (js/parseInt (subs hex 4 6) 16)
+          luminance (+ (* 0.2126 r) (* 0.7152 g) (* 0.0722 b))]
+      (if (> luminance 155) "#111111" "#ffffff"))
+    "var(--ink)"))
+
 (defn rich-preview-key [key]
   [:div {:class (str "keyboard-preview-key is-rich"
                      (when (contains? #{"shift" "backspace" "enter" "numeric"} (:kind key))
@@ -230,7 +240,8 @@
                      (when (= "space" (:kind key))
                        " is-space"))
          :style {:flex (str (or (:width key) 1) " 1 0%")
-                 :background (:background key)}}
+                 :background (:background key)
+                 "--preview-fallback-color" (preview-fallback-color (:background key))}}
    (if (seq (:layers key))
      (into
       [:<>]
@@ -240,7 +251,7 @@
                             (when (= layer-index 0) " is-primary"))
                 :style {:left (str (* 100 (or (:x layer) 0.5)) "%")
                         :top (str (* 100 (or (:y layer) 0.5)) "%")
-                        :font-size (str (max 9 (* 0.72 (or (:font-size layer) 14))) "px")
+                        :font-size (str (max 9 (* 1.02 (or (:font-size layer) 14))) "px")
                         :font-weight (or (:font-weight layer) "400")
                         :color (:color layer)
                         :transform "translate(-50%, -50%)"}}
