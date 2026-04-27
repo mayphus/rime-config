@@ -72,6 +72,7 @@
          "core/dsl.rkt"
          "core/docs.rkt"
          "core/preview.rkt"
+         "core/preview-svg.rkt"
          "presets/standard.rkt"
          "keysets/pinyin-common.rkt"
          "layouts/base-page.rkt"
@@ -98,6 +99,7 @@
                        "core/dsl.rkt"
                        "core/docs.rkt"
                        "core/preview.rkt"
+                       "core/preview-svg.rkt"
                        "presets/standard.rkt"
                        "keysets/pinyin-common.rkt"
                        "layouts/base-page.rkt"
@@ -457,6 +459,7 @@
          (define english-name (if -meta- (skin-meta-english-name -meta-) ""))
          (define skin-preview-files #,skin-preview-files-expr)
          (define skin-preview-spec #,skin-preview-spec-expr)
+         (define skin-preview-svgs (preview-spec->svgs skin-preview-spec))
          (define skin-preview-build-files #,preview-build-files-expr)
          (define skin-files #,skin-files-expr)
-         (provide skin-preview-files skin-preview-spec skin-preview-build-files skin-files trigger-schemas chinese-name english-name))]))
+         (provide skin-preview-files skin-preview-spec skin-preview-svgs skin-preview-build-files skin-files trigger-schemas chinese-name english-name))]))

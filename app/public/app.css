@@ -599,6 +599,12 @@ input {
   margin: 0;
 }
 
+.keyboard-preview-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .keyboard-preview-grid.is-rich {
   height: 100%;
   width: 100%;

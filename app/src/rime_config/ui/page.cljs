@@ -274,6 +274,23 @@
           ^{:key (:id key)}
           [rich-preview-key key])])]]])
 
+(defn svg-data-uri [svg]
+  (str "data:image/svg+xml;charset=utf-8," (js/encodeURIComponent svg)))
+
+(defn keyboard-svg-preview [{:keys [svg dark-svg]}]
+  [:div {:class "keyboard-preview keyboard-preview-svg-wrap"}
+   (if dark-svg
+     [:div {:class "keyboard-preview-themes"}
+      [:img {:class "keyboard-preview-svg keyboard-preview-theme is-light"
+             :src (svg-data-uri svg)
+             :alt ""}]
+      [:img {:class "keyboard-preview-svg keyboard-preview-theme is-dark"
+             :src (svg-data-uri dark-svg)
+             :alt ""}]]
+     [:img {:class "keyboard-preview-svg"
+            :src (svg-data-uri svg)
+            :alt ""}])])
+
 (defn keyboard-preview-body [{:keys [label background offsets rows size]}]
   (if (and (seq rows) (map? (first (first rows))))
     [rich-keyboard-preview {:background background
@@ -298,13 +315,16 @@
          [:div {:class "keyboard-preview-space"}]])]]))
 
 (defn keyboard-preview [preview]
-  (if-let [dark-preview (:dark preview)]
+  (if-let [svg (:svg preview)]
+    [keyboard-svg-preview {:svg svg
+                           :dark-svg (:svg (:dark preview))}]
+    (if-let [dark-preview (:dark preview)]
     [:div {:class "keyboard-preview-themes"}
      [:div {:class "keyboard-preview-theme is-light"}
       [keyboard-preview-body (dissoc preview :dark)]]
      [:div {:class "keyboard-preview-theme is-dark"}
       [keyboard-preview-body dark-preview]]]
-    [keyboard-preview-body preview]))
+    [keyboard-preview-body preview])))
 
 (defn build-request-body [platform selected-schemas active-skins]
   {:schemas (vec (sort selected-schemas))
@@ -379,7 +399,11 @@
         active-skins (state/active-skins metadata platform selected-schemas manually-unchecked-skins)
         preview-skin-id (or preview-skin-id (some-> visible-skins first :id))
         preview-skin (first (filter #(= preview-skin-id (:id %)) visible-skins))
-        preview-layout (:preview preview-skin)
+        preview-layout (cond-> (:preview preview-skin)
+                         (:preview-svg preview-skin)
+                         (assoc :svg (:preview-svg preview-skin))
+                         (and (:dark (:preview preview-skin)) (:preview-dark-svg preview-skin))
+                         (assoc-in [:dark :svg] (:preview-dark-svg preview-skin)))
         build-disabled? (or (zero? (count selected-schemas)) is-building?)]
     [:div {:class "rime-config-shell"}
      [:section {:class "rime-hero-card"}

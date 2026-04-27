@@ -24,6 +24,10 @@
   (with-handlers ([exn:fail? (lambda (_) #f)])
     (dynamic-require `(file ,(path->string skin-rkt)) 'skin-preview-spec)))
 
+(define (skin-preview-svgs skin-rkt)
+  (with-handlers ([exn:fail? (lambda (_) (hash))])
+    (dynamic-require `(file ,(path->string skin-rkt)) 'skin-preview-svgs)))
+
 (define (list-static-schemas)
   (filter-map
    (lambda (f)
@@ -89,7 +93,8 @@
                            [(list? trigger)        trigger]
                            [else                   '()])
                      (or zh-name "")
-                     (skin-preview-spec f)))))))
+                     (skin-preview-spec f)
+                     (skin-preview-svgs f)))))))
    (sort (directory-list skins-dir #:build? #t) path<?)))
 
 (define precomputed-schema-items
@@ -117,11 +122,14 @@
            (define triggers (cadr item))
            (define zh-name (caddr item))
            (define preview (cadddr item))
+           (define preview-svgs (car (cddddr item)))
            (define demo-path (skin-demo-path name))
            (hash 'id name
                  'name (if (string=? zh-name "") name zh-name)
                  'triggers (if (eq? triggers 'default) "default" triggers)
                  'preview preview
+                 'preview-svg (hash-ref preview-svgs 'light #f)
+                 'preview-dark-svg (hash-ref preview-svgs 'dark #f)
                  'preview-image-url (and (file-exists? demo-path)
                                          (string-append "/skins/" name "/demo.png"))))
          precomputed-skin-items))

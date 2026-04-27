@@ -8,6 +8,10 @@
 (provide preview-spec-from-files)
 
 (define preview-logical-width 375)
+;; Use the search return-key state so previews match common iOS search fields.
+(define preview-return-key-type 6)
+(define return-key-labels
+  (hash 6 "搜尋"))
 
 (define (page-ref page key [default #f])
   (cond
@@ -41,12 +45,62 @@
   (or (page-ref style 'normalColor #f)
       (page-ref style 'highlightColor #f)))
 
+(define (return-key-label)
+  (hash-ref return-key-labels preview-return-key-type "$returnKeyType"))
+
+(define (preview-text text)
+  (if (equal? text "$returnKeyType")
+      (return-key-label)
+      text))
+
+(define (style-name? value)
+  (or (string? value) (symbol? value)))
+
+(define (style-name->string value)
+  (cond
+    [(string? value) value]
+    [(symbol? value) (symbol->string value)]
+    [else #f]))
+
+(define (number-matches? value expected)
+  (define n (parse-numberish value))
+  (and n (= n expected)))
+
+(define (condition-values-match? value expected)
+  (cond
+    [(vector? value)
+     (for/or ([item (in-vector value)])
+       (number-matches? item expected))]
+    [(list? value)
+     (for/or ([item (in-list value)])
+       (number-matches? item expected))]
+    [else (number-matches? value expected)]))
+
+(define (condition-style-name condition)
+  (and (hash? condition)
+       (style-name->string (page-ref condition 'styleName #f))))
+
+(define (return-key-condition? condition)
+  (and (hash? condition)
+       (equal? (page-ref condition 'conditionKey #f) "$returnKeyType")
+       (condition-values-match?
+        (page-ref condition 'conditionValue '())
+        preview-return-key-type)))
+
+(define (conditional-style-ref items)
+  (or (for/or ([item (in-list items)]
+               #:when (return-key-condition? item))
+        (condition-style-name item))
+      (for/or ([item (in-list items)]
+               #:when (condition-style-name item))
+        (condition-style-name item))))
+
 (define (text-style-layer page style-name)
   (define style (page-ref page style-name #f))
   (and (hash? style)
        (equal? (page-ref style 'buttonStyleType #f) "text")
        (let ([center (page-ref style 'center (hash))]
-             [text (page-ref style 'text "")])
+             [text (preview-text (page-ref style 'text ""))])
          (hash 'text text
                'x (or (page-ref center 'x #f) 0.5)
                'y (or (page-ref center 'y #f) 0.5)
@@ -56,10 +110,36 @@
 
 (define (normalize-style-refs value)
   (cond
-    [(string? value) (list value)]
-    [(vector? value) (filter string? (vector->list value))]
-    [(list? value) (filter string? value)]
+    [(style-name? value) (list (style-name->string value))]
+    [(vector? value)
+     (define items (vector->list value))
+     (if (ormap hash? items)
+         (let ([ref (conditional-style-ref items)])
+           (if ref (list ref) '()))
+         (filter values (map style-name->string items)))]
+    [(list? value)
+     (if (ormap hash? value)
+         (let ([ref (conditional-style-ref value)])
+           (if ref (list ref) '()))
+         (filter values (map style-name->string value)))]
     [else '()]))
+
+(define (style-ref value)
+  (cond
+    [(style-name? value) (style-name->string value)]
+    [(hash? value) (condition-style-name value)]
+    [(vector? value)
+     (let ([items (vector->list value)])
+       (or (conditional-style-ref items)
+           (for/or ([item (in-list items)]
+                    #:when (style-name? item))
+             (style-name->string item))))]
+    [(list? value)
+     (or (conditional-style-ref value)
+         (for/or ([item (in-list value)]
+                  #:when (style-name? item))
+           (style-name->string item)))]
+    [else #f]))
 
 (define (button-kind button-id button)
   (define action (page-ref button 'action #f))
@@ -95,9 +175,8 @@
                                  (not (string=? (hash-ref layer 'text "") ""))))
                           sorted-layers)
                    (and (pair? sorted-layers) (car sorted-layers)))]
-              [background-style-name (page-ref button 'backgroundStyle #f)]
-              [background-style (and (or (string? background-style-name)
-                                         (symbol? background-style-name))
+              [background-style-name (style-ref (page-ref button 'backgroundStyle #f))]
+              [background-style (and background-style-name
                                      (page-ref page background-style-name #f))]
               [size (page-ref button 'size (hash))]
               [bounds (page-ref button 'bounds (hash))]
@@ -170,3 +249,57 @@
     [light-preview light-preview]
     [dark-preview dark-preview]
     [else #f]))
+
+(module+ test
+  (require rackunit)
+
+  (define conditional-page
+    (jsexpr->string
+     (hash 'keyboardHeight 216
+           'keyboardStyle (hash 'backgroundStyle "keyboardBackgroundStyle")
+           'keyboardBackgroundStyle (hash 'buttonStyleType "geometry"
+                                          'normalColor "#00000003")
+           'systemButtonBackgroundStyle (hash 'buttonStyleType "geometry"
+                                              'normalColor "#4C4C4C"
+                                              'highlightColor "#707070")
+           'blueButtonBackgroundStyle (hash 'buttonStyleType "geometry"
+                                            'normalColor "#0A84FF"
+                                            'highlightColor "#707070")
+           'enterButtonForegroundStyle (hash 'buttonStyleType "text"
+                                             'fontSize 16
+                                             'normalColor "#FFFFFF"
+                                             'text "$returnKeyType")
+           'blueButtonForegroundStyle (hash 'buttonStyleType "text"
+                                            'fontSize 16
+                                            'normalColor "#FFFFFF"
+                                            'text "$returnKeyType")
+           'enterButton (hash 'action "enter"
+                              'backgroundStyle
+                              (list (hash 'conditionKey "$returnKeyType"
+                                          'conditionValue (list 0 2 3 5 6 8 11)
+                                          'styleName "systemButtonBackgroundStyle")
+                                    (hash 'conditionKey "$returnKeyType"
+                                          'conditionValue (list 1 4 7 9 10)
+                                          'styleName "blueButtonBackgroundStyle"))
+                              'foregroundStyle
+                              (list (hash 'conditionKey "$returnKeyType"
+                                          'conditionValue (list 0 2 3 5 6 8 11)
+                                          'styleName "enterButtonForegroundStyle")
+                                    (hash 'conditionKey "$returnKeyType"
+                                          'conditionValue (list 1 4 7 9 10)
+                                          'styleName "blueButtonForegroundStyle"))
+                              'size (hash 'width "280/1125"))
+           'keyboardLayout
+           (list (hash 'HStack (hash 'subviews
+                                     (list (hash 'Cell "enterButton"))))))))
+
+  (define preview
+    (preview-spec-from-files
+     (hash "light/pinyinPortrait.yaml" conditional-page
+           "dark/pinyinPortrait.yaml" conditional-page)))
+  (define enter-key
+    (first (first (hash-ref (hash-ref preview 'dark) 'rows))))
+
+  (check-equal? (hash-ref enter-key 'background) "#4C4C4C")
+  (check-equal? (hash-ref enter-key 'label) "搜尋")
+  (check-equal? (hash-ref (first (hash-ref enter-key 'layers)) 'text) "搜尋"))

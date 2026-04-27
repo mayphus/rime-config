@@ -50,4 +50,4 @@ Each schema in `schema/` exports `config-files` — a hash of relative paths to 
 
 Schema modules declare their own dependencies (`schema-deps`, `static-dep-files`, `static-dep-dirs`) and mobile-only status (`mobile-only?`). Skin modules declare which schemas trigger their inclusion (`trigger-schemas`). The build system discovers everything from these exports — no central dispatch table.
 
-`demo.png` generation is a build-time concern. Production/runtime services should serve prebuilt skin docs/assets instead of rendering them on demand.
+`demo.svg` and `demo.png` generation are build-time concerns. Production/runtime services should serve prebuilt skin docs/assets instead of rendering them on demand.
