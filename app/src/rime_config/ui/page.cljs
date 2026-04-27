@@ -263,7 +263,7 @@
           ^{:key (:id key)}
           [rich-preview-key key])])]]])
 
-(defn keyboard-preview [{:keys [label background offsets rows size]}]
+(defn keyboard-preview-body [{:keys [label background offsets rows size]}]
   (if (and (seq rows) (map? (first (first rows))))
     [rich-keyboard-preview {:background background
                             :size size
@@ -285,6 +285,15 @@
       (when (not-any? #{"⌫"} (flatten rows))
         [:div {:class "keyboard-preview-space-row"}
          [:div {:class "keyboard-preview-space"}]])]]))
+
+(defn keyboard-preview [preview]
+  (if-let [dark-preview (:dark preview)]
+    [:div {:class "keyboard-preview-themes"}
+     [:div {:class "keyboard-preview-theme is-light"}
+      [keyboard-preview-body (dissoc preview :dark)]]
+     [:div {:class "keyboard-preview-theme is-dark"}
+      [keyboard-preview-body dark-preview]]]
+    [keyboard-preview-body preview]))
 
 (defn build-request-body [platform selected-schemas active-skins]
   {:schemas (vec (sort selected-schemas))

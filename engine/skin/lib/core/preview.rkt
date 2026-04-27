@@ -126,16 +126,16 @@
              #:when (hash? subview))
     (extract-key-preview page (page-ref subview 'Cell ""))))
 
-(define (preferred-preview-page-path preview-files)
+(define (preferred-preview-page-path preview-files theme)
   (define keys (hash-keys preview-files))
-  (or (findf (lambda (key) (regexp-match? #rx"^light/pinyinPortrait\\.yaml$" key)) keys)
-      (findf (lambda (key) (regexp-match? #rx"^light/.*Portrait\\.yaml$" key)) keys)
-      (findf (lambda (key) (regexp-match? #rx"^light/.*\\.yaml$" key)) keys)
-      (and (pair? keys) (car keys))))
+  (define prefix (regexp-quote theme))
+  (or (findf (lambda (key) (regexp-match? (regexp (format "^~a/pinyinPortrait\\.yaml$" prefix)) key)) keys)
+      (findf (lambda (key) (regexp-match? (regexp (format "^~a/.*Portrait\\.yaml$" prefix)) key)) keys)
+      (findf (lambda (key) (regexp-match? (regexp (format "^~a/.*\\.yaml$" prefix)) key)) keys)))
 
-(define (preview-spec-from-files preview-files)
+(define (preview-spec-from-page preview-files theme)
   (with-handlers ([exn:fail? (lambda (_) #f)])
-    (define page-path (preferred-preview-page-path preview-files))
+    (define page-path (preferred-preview-page-path preview-files theme))
     (and page-path
          (let* ([page-json (hash-ref preview-files page-path #f)]
                 [page (and page-json
@@ -160,3 +160,13 @@
                                       "#ffffff03")
                       'size size
                       'rows rows))))))
+
+(define (preview-spec-from-files preview-files)
+  (define light-preview (preview-spec-from-page preview-files "light"))
+  (define dark-preview (preview-spec-from-page preview-files "dark"))
+  (cond
+    [(and light-preview dark-preview)
+     (hash-set light-preview 'dark dark-preview)]
+    [light-preview light-preview]
+    [dark-preview dark-preview]
+    [else #f]))

@@ -575,6 +575,25 @@ input {
   width: 100%;
 }
 
+.keyboard-preview-themes,
+.keyboard-preview-theme {
+  width: 100%;
+}
+
+.keyboard-preview-theme.is-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .keyboard-preview-theme.is-light {
+    display: none;
+  }
+
+  .keyboard-preview-theme.is-dark {
+    display: block;
+  }
+}
+
 .keyboard-preview {
   width: min(100%, 44rem);
   margin: 0;
