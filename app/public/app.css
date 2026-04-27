@@ -172,6 +172,13 @@ input {
   max-width: 42rem;
 }
 
+.rime-tool-head {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .rime-landing-choices {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -220,6 +227,8 @@ input {
 .rime-mode-nav {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: 0.7rem;
 }
 
@@ -241,30 +250,24 @@ input {
 }
 
 .rime-language-toggle {
+  appearance: none;
   display: inline-flex;
-  gap: 0.28rem;
-  padding: 0.2rem;
+  min-width: 2.7rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.38rem 0.72rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--bg-soft);
-}
-
-.rime-language-button {
-  appearance: none;
-  min-width: 2.7rem;
-  padding: 0.38rem 0.72rem;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
   color: var(--muted);
   cursor: pointer;
   font-size: 0.76rem;
   font-weight: 700;
 }
 
-.rime-language-button.is-active {
-  background: var(--ink);
-  color: var(--ink-inverted);
+.rime-language-toggle:hover {
+  border-color: var(--selected-line);
+  color: var(--ink);
 }
 
 .rime-config-grid {

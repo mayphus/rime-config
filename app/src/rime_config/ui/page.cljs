@@ -124,16 +124,12 @@
     :else nil))
 
 (defn language-toggle [locale on-change]
-  [:div {:class "rime-language-toggle"
-         :role "group"
-         :aria-label "Language selector"}
-   (for [[value label] [[:en (t locale :locale-en)]
-                        [:zh-Hant (t locale :locale-zh)]]]
-     ^{:key (name value)}
-     [:button {:class (str "rime-language-button" (when (= locale value) " is-active"))
-               :type "button"
-               :on-click #(on-change value)}
-      label])])
+  (let [next-locale (if (= locale :zh-Hant) :en :zh-Hant)]
+    [:button {:class "rime-language-toggle"
+              :type "button"
+              :aria-label "Switch language"
+              :on-click #(on-change next-locale)}
+     (t next-locale (if (= next-locale :zh-Hant) :locale-zh :locale-en))]))
 
 (defn set-document-lang! [locale]
   (set! (.-lang (.-documentElement js/document))
@@ -366,17 +362,18 @@
     [:div {:class "rime-config-shell"}
      [:section {:class "rime-hero-card"}
       [:div {:class "rime-hero-head"}
-       [:div {:class "rime-landing-intro"}
+       [:div {:class "rime-tool-head"}
         [:nav {:class "rime-mode-nav"
                :aria-label "Mode navigation"}
-         [nav-link (t locale :back-home) :home on-navigate]]
-        [:h1 {:class "page-title"} (if (= platform :desktop)
-                                     (t locale :desktop)
-                                     (t locale :mobile))]
-        [:p {:class "rime-section-copy"} (if (= platform :desktop)
-                                           (t locale :landing-desktop-copy)
-                                           (t locale :landing-mobile-copy))]]
-       [language-toggle locale on-locale-change]]]
+         [nav-link (t locale :back-home) :home on-navigate]
+         [language-toggle locale on-locale-change]]
+        [:div {:class "rime-landing-intro"}
+         [:h1 {:class "page-title"} (if (= platform :desktop)
+                                      (t locale :desktop)
+                                      (t locale :mobile))]
+         [:p {:class "rime-section-copy"} (if (= platform :desktop)
+                                            (t locale :landing-desktop-copy)
+                                            (t locale :landing-mobile-copy))]]]]]
      [:div {:class "rime-config-grid"}
       [:div {:class "rime-primary-column"}
        [:section {:class "rime-section"}
