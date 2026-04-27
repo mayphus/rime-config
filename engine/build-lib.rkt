@@ -13,7 +13,8 @@
          racket/set
          racket/string
          racket/system
-         "default-profile.rkt")
+         "default-profile.rkt"
+         "tools/yuanshu-sync.rkt")
 
 (provide data-dir
          skins-dir
@@ -38,7 +39,6 @@
 (define skins-dir    (build-path root-dir "skin"))
 (define profiles-dir (build-path root-dir "profiles"))
 (define output-dir   (build-path root-dir ".." "output" "rime"))
-(define upload-helper  (build-path root-dir "tools" "yuanshu_sync.py"))
 
 (define zip-exe    (find-executable-path "zip"))
 (define python-exe (find-executable-path "python3"))
@@ -439,16 +439,12 @@
                     #:dry-run         [dry-run #f])
   (define exclude-dirs
     (if include-big-dicts '() '("jyut6ping3_dicts" "rime_ice_dicts")))
-  (apply run!
-         python-exe
-         (path->string upload-helper)
-         "--source" (~a src-dir)
-         "--remote-root" remote-root
-         (append
-          (if dry-run       '("--dry-run")      '())
-          (if allow-delete  '("--allow-delete")  '())
-          (if base-url      (list "--base-url" base-url) '())
-          (append-map (lambda (d) (list "--exclude-dir" d)) exclude-dirs))))
+  (sync-yuanshu-bundle! src-dir
+                        #:remote-root remote-root
+                        #:base-url base-url
+                        #:allow-delete? allow-delete
+                        #:dry-run? dry-run
+                        #:exclude-dirs exclude-dirs))
 
 ;; ---- Deploy desktop config -------------------------------------------------
 ;; Builds the desktop profile then syncs to the live Rime directory.

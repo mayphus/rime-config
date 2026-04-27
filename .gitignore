@@ -2,6 +2,7 @@ node_modules/
 dist/
 .cpcache/
 .shadow-cljs/
+compiled/
 .DS_Store
 engine/.DS_Store
 engine/.idea/

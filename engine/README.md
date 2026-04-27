@@ -11,7 +11,7 @@ schema/         — Racket generators for schema YAML and shared config
 skin/           — Racket generators for .cskin skin bundles
 data/           — static YAML: schemas, dictionaries, data files
 profiles/       — build profiles (desktop + Yuanshu mobile)
-tools/          — Python utilities (upload, skin demo renderer)
+tools/          — Racket utilities plus the Python skin demo renderer
 ```
 
 ## Invocation
