@@ -23,8 +23,8 @@
       "custom_domain": true
     },
     {
-      "pattern": "rime-config.mayphus.org/*",
-      "zone_name": "mayphus.org"
+      "pattern": "rime-config.mayphus.org",
+      "custom_domain": true
     }
   ],
   "env": {
