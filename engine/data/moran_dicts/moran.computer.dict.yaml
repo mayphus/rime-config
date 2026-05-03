@@ -20,6 +20,9 @@ name: moran_dicts/moran.computer
 version: "2014.09.07+1"
 sort: by_weight
 use_preset_vocabulary: false
+columns:
+  - text
+  - code
 ...
 
 阿里通
