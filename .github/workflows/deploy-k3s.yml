@@ -19,7 +19,6 @@ on:
       - "Dockerfile"
       - ".dockerignore"
       - "k8s.rkt"
-      - "k8s/**"
       - ".github/workflows/deploy-k3s.yml"
   workflow_dispatch:
 
@@ -45,6 +44,9 @@ jobs:
           distribution: full
           variant: CS
           version: stable
+
+      - name: Generate k8s manifests
+        run: racket k8s.rkt
 
       - name: Check generated k8s manifests
         run: racket -e '(require "k8s.rkt") (check-k8s!)'

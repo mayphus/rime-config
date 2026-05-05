@@ -34,6 +34,9 @@ jobs:
       - name: Run Racket tests
         run: raco test test
 
+      - name: Generate k8s manifests
+        run: racket k8s.rkt
+
       - name: Check generated k8s manifests
         run: racket -e '(require "k8s.rkt") (check-k8s!)'
 
