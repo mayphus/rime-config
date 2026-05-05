@@ -10,6 +10,7 @@ Standalone Rime Config product, served by one Racket app.
 - `data/`, `schema/`, `skin/`, and `profiles/` hold the Rime inputs and generators.
 - `tools/` contains maintenance scripts.
 - `deploy/k8s/` deploys the Racket app to k3s on `pb62`.
+- `deploy/k8s/manifests.rkt` is the source of truth for Kubernetes YAML.
 
 ## URL strategy
 
@@ -25,6 +26,12 @@ racket web.rkt
 ```
 
 Visit `http://localhost:5001`.
+
+Regenerate Kubernetes manifests after changing deploy settings:
+
+```sh
+racket deploy/k8s/manifests.rkt
+```
 
 ## Current shape
 

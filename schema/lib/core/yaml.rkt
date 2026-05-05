@@ -33,6 +33,7 @@
         #px"^[[:alnum:]_./+@|^-][[:alnum:]_ ./+@:'|?^$()*-]*$"
         value)
        (not (regexp-match? #px"^[-?:]|^\\s|\\s$" value))
+       (not (regexp-match? #px"^(?:[+-]?[0-9]+(?:\\.[0-9]+)?|[0-9.]+|true|false|null)$" value))
        (not (string-contains? value "#"))
        (not (string-contains? value "`"))
        (not (string-contains? value "["))

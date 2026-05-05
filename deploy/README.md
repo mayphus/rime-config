@@ -5,6 +5,13 @@
 This repo deploys the public frontend and build API together as one Racket app
 on k3s on `pb62`.
 
+`deploy/k8s/manifests.rkt` owns the Kubernetes objects. The YAML files in this
+directory are generated for Kustomize; update the Racket file and run:
+
+```sh
+racket deploy/k8s/manifests.rkt
+```
+
 ### CI flow
 
 1. GitHub Actions builds the repo root into `ghcr.io/mayphus/rime-config`.

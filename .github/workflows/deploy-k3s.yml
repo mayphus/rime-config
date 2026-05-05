@@ -37,6 +37,17 @@ jobs:
       - name: Checkout rime-config
         uses: actions/checkout@v6.0.2
 
+      - name: Setup Racket
+        uses: Bogdanp/setup-racket@v1.15
+        with:
+          architecture: x64
+          distribution: full
+          variant: CS
+          version: stable
+
+      - name: Check generated k8s manifests
+        run: racket -e '(require "deploy/k8s/manifests.rkt") (check-k8s!)'
+
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
