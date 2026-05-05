@@ -4,8 +4,11 @@ Standalone Rime Config product, served by one Racket app.
 
 ## Layout
 
-- `web.rkt` and `build.rkt` are small repo-root shims.
-- `engine/` owns the web UI, build API, schema generators, skin generators, and static CSS.
+- `web.rkt` serves the public HTML, HTMX partials, metadata, previews, and ZIP builds.
+- `build.rkt` is the callable build library for schemas, skins, profiles, and archives.
+- `frontend.rkt` renders the server-side UI.
+- `data/`, `schema/`, `skin/`, and `profiles/` hold the Rime inputs and generators.
+- `tools/` contains maintenance scripts.
 - `deploy/k8s/` deploys the Racket app to k3s on `pb62`.
 
 ## URL strategy

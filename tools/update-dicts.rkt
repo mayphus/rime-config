@@ -14,8 +14,8 @@
 (provide update-dicts!)
 
 (define-runtime-path tools-dir ".")
-(define root-dir (simplify-path (build-path tools-dir "../..")))
-(define data-dir (build-path root-dir "engine" "data"))
+(define root-dir (simplify-path (build-path tools-dir "..")))
+(define data-dir (build-path root-dir "data"))
 
 (struct dict-source (upstream local local-name upstream-name) #:transparent)
 

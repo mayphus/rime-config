@@ -7,5 +7,5 @@ resources:
   - service.yaml
   - ingress.yaml
 images:
-  - name: ghcr.io/mayphus/rime-config-engine
+  - name: ghcr.io/mayphus/rime-config
     newTag: latest

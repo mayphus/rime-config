@@ -1,0 +1,15 @@
+.git
+.claude
+.codex
+.cpcache
+.github
+.shadow-cljs
+.wrangler
+app
+compiled
+dist
+node_modules
+output
+*.zip
+tools/yuanshu_sync.py
+tools/__pycache__

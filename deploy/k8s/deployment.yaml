@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rime-config-engine
+  name: rime-config
   namespace: rime-config
   labels:
-    app: rime-config-engine
+    app: rime-config
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: rime-config-engine
+      app: rime-config
   template:
     metadata:
       labels:
-        app: rime-config-engine
+        app: rime-config
     spec:
       imagePullSecrets:
         - name: ghcr-pull
       containers:
-        - name: engine
-          image: ghcr.io/mayphus/rime-config-engine:latest
+        - name: app
+          image: ghcr.io/mayphus/rime-config:latest
           imagePullPolicy: Always
           env:
             - name: PORT

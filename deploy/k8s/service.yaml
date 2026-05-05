@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rime-config-engine
+  name: rime-config
   namespace: rime-config
 spec:
   selector:
-    app: rime-config-engine
+    app: rime-config
   ports:
     - name: http
       port: 80

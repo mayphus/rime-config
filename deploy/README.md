@@ -7,10 +7,10 @@ on k3s on `pb62`.
 
 ### CI flow
 
-1. GitHub Actions builds `engine/` into `ghcr.io/mayphus/rime-config-engine`.
+1. GitHub Actions builds the repo root into `ghcr.io/mayphus/rime-config`.
 2. Actions joins your tailnet using Tailscale OAuth client credentials.
 3. Actions uses `KUBECONFIG_PB62` to reach k3s on `pb62`.
-4. Actions applies `deploy/k8s` and updates the engine image tag.
+4. Actions applies `deploy/k8s` and updates the app image tag.
 
 ### Required GitHub secrets
 
@@ -25,7 +25,7 @@ on k3s on `pb62`.
   `https://100.116.247.67:6443` before running `kubectl`, so the stored
   `KUBECONFIG_PB62` secret can keep the original cluster/user/certificate data.
 - If `pb62` gets a different Tailscale IP, update `K8S_API_SERVER` in
-  `.github/workflows/deploy-engine.yml` to match the new address.
+  `.github/workflows/deploy-k3s.yml` to match the new address.
 - `GHCR_PULL_TOKEN` should be a GitHub personal access token for `mayphus`
   with at least `read:packages`, so the workflow can create the `ghcr-pull`
   image pull secret in Kubernetes before deploying.

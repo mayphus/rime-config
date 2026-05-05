@@ -3,10 +3,8 @@ dist/
 .cpcache/
 .shadow-cljs/
 compiled/
+.racket/
+profiles/yuanshu/customer/
 .DS_Store
-engine/.DS_Store
-engine/.idea/
-engine/.racket/
-engine/output/
-engine/tools/__pycache__/
 output/
+tools/__pycache__/

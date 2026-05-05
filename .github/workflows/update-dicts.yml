@@ -29,7 +29,7 @@ jobs:
           version: stable
 
       - name: Update dictionary files
-        run: racket -e '(require "engine/tools/update-dicts.rkt") (update-dicts!)'
+        run: racket -e '(require "tools/update-dicts.rkt") (update-dicts!)'
 
       - name: Run Racket tests
         run: raco test test
@@ -50,4 +50,4 @@ jobs:
             - `raco test test`
             - `racket -e '(require "build.rkt") (build-profile! "desktop") (build-profile! "yuanshu/all")'`
           add-paths: |
-            engine/data/**
+            data/**
