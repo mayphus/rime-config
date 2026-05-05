@@ -1,9 +1,9 @@
 # Deployment
 
-## Engine on pb62 k3s
+## Racket app on pb62 k3s
 
-This repo assumes the public frontend stays separate and the engine is deployed
-to k3s on `pb62`.
+This repo deploys the public frontend and build API together as one Racket app
+on k3s on `pb62`.
 
 ### CI flow
 
@@ -29,8 +29,11 @@ to k3s on `pb62`.
 - `GHCR_PULL_TOKEN` should be a GitHub personal access token for `mayphus`
   with at least `read:packages`, so the workflow can create the `ghcr-pull`
   image pull secret in Kubernetes before deploying.
-- The ingress manifest assumes `api-rime.mayphus.org` should terminate in the
-  cluster.
+- The ingress manifest assumes `rime.mayphus.org`,
+  `rime-config.mayphus.org`, and `api-rime.mayphus.org` should terminate in
+  the cluster.
+- Cloudflare should route those hostnames to the k3s ingress. The old Worker
+  frontend is no longer part of this repo.
 - The cert-manager issuer name is currently `letsencrypt`.
 - If your k3s ingress class or cert-manager setup differs, adjust
   `deploy/k8s/ingress.yaml`.

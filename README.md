@@ -1,33 +1,31 @@
 # rime-config
 
-Standalone Rime Config product.
+Standalone Rime Config product, served by one Racket app.
 
 ## Layout
 
-- repo root holds the standalone product frontend and small public entrypoints
-- `engine/` holds the Rime config generation and export engine internals
-- `docs/` tracks migration and deployment notes
+- `web.rkt` and `build.rkt` are small repo-root shims.
+- `engine/` owns the web UI, build API, schema generators, skin generators, and static CSS.
+- `deploy/k8s/` deploys the Racket app to k3s on `pb62`.
 
 ## URL strategy
 
-The product should remain publicly reachable at `mayphus.org/rime-config`.
-`mayphus-sites` should eventually serve only as the outer router or proxy for
-that path, while the actual product code lives here.
+The product is served directly by the k3s-hosted Racket app:
 
-Current standalone deployment work also supports:
+- `rime.mayphus.org`
+- `rime-config.mayphus.org`
+- `api-rime.mayphus.org` for compatibility with older API clients
 
-- frontend on `rime.mayphus.org`
-- redirects from `rime-config.mayphus.org`
-- engine on k3s behind `api-rime.mayphus.org`
+## Local development
 
-## Migration status
+```sh
+racket web.rkt
+```
 
-The first extraction pass is complete:
+Visit `http://localhost:5001`.
 
-- engine code copied from `orchestrator/apps/rime`
-- Rime frontend logic copied from `mayphus-sites`
-- frontend flattened to repo root
-- root `build.rkt` is the public callable build API
-- root `web.rkt` still delegates to the engine
+## Current shape
 
-Remaining cutover work is documented in `docs/migration.md`.
+The old ClojureScript/React/Bun/Wrangler frontend path has been removed. Racket
+renders the pages, HTMX handles small form refreshes, and the same Racket process
+builds the downloadable ZIP archives.

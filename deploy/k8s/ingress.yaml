@@ -10,8 +10,34 @@ spec:
     - hosts:
         - api-rime.mayphus.org
       secretName: api-rime-mayphus-org-tls
+    - hosts:
+        - rime.mayphus.org
+      secretName: rime-mayphus-org-tls
+    - hosts:
+        - rime-config.mayphus.org
+      secretName: rime-config-mayphus-org-tls
   rules:
     - host: api-rime.mayphus.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rime-config-engine
+                port:
+                  number: 80
+    - host: rime.mayphus.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rime-config-engine
+                port:
+                  number: 80
+    - host: rime-config.mayphus.org
       http:
         paths:
           - path: /

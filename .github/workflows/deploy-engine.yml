@@ -1,4 +1,4 @@
-name: deploy-engine
+name: deploy-k3s
 
 concurrency:
   group: deploy-engine-${{ github.ref }}
@@ -16,7 +16,7 @@ on:
 
 jobs:
   deploy:
-    name: Build and Deploy Engine
+    name: Build and Deploy Racket App
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -39,7 +39,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push engine image
+      - name: Build and push Racket app image
         uses: docker/build-push-action@v6
         with:
           context: ./engine

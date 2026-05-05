@@ -7,9 +7,12 @@ Rime input method config and Yuanshu app skin/config generator, managed with a R
 ``` 
 build-lib.rkt   — shared build library
 default-profile.rkt — built-in desktop/default profile
+frontend.rkt    — Racket-rendered HTMX web UI
+web.rkt         — Racket HTTP app for pages, metadata, previews, and ZIP builds
 schema/         — Racket generators for schema YAML and shared config
 skin/           — Racket generators for .cskin skin bundles
 data/           — static YAML: schemas, dictionaries, data files
+static/         — CSS served by the Racket app
 profiles/       — build profiles (desktop + Yuanshu mobile)
 tools/          — Racket utilities plus the Python skin demo renderer
 ```
@@ -30,6 +33,8 @@ From the repo root:
 ## Web Customizer
 
 A Racket-based web interface for customizing and downloading configurations.
+The UI is plain server-rendered HTML with HTMX-enhanced partial refreshes; there
+is no ClojureScript or React build step.
 
 ```sh
 racket web.rkt

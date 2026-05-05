@@ -7,12 +7,17 @@
          racket/format
          racket/path
          racket/list
+         racket/runtime-path
+         racket/string
          json
+         "frontend.rkt"
          "build-lib.rkt")
 
 (provide precomputed-skin-items list-static-schemas)
 
 ;; ---- Helpers ---------------------------------------------------------------
+
+(define-runtime-path app-css-path "static/app.css")
 
 (define (valid-id? s)
   (and (string? s) (regexp-match? #rx"^[a-zA-Z0-9_-]+$" s)))
@@ -27,6 +32,12 @@
 (define (skin-preview-svgs skin-rkt)
   (with-handlers ([exn:fail? (lambda (_) (hash))])
     (dynamic-require `(file ,(path->string skin-rkt)) 'skin-preview-svgs)))
+
+(define (skin-preview-svg skin-id [theme 'light])
+  (for/or ([item (in-list precomputed-skin-items)]
+           #:when (equal? skin-id (car item)))
+    (define preview-svgs (car (cddddr item)))
+    (hash-ref preview-svgs theme #f)))
 
 (define (list-static-schemas)
   (filter-map
@@ -115,6 +126,33 @@
    400 #"Bad Request" (current-seconds) #"application/json" '()
    (list (jsexpr->bytes (hash 'error msg)))))
 
+(define (html-response html)
+  (response/full
+   200 #"OK" (current-seconds) #"text/html; charset=utf-8" '()
+   (list (string->bytes/utf-8 html))))
+
+(define (svg-response svg)
+  (response/full
+   200 #"OK" (current-seconds) #"image/svg+xml"
+   (list (make-header #"Cache-Control" #"public, max-age=300"))
+   (list (string->bytes/utf-8 svg))))
+
+(define (handle-page req route)
+  (html-response (render-page req precomputed-schema-items precomputed-skin-items #:route route)))
+
+(define (handle-configurator req)
+  (html-response (render-configurator req precomputed-schema-items precomputed-skin-items)))
+
+(define (handle-app-css req)
+  (if (file-exists? app-css-path)
+      (response/full
+       200 #"OK" (current-seconds) #"text/css; charset=utf-8"
+       (list (make-header #"Cache-Control" #"public, max-age=300"))
+       (list (file->bytes app-css-path)))
+      (response/full
+       404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
+       (list #"CSS not found"))))
+
 (define (handle-metadata req)
   (define skins
     (map (lambda (item)
@@ -151,11 +189,27 @@
           (list (file->bytes demo-path)))
          (response/full
           404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
-          (list #"Preview image not found")))]))
+         (list #"Preview image not found")))]))
+
+(define (handle-skin-preview-svg req skin-id)
+  (cond
+    [(not (valid-id? skin-id))
+     (json-error "Invalid skin id")]
+    [else
+     (define svg (skin-preview-svg skin-id))
+     (if svg
+         (svg-response svg)
+         (response/full
+          404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
+          (list #"Preview SVG not found")))]))
 
 (define (handle-build req)
   (define body-bytes (request-post-data/raw req))
-  (define data (if body-bytes (bytes->jsexpr body-bytes) (hash)))
+  (define data
+    (cond
+      [(form-request? req) (form-profile req)]
+      [body-bytes (bytes->jsexpr body-bytes)]
+      [else (hash)]))
   (define schemas     (hash-ref data 'schemas '()))
   (define extra-skins (hash-ref data 'extra-skins '()))
   (cond
@@ -194,9 +248,19 @@
 
 (define-values (dispatch url)
   (dispatch-rules
+   [("") (lambda (req) (handle-page req 'home))]
+   [("desktop") (lambda (req) (handle-page req 'desktop))]
+   [("mobile") (lambda (req) (handle-page req 'mobile))]
+   [("ui" "configurator") handle-configurator]
+   [("app.css") handle-app-css]
    [("metadata") handle-metadata]
+   [("skins" (string-arg) "preview.svg") handle-skin-preview-svg]
    [("skins" (string-arg) "demo.png") handle-skin-demo]
-   [("build") #:method "post" handle-build]))
+   [("build") #:method "post" handle-build]
+   [("api" "rime-config" "metadata") handle-metadata]
+   [("api" "rime-config" "skins" (string-arg) "preview.svg") handle-skin-preview-svg]
+   [("api" "rime-config" "skins" (string-arg) "demo.png") handle-skin-demo]
+   [("api" "rime-config" "build") #:method "post" handle-build]))
 
 (define (start)
   (define port      (let ([p (getenv "PORT")])      (if p (string->number p) 5001)))

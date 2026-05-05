@@ -1,0 +1,478 @@
+#lang racket/base
+
+(require racket/list
+         racket/match
+         racket/set
+         racket/string
+         web-server/http
+         xml)
+
+(provide render-page
+         render-configurator
+         form-profile
+         form-request?)
+
+;; The Racket UI is deliberately boring HTML. HTMX gives us small partial
+;; refreshes, while the complete form still posts to the same ZIP build path.
+
+(define htmx-script
+  "https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js")
+
+(define copy
+  (hash
+   'en
+   (hash
+    'title "Rime Config"
+    'landing-copy "Build a small Rime package for the place you type most."
+    'desktop-copy "Export desktop Rime schemas for Squirrel, Weasel, or fcitx-rime."
+    'mobile-copy "Export Yuanshu IME schemas and matching skins for iPhone or iPad."
+    'desktop "Desktop"
+    'mobile "Mobile"
+    'home "Home"
+    'schemas "Schemas"
+    'schemas-copy "Dependent schemas are added automatically."
+    'skins "Skins"
+    'skins-copy "Skins follow the selected schemas. You can still turn them off."
+    'include "Include"
+    'selected "Selected"
+    'auto "Auto"
+    'preview "Preview"
+    'summary "Summary"
+    'platform "Platform"
+    'summary-copy "Review the package contents, then generate the archive."
+    'empty "Nothing selected yet."
+    'build "Build and Download"
+    'zip-help "Output is a ZIP archive."
+    'yuanshu-help "Use in Yuanshu"
+    'yuanshu-1 "1. Install Yuanshu IME on iPhone or iPad."
+    'yuanshu-2 "2. Open the ZIP in Yuanshu, or use Input Schemas -> ... -> Import."
+    'yuanshu-3 "3. Skins are separate from schemas. Remove any old skin with the same name before importing."
+    'support "Support"
+    'language "繁")
+   'zh-Hant
+   (hash
+    'title "Rime 配置"
+    'landing-copy "為你最常輸入的地方生成一份小而完整的 Rime 配置。"
+    'desktop-copy "導出桌面 Rime 方案，可用於鼠鬚管、小狼毫或 fcitx-rime。"
+    'mobile-copy "導出元書輸入法方案與配套皮膚，適合 iPhone 或 iPad。"
+    'desktop "桌面"
+    'mobile "移動端"
+    'home "首頁"
+    'schemas "方案"
+    'schemas-copy "依賴方案會自動補上。"
+    'skins "皮膚"
+    'skins-copy "皮膚會根據所選方案自動顯示，你仍然可以手動關閉。"
+    'include "加入"
+    'selected "已選"
+    'auto "自動"
+    'preview "預覽"
+    'summary "摘要"
+    'platform "平台"
+    'summary-copy "確認打包內容後即可生成壓縮檔。"
+    'empty "目前尚未選擇。"
+    'build "編譯並下載"
+    'zip-help "輸出為 ZIP 壓縮包。"
+    'yuanshu-help "如何在元書中使用"
+    'yuanshu-1 "1. 先在 iPhone 或 iPad 安裝元書輸入法。"
+    'yuanshu-2 "2. 用元書打開這個 ZIP，或在「輸入方案」->「...」->「導入方案」中導入。"
+    'yuanshu-3 "3. 皮膚與方案是分開管理的。導入前請先刪除同名舊皮膚。"
+    'support "支持"
+    'language "EN")))
+
+(struct ui-state (route locale selected-schemas selected-skins preview-skin configured? skins-configured?)
+  #:transparent)
+
+(define (t locale key)
+  (hash-ref (hash-ref copy locale) key))
+
+(define (next-locale locale)
+  (if (eq? locale 'zh-Hant) 'en 'zh-Hant))
+
+(define (locale-param value)
+  (if (equal? value "zh-Hant") 'zh-Hant 'en))
+
+(define (route-param value fallback)
+  (match value
+    ["desktop" 'desktop]
+    ["mobile" 'mobile]
+    ["home" 'home]
+    [_ fallback]))
+
+(define (route-path route)
+  (case route
+    [(desktop) "/desktop"]
+    [(mobile) "/mobile"]
+    [else "/"]))
+
+(define (route-label locale route)
+  (case route
+    [(desktop) (t locale 'desktop)]
+    [(mobile) (t locale 'mobile)]
+    [else (t locale 'home)]))
+
+(define (binding-value binding)
+  (and (binding:form? binding)
+       (bytes->string/utf-8 (binding:form-value binding))))
+
+(define (request-values req key)
+  (for/list ([binding (in-list (request-bindings/raw req))]
+             #:when (equal? (bytes->string/utf-8 (binding-id binding)) key)
+             #:do [(define value (binding-value binding))]
+             #:when value)
+    value))
+
+(define (request-value req key [default #f])
+  (match (request-values req key)
+    [(list value _ ...) value]
+    [_ default]))
+
+(define (present? req key)
+  (not (null? (request-values req key))))
+
+(define (form-request? req)
+  (define headers (request-headers/raw req))
+  (for/or ([header (in-list headers)])
+    (and (string-ci=? (bytes->string/utf-8 (header-field header)) "content-type")
+         (regexp-match? #rx#"application/x-www-form-urlencoded"
+                        (header-value header)))))
+
+(define (schema-id schema)
+  (hash-ref schema 'id))
+
+(define (schema-name schema)
+  (hash-ref schema 'name (schema-id schema)))
+
+(define (schema-mobile-only? schema)
+  (hash-ref schema 'mobile-only? #f))
+
+(define (schema-deps schema)
+  (hash-ref schema 'deps '()))
+
+(define (schema-by-id schemas id)
+  (for/first ([schema (in-list schemas)]
+              #:when (equal? id (schema-id schema)))
+    schema))
+
+(define (auto-deps schemas selected)
+  (let loop ([visited selected] [queue selected] [auto '()])
+    (match queue
+      ['() (reverse auto)]
+      [(cons id rest)
+       (define schema (schema-by-id schemas id))
+       (define new-deps
+         (filter (lambda (dep) (not (member dep visited)))
+                 (if schema (schema-deps schema) '())))
+       (loop (append visited new-deps)
+             (append rest new-deps)
+             (append new-deps auto))])))
+
+(define (active-schema-ids schemas selected)
+  (remove-duplicates (append selected (auto-deps schemas selected))))
+
+(define (visible-schemas schemas route)
+  (filter (lambda (schema)
+            (or (eq? route 'mobile)
+                (not (schema-mobile-only? schema))))
+          schemas))
+
+(define (skin-id skin)
+  (list-ref skin 0))
+
+(define (skin-triggers skin)
+  (list-ref skin 1))
+
+(define (skin-name skin)
+  (define name (list-ref skin 2))
+  (if (string=? name "") (skin-id skin) name))
+
+(define (visible-skins skins route active-ids)
+  (if (not (eq? route 'mobile))
+      '()
+      (filter
+       (lambda (skin)
+         (define triggers (skin-triggers skin))
+         (or (equal? triggers "default")
+             (and (list? triggers)
+                  (for/or ([trigger (in-list triggers)])
+                    (member trigger active-ids)))))
+       skins)))
+
+(define (selected-or-default req route)
+  (define configured? (present? req "configured"))
+  (define selected (request-values req "schemas"))
+  (cond
+    [configured? selected]
+    [(eq? route 'mobile) '("flypy_14")]
+    [else '("flypy")]))
+
+(define (parse-state req route)
+  (define locale (locale-param (request-value req "locale" "en")))
+  (define actual-route (route-param (request-value req "route" #f) route))
+  (define configured? (present? req "configured"))
+  (define skins-configured? (present? req "skins_configured"))
+  (ui-state actual-route
+            locale
+            (selected-or-default req actual-route)
+            (request-values req "skins")
+            (request-value req "preview_skin" #f)
+            configured?
+            skins-configured?))
+
+(define (attrs . pairs)
+  (filter values pairs))
+
+(define (input-hidden name value)
+  `(input ((type "hidden") (name ,name) (value ,value))))
+
+(define (classes . values)
+  (string-join (filter (lambda (value) value) values) " "))
+
+(define (hx-refresh-attrs)
+  '((hx-get "/ui/configurator")
+    (hx-target "#configurator")
+    (hx-include "#configurator-form")
+    (hx-swap "innerHTML")
+    (hx-trigger "change")))
+
+(define (schema-card locale schema checked? auto?)
+  `(div ((class ,(classes "rime-option-card"
+                          (and checked? "is-selected")
+                          (and auto? "is-auto"))))
+        (div ((class "rime-option-copy"))
+             (div ((class "rime-option-title-row"))
+                  (span ((class "rime-option-title")) ,(schema-name schema))
+                  ,@(if auto?
+                        `((span ((class "rime-inline-note")) ,(t locale 'auto)))
+                        '()))
+             (span ((class "rime-option-id")) ,(schema-id schema)))
+        (label ((class "rime-option-toggle"))
+               (input ,(append
+                        (attrs `(type "checkbox")
+                               `(name "schemas")
+                               `(value ,(schema-id schema))
+                               (and checked? `(checked "checked"))
+                               (and auto? `(disabled "disabled")))
+                        (if auto? '() (hx-refresh-attrs))))
+               (span ((class "rime-option-toggle-label"))
+                     ,(if checked? (t locale 'selected) (t locale 'include))))))
+
+(define (skin-card locale skin checked? previewing?)
+  (define card
+    `(div ((class ,(classes "rime-option-card rime-skin-card"
+                            (and checked? "is-selected")
+                            (and previewing? "is-previewing"))))
+          (div ((class "rime-skin-row"))
+               (div ((class "rime-option-copy"))
+                    (span ((class "rime-option-title")) ,(skin-name skin))
+                    (span ((class "rime-option-id")) ,(skin-id skin)))
+               (div ((class "rime-skin-actions"))
+                    (button ((class "rime-skin-preview-button")
+                             (type "button")
+                             (hx-get "/ui/configurator")
+                             (hx-target "#configurator")
+                             (hx-include "#configurator-form")
+                             (hx-swap "innerHTML")
+                             (hx-vals ,(format "{\"preview_skin\":\"~a\"}" (skin-id skin))))
+                            (span ((class "rime-option-action")) ,(t locale 'preview)))
+                    (label ((class "rime-option-toggle rime-skin-toggle"))
+                           (input ,(append
+                                    (attrs `(type "checkbox")
+                                           `(name "skins")
+                                           `(value ,(skin-id skin))
+                                           (and checked? `(checked "checked")))
+                                    (hx-refresh-attrs)))
+                           (span ((class "rime-option-toggle-label"))
+                                 ,(if checked? (t locale 'selected) (t locale 'include))))))))
+  (if previewing?
+      (append card `((span ((class "rime-preview-hint")) ,(t locale 'preview))))
+      card))
+
+(define (summary-pill text)
+  `(span ((class "rime-summary-pill")) ,text))
+
+(define (skin-by-id skins id)
+  (for/first ([skin (in-list skins)]
+              #:when (equal? (skin-id skin) id))
+    skin))
+
+(define (schema-summary locale schemas active-ids auto-ids)
+  (if (null? active-ids)
+      `((p ((class "rime-empty-state")) ,(t locale 'empty)))
+      (list
+       `(div ((class "rime-summary-pills"))
+             ,@(for/list ([id (in-list active-ids)])
+                 (define schema (schema-by-id schemas id))
+                 (summary-pill
+                  (string-append
+                   (if schema (schema-name schema) id)
+                   (if (member id auto-ids)
+                       (string-append " · " (t locale 'auto))
+                       ""))))))))
+
+(define (skin-summary locale skins selected-skin-ids)
+  (if (null? selected-skin-ids)
+      '()
+      `((div ((class "rime-summary-block"))
+             (p ((class "rime-summary-label"))
+                ,(format "~a (~a)" (t locale 'skins) (length selected-skin-ids)))
+             (div ((class "rime-summary-pills"))
+                  ,@(for/list ([id (in-list selected-skin-ids)])
+                      (define skin (skin-by-id skins id))
+                      (summary-pill (if skin (skin-name skin) id))))))))
+
+(define (configurator-xexpr req schemas skins #:route [fallback-route 'desktop])
+  (define state (parse-state req fallback-route))
+  (define route (ui-state-route state))
+  (define locale (ui-state-locale state))
+  (define selected-ids (ui-state-selected-schemas state))
+  (define auto-ids (auto-deps schemas selected-ids))
+  (define active-ids (active-schema-ids schemas selected-ids))
+  (define shown-skins (visible-skins skins route active-ids))
+  (define selected-skin-ids
+    (if (ui-state-skins-configured? state)
+        (filter (lambda (id) (skin-by-id shown-skins id))
+                (ui-state-selected-skins state))
+        (map skin-id shown-skins)))
+  (define preview-id
+    (or (and (skin-by-id shown-skins (ui-state-preview-skin state))
+             (ui-state-preview-skin state))
+        (for/first ([id (in-list selected-ids)]
+                    #:when (skin-by-id shown-skins id))
+          id)
+        (and (pair? shown-skins) (skin-id (car shown-skins)))))
+  (define preview-skin (and preview-id (skin-by-id shown-skins preview-id)))
+  `(form ((id "configurator-form")
+          (class "rime-config-grid")
+          (method "post")
+          (action "/build"))
+         ,(input-hidden "configured" "1")
+         ,(input-hidden "route" (symbol->string route))
+         ,(input-hidden "locale" (symbol->string locale))
+         ,(input-hidden "desktop?" (if (eq? route 'desktop) "true" "false"))
+         ,@(if (pair? shown-skins)
+               (list (input-hidden "skins_configured" "1"))
+               '())
+         (div ((class "rime-primary-column"))
+              (section ((class "rime-section"))
+                       (div ((class "rime-section-header"))
+                            (h2 ((class "rime-section-title")) ,(t locale 'schemas))
+                            (p ((class "rime-section-copy")) ,(t locale 'schemas-copy)))
+                       (div ((class "rime-option-grid"))
+                            ,@(for/list ([schema (in-list (visible-schemas schemas route))])
+                                (define id (schema-id schema))
+                                (schema-card locale
+                                             schema
+                                             (member id active-ids)
+                                             (member id auto-ids)))))
+              ,@(if (and (eq? route 'mobile) (pair? shown-skins))
+                    `((section ((class "rime-section"))
+                               (div ((class "rime-section-header"))
+                                    (h2 ((class "rime-section-title")) ,(t locale 'skins))
+                                    (p ((class "rime-section-copy")) ,(t locale 'skins-copy)))
+                               (div ((class "rime-skin-layout"))
+                                    (div ((class "rime-skin-picker"))
+                                         ,@(for/list ([skin (in-list shown-skins)])
+                                             (skin-card locale
+                                                        skin
+                                                        (member (skin-id skin) selected-skin-ids)
+                                                        (equal? (skin-id skin) preview-id))))
+                                    (div ((class "rime-preview-panel"))
+                                         ,@(if preview-skin
+                                               `((div ((class "rime-preview-head"))
+                                                      (div ((class "rime-option-copy"))
+                                                           (span ((class "rime-option-title")) ,(skin-name preview-skin))
+                                                           (span ((class "rime-option-id")) ,(skin-id preview-skin)))
+                                                      (span ((class "rime-preview-hint")) ,(t locale 'preview)))
+                                                 (div ((class "keyboard-preview keyboard-preview-svg-wrap"))
+                                                      (img ((class "keyboard-preview-svg")
+                                                            (src ,(format "/skins/~a/preview.svg" preview-id))
+                                                            (alt ,(skin-name preview-skin))))))
+                                               '())))))
+                    '()))
+         (aside ((class "rime-summary-column"))
+                (div ((class "rime-summary-card"))
+                     (div ((class "rime-summary-intro"))
+                          (h2 ((class "rime-section-title")) ,(t locale 'summary))
+                          (p ((class "rime-section-copy")) ,(t locale 'summary-copy)))
+                     (div ((class "rime-summary-block"))
+                          (p ((class "rime-summary-label")) ,(t locale 'platform))
+                          ,(summary-pill (route-label locale route)))
+                     (div ((class "rime-summary-block"))
+                          (p ((class "rime-summary-label"))
+                             ,(format "~a (~a)" (t locale 'schemas) (length active-ids)))
+                          ,@(schema-summary locale schemas active-ids auto-ids))
+                     ,@(skin-summary locale shown-skins selected-skin-ids)
+                     (button ((class "rime-build-button")
+                              (type "submit"))
+                             ,(t locale 'build))
+                     (p ((class "rime-help-text")) ,(t locale 'zip-help))
+                     ,@(if (eq? route 'mobile)
+                           `((div ((class "rime-help-block"))
+                                  (p ((class "rime-summary-label")) ,(t locale 'yuanshu-help))
+                                  (p ((class "rime-help-text")) ,(t locale 'yuanshu-1))
+                                  (p ((class "rime-help-text")) ,(t locale 'yuanshu-2))
+                                  (p ((class "rime-help-text")) ,(t locale 'yuanshu-3))))
+                           '())))))
+
+(define (render-configurator req schemas skins #:route [fallback-route 'desktop])
+  (xexpr->string (configurator-xexpr req schemas skins #:route fallback-route)))
+
+(define (page-shell req schemas skins route)
+  (define state (parse-state req route))
+  (define locale (ui-state-locale state))
+  `(html ((lang ,(if (eq? locale 'zh-Hant) "zh-Hant" "en")))
+         (head
+          (meta ((charset "utf-8")))
+          (meta ((name "viewport") (content "width=device-width, initial-scale=1")))
+          (title ,(t locale 'title))
+          (link ((rel "stylesheet") (href "/app.css")))
+          (script ((src ,htmx-script)
+                   (defer "defer")) ""))
+         (body
+          (main ((id "app"))
+                (div ((class ,(classes "rime-config-shell"
+                                       (and (eq? route 'home) "rime-landing-shell"))))
+                     (section ((class "rime-hero-card"))
+                              (div ((class "rime-hero-head"))
+                                   (div
+                                    (a ((class "rime-back-link")
+                                        (href "/")) ,(t locale 'home))
+                                    (h1 ((class "page-title")) ,(t locale 'title))
+                                    (p ((class "rime-section-copy"))
+                                       ,(case route
+                                          [(desktop) (t locale 'desktop-copy)]
+                                          [(mobile) (t locale 'mobile-copy)]
+                                          [else (t locale 'landing-copy)])))
+                                   (a ((class "rime-language-toggle")
+                                       (href ,(format "~a?locale=~a"
+                                                      (route-path route)
+                                                      (symbol->string (next-locale locale)))))
+                                      ,(t locale 'language)))
+                              (nav ((class "rime-platform-tabs"))
+                                   (a ((class ,(classes "rime-platform-tab"
+                                                        (and (eq? route 'desktop) "is-active")))
+                                       (href "/desktop")) ,(t locale 'desktop))
+                                   (a ((class ,(classes "rime-platform-tab"
+                                                        (and (eq? route 'mobile) "is-active")))
+                                       (href "/mobile")) ,(t locale 'mobile))))
+                     ,@(if (eq? route 'home)
+                           `((div ((class "rime-entry-grid"))
+                                  (a ((class "rime-entry-card") (href "/desktop"))
+                                     (span ((class "rime-option-title")) ,(t locale 'desktop))
+                                     (span ((class "rime-section-copy")) ,(t locale 'desktop-copy)))
+                                  (a ((class "rime-entry-card") (href "/mobile"))
+                                     (span ((class "rime-option-title")) ,(t locale 'mobile))
+                                     (span ((class "rime-section-copy")) ,(t locale 'mobile-copy)))))
+                           `((div ((id "configurator"))
+                                  ,(configurator-xexpr req schemas skins #:route route)))))))))
+
+(define (render-page req schemas skins #:route [route 'home])
+  (xexpr->string (page-shell req schemas skins route)))
+
+(define (form-profile req)
+  (define schemas (request-values req "schemas"))
+  (define skins (request-values req "skins"))
+  (define desktop? (equal? (request-value req "desktop?" "true") "true"))
+  (hash 'schemas schemas
+        'extra-skins skins
+        'desktop? desktop?))

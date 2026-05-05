@@ -5,15 +5,15 @@
   --panel-strong: rgba(255, 255, 255, 0.9);
   --surface: rgba(255, 255, 255, 0.48);
   --surface-strong: rgba(255, 255, 255, 0.82);
-  --ink: #1d1814;
+  --ink: #151a17;
   --ink-inverted: #fffdf9;
-  --muted: #746a60;
-  --line: rgba(29, 24, 20, 0.08);
-  --line-strong: rgba(29, 24, 20, 0.14);
-  --accent: #8a5539;
-  --accent-soft: rgba(138, 85, 57, 0.05);
-  --selected-line: rgba(138, 85, 57, 0.24);
-  --inline-note-bg: rgba(29, 24, 20, 0.045);
+  --muted: #68716a;
+  --line: rgba(21, 26, 23, 0.09);
+  --line-strong: rgba(21, 26, 23, 0.16);
+  --accent: #2f7d68;
+  --accent-soft: rgba(47, 125, 104, 0.08);
+  --selected-line: rgba(47, 125, 104, 0.28);
+  --inline-note-bg: rgba(21, 26, 23, 0.045);
   --keyboard-special-bg: rgba(232, 232, 232, 0.95);
   --qr-frame-bg: transparent;
   --error: #a83f2f;
@@ -35,9 +35,9 @@
     --muted: #b8ada1;
     --line: rgba(255, 255, 255, 0.13);
     --line-strong: rgba(255, 255, 255, 0.22);
-    --accent: #d6a074;
-    --accent-soft: rgba(214, 160, 116, 0.12);
-    --selected-line: rgba(214, 160, 116, 0.38);
+    --accent: #7fd8bc;
+    --accent-soft: rgba(127, 216, 188, 0.12);
+    --selected-line: rgba(127, 216, 188, 0.38);
     --inline-note-bg: rgba(255, 255, 255, 0.085);
     --keyboard-special-bg: rgba(255, 255, 255, 0.16);
     --qr-frame-bg: #fff;
@@ -85,7 +85,7 @@ input {
   margin: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
   font-weight: 600;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
 }
 
 .page-title {
@@ -245,8 +245,71 @@ input {
   margin: 0;
   font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.rime-back-link,
+.rime-platform-tab,
+.rime-entry-card {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.rime-back-link {
+  display: inline-flex;
+  margin-bottom: 0.65rem;
+  color: var(--accent);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.rime-platform-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.rime-platform-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.3rem;
+  padding: 0.46rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.rime-platform-tab:hover,
+.rime-platform-tab.is-active {
+  border-color: var(--selected-line);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+
+.rime-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.rime-entry-card {
+  display: flex;
+  min-height: 9rem;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.rime-entry-card:hover {
+  border-color: var(--selected-line);
+  background: var(--accent-soft);
 }
 
 .rime-language-toggle {
@@ -605,6 +668,10 @@ input {
   height: auto;
 }
 
+.keyboard-preview-svg-wrap {
+  width: min(100%, 32rem);
+}
+
 .keyboard-preview-grid.is-rich {
   height: 100%;
   width: 100%;
@@ -737,6 +804,7 @@ input {
   }
 
   .rime-landing-choices,
+  .rime-entry-grid,
   .rime-platform-grid,
   .rime-option-grid,
   .rime-skin-picker {
