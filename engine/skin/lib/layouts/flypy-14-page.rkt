@@ -1,6 +1,7 @@
 #lang racket/base
 
-(require "../core/dsl.rkt"
+(require racket/hash
+         "../core/dsl.rkt"
          "../keysets/pinyin-common.rkt"
          "flypy18-page.rkt"
          "flypy18-bases.rkt")
@@ -59,12 +60,32 @@
    (merged18-spec "bn14Button" "b" "BN" "in iao" six-column-size #f #f)
    (merged18-spec "m14Button" "m" "M" "ian" six-column-size #f #f)))
 
+(define third-row-system-size six-column-size)
+
+(define (set-entry entry key value)
+  (for/list ([pair (in-list entry)])
+    (if (equal? (car pair) key)
+        (cons key value)
+        pair)))
+
+(define (with-14-key-system-sizes page)
+  (hash-set* page
+             "shiftButton"
+             (set-entry (hash-ref page "shiftButton")
+                        "size"
+                        third-row-system-size)
+             "backspaceButton"
+             (set-entry (hash-ref page "backspaceButton")
+                        "size"
+                        third-row-system-size)))
+
 (define (base-page dark? portrait?)
-  (cond
-    [(and (not dark?) portrait?)       flypy18-portrait-light-base]
-    [(and dark?       portrait?)       flypy18-portrait-dark-base]
-    [(and (not dark?) (not portrait?)) flypy18-landscape-light-base]
-    [else                              flypy18-landscape-dark-base]))
+  (with-14-key-system-sizes
+   (cond
+     [(and (not dark?) portrait?)       flypy18-portrait-light-base]
+     [(and dark?       portrait?)       flypy18-portrait-dark-base]
+     [(and (not dark?) (not portrait?)) flypy18-landscape-light-base]
+     [else                              flypy18-landscape-dark-base])))
 
 (define flypy-14-iphone-pinyin-files
   (make-flypy18-files
