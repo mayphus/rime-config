@@ -18,6 +18,11 @@
            :rows [["Q" "W" "E" "R" "T" "Y"]
                   ["A" "S" "D" "F" "G" "H"]
                   ["Z" "X" "C" "V" "B" "N"]]}
+   :14key {:label "14 鍵"
+           :offsets [0.75 0.75 1.3]
+           :rows [["QW" "ER" "TY" "UI" "OP"]
+                  ["AS" "DF" "GH" "JK" "L"]
+                  ["ZX" "CV" "BN" "M"]]}
    :17key {:label "17 鍵亂序"
            :offsets [0.75 0.75 1.3]
            :rows [["Q" "W" "E" "R" "T" "Y"]
@@ -33,6 +38,7 @@
 
 (def skin-layout
   {"flypy" :qwerty
+   "flypy_14" :14key
    "flypy_18" :18key
    "cangjie6" :cangjie6
    "bopomofo" :bopomofo

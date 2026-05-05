@@ -26,3 +26,10 @@
 (deftest active-skins-honor-manual-uncheck
   (is (= ["flypy" "hybrid"]
          (state/active-skins sample-metadata :mobile #{"flypy"} #{"cangjie6"}))))
+
+(deftest flypy-14-uses-14-key-preview-layout
+  (is (= :14key (get state/skin-layout "flypy_14")))
+  (is (= [["QW" "ER" "TY" "UI" "OP"]
+          ["AS" "DF" "GH" "JK" "L"]
+          ["ZX" "CV" "BN" "M"]]
+         (get-in state/keyboard-layouts [:14key :rows]))))
