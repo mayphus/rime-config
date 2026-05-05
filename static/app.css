@@ -101,6 +101,7 @@ input {
 
 .rime-section-copy,
 .rime-help-text,
+.rime-help-list,
 .rime-empty-state,
 .rime-option-id,
 .rime-preview-hint {
@@ -518,6 +519,16 @@ input {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
+}
+
+.rime-help-list {
+  padding-left: 1.1rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.rime-help-list li + li {
+  margin-top: 0.25rem;
 }
 
 .rime-help-links {

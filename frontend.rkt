@@ -44,9 +44,10 @@
     'build "Build and Download"
     'zip-help "Output is a ZIP archive."
     'yuanshu-help "Use in Yuanshu"
-    'yuanshu-1 "1. Install Yuanshu IME on iPhone or iPad."
-    'yuanshu-2 "2. Open the ZIP in Yuanshu, or use Input Schemas -> ... -> Import."
-    'yuanshu-3 "3. Skins are separate from schemas. Remove any old skin with the same name before importing."
+    'yuanshu-steps
+    '("Install Yuanshu IME on iPhone or iPad."
+      "Open the ZIP in Yuanshu, or use Input Schemas -> ... -> Import."
+      "Skins are separate from schemas. Remove any old skin with the same name before importing.")
     'support "Support"
     'language "繁")
    'zh-Hant
@@ -73,9 +74,10 @@
     'build "編譯並下載"
     'zip-help "輸出為 ZIP 壓縮包。"
     'yuanshu-help "如何在元書中使用"
-    'yuanshu-1 "1. 先在 iPhone 或 iPad 安裝元書輸入法。"
-    'yuanshu-2 "2. 用元書打開這個 ZIP，或在「輸入方案」->「...」->「導入方案」中導入。"
-    'yuanshu-3 "3. 皮膚與方案是分開管理的。導入前請先刪除同名舊皮膚。"
+    'yuanshu-steps
+    '("先在 iPhone 或 iPad 安裝元書輸入法。"
+      "用元書打開這個 ZIP，或在「輸入方案」->「...」->「導入方案」中導入。"
+      "皮膚與方案是分開管理的。導入前請先刪除同名舊皮膚。")
     'support "支持"
     'language "EN")))
 
@@ -409,9 +411,9 @@
                      ,@(if (eq? route 'mobile)
                            `((div ((class "rime-help-block"))
                                   (p ((class "rime-summary-label")) ,(t locale 'yuanshu-help))
-                                  (p ((class "rime-help-text")) ,(t locale 'yuanshu-1))
-                                  (p ((class "rime-help-text")) ,(t locale 'yuanshu-2))
-                                  (p ((class "rime-help-text")) ,(t locale 'yuanshu-3))))
+                                  (ol ((class "rime-help-list"))
+                                      ,@(for/list ([step (in-list (t locale 'yuanshu-steps))])
+                                          `(li ,step)))))
                            '())))))
 
 (define (render-configurator req schemas skins #:route [fallback-route 'desktop])
