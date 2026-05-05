@@ -5,6 +5,7 @@ Standalone Rime Config product, served by one Racket app.
 ## Layout
 
 - `web.rkt` serves the public HTML, HTMX partials, metadata, previews, and ZIP builds.
+- `gui.rkt` opens a native Racket GUI for local Yuanshu builds and iPhone pushes.
 - `build.rkt` is the callable build library for schemas, skins, profiles, and archives.
 - `frontend.rkt` renders the server-side UI.
 - `k8s.rkt` generates and checks the Kubernetes YAML.
@@ -26,6 +27,17 @@ racket web.rkt
 ```
 
 Visit `http://localhost:5001`.
+
+Run the native GUI when you want to push directly to a local iPhone:
+
+```sh
+racket gui.rkt
+```
+
+Open Yuanshu's WiFi transfer screen on the iPhone, keep both devices on the
+same LAN, then paste the URL shown by Yuanshu into the GUI and press
+`Push to iPhone`. Leaving the URL blank lets the sync tool scan its known LAN
+candidates.
 
 Regenerate Kubernetes manifests after changing deploy settings:
 
