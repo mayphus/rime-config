@@ -18,6 +18,7 @@
 ;; ---- Helpers ---------------------------------------------------------------
 
 (define-runtime-path app-css-path "static/app.css")
+(define-runtime-path support-svg-path "static/support.svg")
 
 (define (valid-id? s)
   (and (string? s) (regexp-match? #rx"^[a-zA-Z0-9_-]+$" s)))
@@ -153,6 +154,16 @@
        404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
        (list #"CSS not found"))))
 
+(define (handle-support-svg req)
+  (if (file-exists? support-svg-path)
+      (response/full
+       200 #"OK" (current-seconds) #"image/svg+xml"
+       (list (make-header #"Cache-Control" #"public, max-age=86400"))
+       (list (file->bytes support-svg-path)))
+      (response/full
+       404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
+       (list #"Support QR not found"))))
+
 (define (handle-metadata req)
   (define skins
     (map (lambda (item)
@@ -253,6 +264,7 @@
    [("mobile") (lambda (req) (handle-page req 'mobile))]
    [("ui" "configurator") handle-configurator]
    [("app.css") handle-app-css]
+   [("support.svg") handle-support-svg]
    [("metadata") handle-metadata]
    [("skins" (string-arg) "preview.svg") handle-skin-preview-svg]
    [("skins" (string-arg) "demo.png") handle-skin-demo]
