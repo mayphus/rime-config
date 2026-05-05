@@ -5,13 +5,13 @@
          racket/path
          racket/runtime-path
          racket/string
-         "../../schema/lib/core/yaml.rkt")
+         "schema/lib/core/yaml.rkt")
 
 (provide k8s-documents
          render-k8s!
          check-k8s!)
 
-(define-runtime-path k8s-dir ".")
+(define-runtime-path k8s-dir "k8s")
 
 (define app-name "rime-config")
 (define namespace-name "rime-config")
@@ -189,6 +189,7 @@
   (build-path k8s-dir name))
 
 (define (render-k8s!)
+  (make-directory* k8s-dir)
   (for ([entry (in-list k8s-documents)])
     (call-with-output-file (render-path (car entry))
       #:exists 'replace

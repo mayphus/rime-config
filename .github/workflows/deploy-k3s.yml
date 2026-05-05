@@ -18,7 +18,8 @@ on:
       - "tools/**"
       - "Dockerfile"
       - ".dockerignore"
-      - "deploy/k8s/**"
+      - "k8s.rkt"
+      - "k8s/**"
       - ".github/workflows/deploy-k3s.yml"
   workflow_dispatch:
 
@@ -46,7 +47,7 @@ jobs:
           version: stable
 
       - name: Check generated k8s manifests
-        run: racket -e '(require "deploy/k8s/manifests.rkt") (check-k8s!)'
+        run: racket -e '(require "k8s.rkt") (check-k8s!)'
 
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -90,7 +91,7 @@ jobs:
       - name: Sync GHCR pull secret
         shell: bash
         run: |
-          kubectl apply -f deploy/k8s/namespace.yaml
+          kubectl apply -f k8s/namespace.yaml
           kubectl -n rime-config create secret docker-registry ghcr-pull \
             --docker-server=ghcr.io \
             --docker-username=mayphus \
@@ -101,7 +102,7 @@ jobs:
         shell: bash
         run: |
           kubectl -n rime-config delete deployment/rime-config-engine service/rime-config-engine ingress/rime-config-engine --ignore-not-found
-          kubectl apply -k deploy/k8s
+          kubectl apply -k k8s
           kubectl -n rime-config set image deployment/rime-config app=${IMAGE_NAME}:${IMAGE_TAG}
           if ! kubectl -n rime-config rollout status deployment/rime-config --timeout=600s; then
             kubectl -n rime-config get pods -l app=rime-config -o wide

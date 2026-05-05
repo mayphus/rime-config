@@ -35,7 +35,7 @@ jobs:
         run: raco test test
 
       - name: Check generated k8s manifests
-        run: racket -e '(require "deploy/k8s/manifests.rkt") (check-k8s!)'
+        run: racket -e '(require "k8s.rkt") (check-k8s!)'
 
       - name: Validate generated profiles
         run: racket -e '(require "build.rkt") (build-profile! "desktop") (build-profile! "yuanshu/all")'
