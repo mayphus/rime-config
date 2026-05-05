@@ -435,8 +435,10 @@
                      (section ((class "rime-hero-card"))
                               (div ((class "rime-hero-head"))
                                    (div
-                                    (a ((class "rime-back-link")
-                                        (href "/")) ,(t locale 'home))
+                                    ,@(if (eq? route 'home)
+                                          '()
+                                          `((a ((class "rime-back-link")
+                                               (href "/")) ,(t locale 'home))))
                                     (h1 ((class "page-title")) ,(t locale 'title))
                                     (p ((class "rime-section-copy"))
                                        ,(case route
@@ -448,13 +450,15 @@
                                                       (route-path route)
                                                       (symbol->string (next-locale locale)))))
                                       ,(t locale 'language)))
-                              (nav ((class "rime-platform-tabs"))
-                                   (a ((class ,(classes "rime-platform-tab"
-                                                        (and (eq? route 'desktop) "is-active")))
-                                       (href "/desktop")) ,(t locale 'desktop))
-                                   (a ((class ,(classes "rime-platform-tab"
-                                                        (and (eq? route 'mobile) "is-active")))
-                                       (href "/mobile")) ,(t locale 'mobile))))
+                              ,@(if (eq? route 'home)
+                                    '()
+                                    `((nav ((class "rime-platform-tabs"))
+                                           (a ((class ,(classes "rime-platform-tab"
+                                                                (and (eq? route 'desktop) "is-active")))
+                                               (href "/desktop")) ,(t locale 'desktop))
+                                           (a ((class ,(classes "rime-platform-tab"
+                                                                (and (eq? route 'mobile) "is-active")))
+                                               (href "/mobile")) ,(t locale 'mobile))))))
                      ,@(if (eq? route 'home)
                            `((div ((class "rime-entry-grid"))
                                   (a ((class "rime-entry-card") (href "/desktop"))

@@ -30,6 +30,13 @@
            "127.0.0.1"))
 
 (module+ test
+  (test-case "home page has one platform chooser"
+    (define html (render-page (req "/") schemas skins #:route 'home))
+    (check-false (regexp-match? #rx"rime-platform-tabs" html))
+    (check-true (regexp-match? #rx"rime-entry-grid" html))
+    (check-true (regexp-match? #rx"href=\"/desktop\"" html))
+    (check-true (regexp-match? #rx"href=\"/mobile\"" html)))
+
   (test-case "mobile page defaults to the 14-key schema"
     (define html (render-page (req "/mobile") schemas skins #:route 'mobile))
     (check-true (regexp-match? #rx"小鶴十四鍵" html))
