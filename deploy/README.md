@@ -29,9 +29,8 @@ on k3s on `pb62`.
 - `GHCR_PULL_TOKEN` should be a GitHub personal access token for `mayphus`
   with at least `read:packages`, so the workflow can create the `ghcr-pull`
   image pull secret in Kubernetes before deploying.
-- The ingress manifest assumes `rime.mayphus.org`,
-  `rime-config.mayphus.org`, and `api-rime.mayphus.org` should terminate in
-  the cluster.
+- The ingress manifest assumes `rime.mayphus.org` and
+  `rime-config.mayphus.org` should terminate in the cluster.
 - Cloudflare should route those hostnames to the k3s ingress. The old Worker
   frontend is no longer part of this repo.
 - The cert-manager issuer name is currently `letsencrypt`.

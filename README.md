@@ -17,7 +17,6 @@ The product is served directly by the k3s-hosted Racket app:
 
 - `rime.mayphus.org`
 - `rime-config.mayphus.org`
-- `api-rime.mayphus.org` for compatibility with older API clients
 
 ## Local development
 
