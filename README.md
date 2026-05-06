@@ -9,9 +9,32 @@ Standalone Rime Config product, served by one Racket app.
 - `build.rkt` is the callable build library for schemas, skins, profiles, and archives.
 - `frontend.rkt` renders the server-side UI.
 - `k8s.rkt` generates and checks the Kubernetes YAML.
-- `data/`, `schema/`, `skin/`, and `profiles/` hold the Rime inputs and generators.
+- `data/`, `schema/`, and `profiles/` hold the Rime inputs and generators.
+- `schema/lib/skin/` is the internal Yuanshu skin compiler used by schema modules.
 - `tools/` contains maintenance scripts.
 - `k8s/` contains generated manifests for k3s on `pb62`.
+
+Generated schema modules use `#lang s-exp "lib/lang.rkt"` and declare their
+mobile skin shape in the schema itself:
+
+```racket
+(rime-schema flypy_14
+  (name "14鍵")
+  (mobile-only)
+  (deps cangjie6)
+  (static-files "rime_ice.dict.yaml")
+  (static-dirs "rime_ice_dicts")
+  (schema schema-doc)
+  (custom "flypy_14.custom.yaml"
+    (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
+    (patch custom-doc))
+  (mobile-skin flypy_14
+    (meta
+      (name "Flypy 14" "小鶴十四鍵")
+      (summary "A compact Yuanshu skin for the Flypy 14-key layout."))
+    (phone-layout flypy-14)
+    (ipad-layout standard-18)))
+```
 
 ## URL strategy
 

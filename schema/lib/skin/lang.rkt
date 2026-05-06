@@ -92,13 +92,12 @@
          "layouts/bopomofo-page.rkt"
          "layouts/soft46-page.rkt"
          (for-syntax racket/base
-                     syntax/parse
-                     racket/list
-                     racket/string))
+                     syntax/parse))
 
 ;; Re-export racket/base (minus #%module-begin which we replace) and all skin
 ;; library bindings, so skin modules get everything automatically.
 (provide (except-out (all-from-out racket/base) #%module-begin)
+         #%datum
          (all-from-out racket/hash
                        "core/dsl.rkt"
                        "core/docs.rkt"

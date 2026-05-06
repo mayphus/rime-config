@@ -4,11 +4,8 @@
          web-server/servlet-env
          web-server/http
          racket/file
-         racket/format
-         racket/path
          racket/list
          racket/runtime-path
-         racket/string
          json
          "frontend.rkt"
          "build.rkt")
@@ -48,76 +45,33 @@
           (regexp-replace #rx"\\.schema\\.yaml$" name "")))
    (directory-list data-dir)))
 
-;; Read skin metadata by statically parsing the .rkt file — avoids executing
-;; the full skin module (which renders PNG demos and is very slow).
-(define (read-skin-metadata rkt-path)
-  (call-with-input-file rkt-path
-    (lambda (in)
-      (read-line in) ; skip #lang line
-      (let loop ([trigger #f] [zh-name #f])
-        (define expr (with-handlers ([exn:fail? (lambda (_) eof)]) (read in)))
-        (cond
-          [(eof-object? expr) (values trigger zh-name)]
-          ;; Case 1: (skin slug (triggers ...) (meta (name "Eng" "Zh") ...) ...)
-          [(and (list? expr) (> (length expr) 2) (eq? (car expr) 'skin))
-           (define clauses (cddr expr))
-           (define t (for/or ([c clauses])
-                       (and (list? c) (eq? (car c) 'triggers)
-                            (let ([args (cdr c)])
-                              (if (and (= (length args) 1) (eq? (car args) 'default))
-                                  'default
-                                  (map (lambda (x) (if (symbol? x) (symbol->string x) (~a x))) args))))))
-           (define n (for/or ([c clauses])
-                       (and (list? c) (eq? (car c) 'meta)
-                            (let ([meta-clauses (cdr c)])
-                              (for/or ([mc meta-clauses])
-                                (and (list? mc) (eq? (car mc) 'name)
-                                     (>= (length mc) 3)
-                                     (caddr mc)))))))
-           (loop (or trigger t) (or zh-name n))]
-          ;; Case 2: (define trigger-schemas ...)
-          [(and (list? expr) (= (length expr) 3)
-                (eq? (car expr) 'define)
-                (eq? (cadr expr) 'trigger-schemas))
-           (define val (caddr expr))
-           (define t (cond [(eq? val 'default)                      'default]
-                           [(and (pair? val) (eq? (car val) 'quote)) (cadr val)]
-                           [else #f]))
-           (loop (or trigger t) zh-name)]
-          ;; Case 3: (define chinese-name ...)
-          [(and (list? expr) (= (length expr) 3)
-                (eq? (car expr) 'define)
-                (eq? (cadr expr) 'chinese-name))
-           (loop trigger (or zh-name (caddr expr)))]
-          [else (loop trigger zh-name)])))))
+(define precomputed-schema-ids
+  (remove-duplicates (append generated-config-ids (list-static-schemas))))
 
-;; Precompute skin metadata once at startup
+;; Precompute skin metadata once at startup. Concrete skins are declared by
+;; schema modules and materialized into temporary modules for the existing
+;; Yuanshu skin compiler.
 (define precomputed-skin-items
-  (filter-map
-   (lambda (f)
-     (and
-      (equal? (path-get-extension f) #".rkt")
-      (let-values ([(trigger zh-name) (read-skin-metadata f)])
-        (and trigger
-             (let ([skin-id (path->string (path-replace-extension (file-name-from-path f) #""))])
-               (list skin-id
-                     (cond [(eq? trigger 'default) "default"]
-                           [(list? trigger)        trigger]
-                           [else                   '()])
-                     (or zh-name "")
-                     (skin-preview-spec f)
-                     (skin-preview-svgs f)))))))
-   (sort (directory-list skins-dir #:build? #t) path<?)))
+  (for/list ([item (in-list (list-mobile-skin-items precomputed-schema-ids))])
+    (define schema-id (car item))
+    (define skin-id (cadr item))
+    (define skin-rkt (caddr item))
+    (list skin-id
+          (list schema-id)
+          (dynamic-require `(file ,(path->string skin-rkt)) 'chinese-name (lambda () ""))
+          (skin-preview-spec skin-rkt)
+          (skin-preview-svgs skin-rkt))))
 
 (define precomputed-schema-items
-  (for/list ([s (in-list (remove-duplicates (append generated-config-ids
-                                                    (list-static-schemas))))])
+  (for/list ([s (in-list precomputed-schema-ids)])
     (define mo? (schema-module-ref s 'mobile-only? #f))
     (define deps (read-schema-deps s))
+    (define mobile-skins (read-schema-mobile-skins s))
     (define zh-name (schema-module-ref s 'chinese-name (read-schema-name-from-yaml s)))
     (hash 'id s
           'name (or zh-name s)
           'deps deps
+          'mobile-skins mobile-skins
           'mobile-only? mo?)))
 
 ;; ---- Handlers --------------------------------------------------------------
@@ -222,15 +176,11 @@
       [body-bytes (bytes->jsexpr body-bytes)]
       [else (hash)]))
   (define schemas     (hash-ref data 'schemas '()))
-  (define extra-skins (hash-ref data 'extra-skins '()))
   (cond
     [(not (and (list? schemas) (andmap valid-id? schemas)))
      (json-error "Invalid schema id")]
-    [(not (and (list? extra-skins) (andmap valid-id? extra-skins)))
-     (json-error "Invalid skin id")]
     [else
      (define profile (hash 'schemas     schemas
-                           'extra-skins extra-skins
                            'desktop?    (hash-ref data 'desktop? #t)))
      (define final-profile
        (if (hash-ref profile 'desktop?)

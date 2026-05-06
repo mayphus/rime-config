@@ -16,11 +16,13 @@
          "tools/yuanshu-sync.rkt")
 
 (provide data-dir
-         skins-dir
          output-dir
          generated-config-ids
          schema-module-ref
          read-schema-deps
+         read-schema-mobile-skins
+         schema-mobile-skin-module-path
+         list-mobile-skin-items
          read-schema-name-from-yaml
          build-profile!
          build-profile-from-hash!
@@ -35,9 +37,9 @@
 (define-runtime-path root-dir ".")
 (define schema-dir   (build-path root-dir "schema"))
 (define data-dir     (build-path root-dir "data"))
-(define skins-dir    (build-path root-dir "skin"))
 (define profiles-dir (build-path root-dir "profiles"))
 (define output-dir   (build-path root-dir "output" "rime"))
+(define-runtime-path skin-lang-path "schema/lib/skin/lang.rkt")
 
 (define zip-exe    (find-executable-path "zip"))
 (define python-exe (find-executable-path "python3"))
@@ -48,6 +50,9 @@
 (define generated-custom-ids '("cangjie6" "flypy" "jyut6ping3"))
 (define generated-config-ids (append generated-schema-ids generated-custom-ids))
 
+(define static-schema-mobile-skins
+  (hash "bopomofo" '("bopomofo")))
+
 ;; ---- Schema module helpers -------------------------------------------------
 
 ;; Safely dynamic-require a binding from a generated schema module.
@@ -57,6 +62,71 @@
   (if (file-exists? rkt)
       (dynamic-require rkt prop (lambda () default))
       default))
+
+(define (schema-source-path schema)
+  (build-path schema-dir (string-append schema ".rkt")))
+
+(define (datum-name value)
+  (cond
+    [(symbol? value) (symbol->string value)]
+    [(string? value) value]
+    [else #f]))
+
+(define (read-schema-forms schema)
+  (define path (schema-source-path schema))
+  (if (not (file-exists? path))
+      '()
+      (call-with-input-file path
+        (lambda (in)
+          (read-line in)
+          (let loop ([forms '()])
+            (define form (with-handlers ([exn:fail? (lambda (_) eof)]) (read in)))
+            (if (eof-object? form)
+                (reverse forms)
+                (loop (cons form forms))))))))
+
+(define (rime-schema-form schema)
+  (for/first ([form (in-list (read-schema-forms schema))]
+              #:when (and (list? form) (pair? form) (eq? (car form) 'rime-schema)))
+    form))
+
+(define (schema-mobile-skin-clause schema skin)
+  (define form (rime-schema-form schema))
+  (and form
+       (for/first ([clause (in-list (cddr form))]
+                   #:when (and (list? clause)
+                               (pair? clause)
+                               (eq? (car clause) 'mobile-skin)
+                               (pair? (cdr clause))
+                               (equal? (datum-name (cadr clause)) skin)))
+         clause)))
+
+(define (write-skin-module! schema skin clause)
+  (define out-dir (build-path (find-system-path 'temp-dir) "rime-config-schema-skins"))
+  (make-directory* out-dir)
+  (define path (build-path out-dir (format "~a-~a.rkt" schema skin)))
+  (call-with-output-file path
+    #:exists 'truncate/replace
+    (lambda (out)
+      (fprintf out "#lang s-exp (file ~s)\n" (path->string skin-lang-path))
+      (write `(skin ,(string->symbol skin)
+               (triggers ,(string->symbol schema))
+               ,@(cddr clause))
+             out)
+      (newline out)))
+  path)
+
+(define (schema-mobile-skin-module-path skin schemas)
+  (for/or ([schema (in-list schemas)])
+    (define clause (schema-mobile-skin-clause schema skin))
+    (and clause (write-skin-module! schema skin clause))))
+
+(define (list-mobile-skin-items schemas)
+  (for*/list ([schema (in-list schemas)]
+              [skin (in-list (read-schema-mobile-skins schema))]
+              #:do [(define clause (schema-mobile-skin-clause schema skin))]
+              #:when clause)
+    (list schema skin (write-skin-module! schema skin clause))))
 
 ;; ---- Utilities -------------------------------------------------------------
 
@@ -159,6 +229,30 @@
   (schema-module-ref schema 'schema-deps
                      (read-schema-deps-from-yaml schema)))
 
+(define (read-schema-mobile-skins schema)
+  (define skins
+    (schema-module-ref schema 'mobile-skins
+                       (hash-ref static-schema-mobile-skins schema '())))
+  (cond
+    [(not skins) '()]
+    [(list? skins) skins]
+    [else (list skins)]))
+
+(define (list-static-schema-ids)
+  (filter-map
+   (lambda (f)
+     (define name (path->string f))
+     (and (regexp-match? #rx"\\.schema\\.yaml$" name)
+          (regexp-replace #rx"\\.schema\\.yaml$" name "")))
+   (directory-list data-dir)))
+
+(define (profile-schema-list profile)
+  (define raw (hash-ref profile 'schemas '()))
+  (define lst (if (list? raw) raw (list raw)))
+  (if (member "all" lst)
+      (remove-duplicates (append generated-config-ids (list-static-schema-ids)))
+      lst))
+
 (define (expand-schema-deps schemas)
   (let loop ([queue schemas] [resolved '()])
     (if (null? queue)
@@ -180,21 +274,11 @@
 
 (define (resolve-schemas profile)
   (define raw
-    (let ([s (hash-ref profile 'schemas '())])
-      (define lst (if (list? s) s (list s)))
-      (if (member "all" lst)
-          (append generated-config-ids
-                  (filter-map
-                   (lambda (f)
-                     (define name (path->string f))
-                     (and (regexp-match? #rx"\\.schema\\.yaml$" name)
-                          (regexp-replace #rx"\\.schema\\.yaml$" name "")))
-                   (directory-list data-dir)))
-          (begin
-            (for ([id lst])
-              (unless (valid-schema-id? id)
-                (error 'resolve-schemas "Invalid schema id: ~v" id)))
-            lst))))
+    (let ([lst (profile-schema-list profile)])
+      (for ([id lst])
+        (unless (valid-schema-id? id)
+          (error 'resolve-schemas "Invalid schema id: ~v" id)))
+      lst))
 
   (define expanded (expand-schema-deps raw))
 
@@ -214,7 +298,8 @@
 
 (define (compute-assets schemas profile)
   (define extra-data  (hash-ref profile 'extra-src-files  '()))
-  (define extra-skins (hash-ref profile 'extra-skins      '()))
+  (define selected-mobile-skins
+    (append-map read-schema-mobile-skins (profile-schema-list profile)))
 
   (define gen-yaml  '())
   (define data-yaml '())
@@ -257,21 +342,9 @@
   ;; Extra static files from profile (e.g. squirrel.custom.yaml)
   (for ([f extra-data]) (add-data-yaml! f))
 
-  ;; Skins: auto-discover from skins-dir via each skin's trigger-schemas export.
+  ;; Mobile skins are schema metadata, so profiles only need schema config.
   (unless (hash-ref profile 'desktop? #f)
-    (for ([skin-file (sort (directory-list skins-dir #:build? #t) path<?)]
-          #:when (equal? (path-get-extension skin-file) #".rkt"))
-      (define skin-name
-        (path->string (path-replace-extension (file-name-from-path skin-file) #"")))
-      (define trigger
-        (dynamic-require skin-file 'trigger-schemas (lambda () '())))
-      (define include?
-        (cond
-          [(eq? trigger 'default)  #t]
-          [(list? trigger) (ormap (lambda (s) (member s schemas)) trigger)]
-          [else #f]))
-      (when include? (add-skin! skin-name)))
-    (for ([s extra-skins]) (add-skin! s)))
+    (for ([s selected-mobile-skins]) (add-skin! s)))
 
   (values (remove-duplicates (reverse gen-yaml))
           (remove-duplicates (reverse data-yaml))
@@ -335,8 +408,10 @@
 
 ;; ---- Build skins -----------------------------------------------------------
 
-(define (build-one-skin! skin profile-name profile-out)
-  (define skin-rkt (build-path skins-dir (string-append skin ".rkt")))
+(define (build-one-skin! skin schemas profile-name profile-out)
+  (define skin-rkt
+    (or (schema-mobile-skin-module-path skin schemas)
+        (error 'build-one-skin! "No mobile skin definition for ~a" skin)))
   (define safe-profile-name
     (regexp-replace* #rx"[^a-zA-Z0-9._-]+" profile-name "_"))
   (define tmp-dir  (build-path (path-only profile-out) (string-append "tmp-" safe-profile-name)))
@@ -355,11 +430,11 @@
     (run! zip-exe "-qr" (path->string cskin) skin))
   (delete-directory/files tmp-dir))
 
-(define (build-skins! skins profile-name profile-out)
+(define (build-skins! skins schemas profile-name profile-out)
   (unless (null? skins)
     (make-directory* (build-path profile-out "skins"))
     (for ([skin skins])
-      (build-one-skin! skin profile-name profile-out))))
+      (build-one-skin! skin schemas profile-name profile-out))))
 
 ;; ---- Build one profile -----------------------------------------------------
 
@@ -404,7 +479,7 @@
               (fprintf out "    - schema: ~a\n" s)))))
       (delete-file* default-custom))
 
-  (build-skins! skins profile-name profile-out))
+  (build-skins! skins schemas profile-name profile-out))
 
 (define (build-profile! profile-name)
   (define profile     (named-rime-profile profile-name))
@@ -516,9 +591,10 @@
 ;; ---- Standalone skin previews ----------------------------------------------
 
 (define (build-preview-skins! #:render-docs? [render-docs? #f])
-  (for ([skin-file (sort (directory-list skins-dir #:build? #t) path<?)]
-        #:when (equal? (path-get-extension skin-file) #".rkt"))
-    (define skin (path->string (path-replace-extension (file-name-from-path skin-file) #"")))
+  (define schemas (remove-duplicates (append generated-config-ids (list-static-schema-ids))))
+  (for ([item (in-list (list-mobile-skin-items schemas))])
+    (define skin (cadr item))
+    (define skin-file (caddr item))
     (define out  (build-path output-dir "compiled-skins" skin))
     (printf "Building preview skin: ~a~a\n" skin (if render-docs? " (with docs)" ""))
     (delete-directory/files out #:must-exist? #f)

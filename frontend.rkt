@@ -2,7 +2,6 @@
 
 (require racket/list
          racket/match
-         racket/set
          racket/string
          web-server/http
          xml)
@@ -32,7 +31,7 @@
     'schemas "Schemas"
     'schemas-copy "Dependent schemas are added automatically."
     'skins "Skins"
-    'skins-copy "Skins follow the selected schemas. You can still turn them off."
+    'skins-copy "Skins are selected by the schema configuration."
     'include "Include"
     'selected "Selected"
     'auto "Auto"
@@ -47,7 +46,7 @@
     'yuanshu-steps
     '("Install Yuanshu IME on iPhone or iPad."
       "Open the ZIP in Yuanshu, or use Input Schemas -> ... -> Import."
-      "Skins are separate from schemas. Remove any old skin with the same name before importing.")
+      "Remove any old skin with the same name before importing.")
     'support "Support"
     'language "繁")
    'zh-Hant
@@ -62,7 +61,7 @@
     'schemas "方案"
     'schemas-copy "依賴方案會自動補上。"
     'skins "皮膚"
-    'skins-copy "皮膚會根據所選方案自動顯示，你仍然可以手動關閉。"
+    'skins-copy "皮膚由方案配置自動選擇。"
     'include "加入"
     'selected "已選"
     'auto "自動"
@@ -77,11 +76,11 @@
     'yuanshu-steps
     '("先在 iPhone 或 iPad 安裝元書輸入法。"
       "用元書打開這個 ZIP，或在「輸入方案」->「...」->「導入方案」中導入。"
-      "皮膚與方案是分開管理的。導入前請先刪除同名舊皮膚。")
+      "導入前請先刪除同名舊皮膚。")
     'support "支持"
     'language "EN")))
 
-(struct ui-state (route locale selected-schemas selected-skins preview-skin configured? skins-configured?)
+(struct ui-state (route locale selected-schemas preview-skin configured?)
   #:transparent)
 
 (define (t locale key)
@@ -150,6 +149,9 @@
 (define (schema-deps schema)
   (hash-ref schema 'deps '()))
 
+(define (schema-mobile-skins schema)
+  (hash-ref schema 'mobile-skins '()))
+
 (define (schema-by-id schemas id)
   (for/first ([schema (in-list schemas)]
               #:when (equal? id (schema-id schema)))
@@ -180,24 +182,21 @@
 (define (skin-id skin)
   (list-ref skin 0))
 
-(define (skin-triggers skin)
-  (list-ref skin 1))
-
 (define (skin-name skin)
   (define name (list-ref skin 2))
   (if (string=? name "") (skin-id skin) name))
 
-(define (visible-skins skins route active-ids)
+(define (visible-skins schemas skins route selected-ids)
   (if (not (eq? route 'mobile))
       '()
-      (filter
-       (lambda (skin)
-         (define triggers (skin-triggers skin))
-         (or (equal? triggers "default")
-             (and (list? triggers)
-                  (for/or ([trigger (in-list triggers)])
-                    (member trigger active-ids)))))
-       skins)))
+      (let ([skin-ids
+             (remove-duplicates
+              (append-map
+               (lambda (id)
+                 (define schema (schema-by-id schemas id))
+                 (if schema (schema-mobile-skins schema) '()))
+               selected-ids))])
+        (filter (lambda (skin) (member (skin-id skin) skin-ids)) skins))))
 
 (define (selected-or-default req route)
   (define configured? (present? req "configured"))
@@ -211,14 +210,11 @@
   (define locale (locale-param (request-value req "locale" "en")))
   (define actual-route (route-param (request-value req "route" #f) route))
   (define configured? (present? req "configured"))
-  (define skins-configured? (present? req "skins_configured"))
   (ui-state actual-route
             locale
             (selected-or-default req actual-route)
-            (request-values req "skins")
             (request-value req "preview_skin" #f)
-            configured?
-            skins-configured?))
+            configured?))
 
 (define (attrs . pairs)
   (filter values pairs))
@@ -258,10 +254,10 @@
                (span ((class "rime-option-toggle-label"))
                      ,(if checked? (t locale 'selected) (t locale 'include))))))
 
-(define (skin-card locale skin checked? previewing?)
+(define (skin-card locale skin previewing?)
   (define card
     `(div ((class ,(classes "rime-option-card rime-skin-card"
-                            (and checked? "is-selected")
+                            "is-selected"
                             (and previewing? "is-previewing"))))
           (div ((class "rime-skin-row"))
                (div ((class "rime-option-copy"))
@@ -275,16 +271,7 @@
                              (hx-include "#configurator-form")
                              (hx-swap "innerHTML")
                              (hx-vals ,(format "{\"preview_skin\":\"~a\"}" (skin-id skin))))
-                            (span ((class "rime-option-action")) ,(t locale 'preview)))
-                    (label ((class "rime-option-toggle rime-skin-toggle"))
-                           (input ,(append
-                                    (attrs `(type "checkbox")
-                                           `(name "skins")
-                                           `(value ,(skin-id skin))
-                                           (and checked? `(checked "checked")))
-                                    (hx-refresh-attrs)))
-                           (span ((class "rime-option-toggle-label"))
-                                 ,(if checked? (t locale 'selected) (t locale 'include))))))))
+                            (span ((class "rime-option-action")) ,(t locale 'preview)))))))
   (if previewing?
       (append card `((span ((class "rime-preview-hint")) ,(t locale 'preview))))
       card))
@@ -329,12 +316,8 @@
   (define selected-ids (ui-state-selected-schemas state))
   (define auto-ids (auto-deps schemas selected-ids))
   (define active-ids (active-schema-ids schemas selected-ids))
-  (define shown-skins (visible-skins skins route active-ids))
-  (define selected-skin-ids
-    (if (ui-state-skins-configured? state)
-        (filter (lambda (id) (skin-by-id shown-skins id))
-                (ui-state-selected-skins state))
-        (map skin-id shown-skins)))
+  (define shown-skins (visible-skins schemas skins route selected-ids))
+  (define selected-skin-ids (map skin-id shown-skins))
   (define preview-id
     (or (and (skin-by-id shown-skins (ui-state-preview-skin state))
              (ui-state-preview-skin state))
@@ -351,9 +334,6 @@
          ,(input-hidden "route" (symbol->string route))
          ,(input-hidden "locale" (symbol->string locale))
          ,(input-hidden "desktop?" (if (eq? route 'desktop) "true" "false"))
-         ,@(if (pair? shown-skins)
-               (list (input-hidden "skins_configured" "1"))
-               '())
          (div ((class "rime-primary-column"))
               (section ((class "rime-section"))
                        (div ((class "rime-section-header"))
@@ -376,7 +356,6 @@
                                          ,@(for/list ([skin (in-list shown-skins)])
                                              (skin-card locale
                                                         skin
-                                                        (member (skin-id skin) selected-skin-ids)
                                                         (equal? (skin-id skin) preview-id))))
                                     (div ((class "rime-preview-panel"))
                                          ,@(if preview-skin
@@ -486,8 +465,6 @@
 
 (define (form-profile req)
   (define schemas (request-values req "schemas"))
-  (define skins (request-values req "skins"))
   (define desktop? (equal? (request-value req "desktop?" "true") "true"))
   (hash 'schemas schemas
-        'extra-skins skins
         'desktop? desktop?))

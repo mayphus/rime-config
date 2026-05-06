@@ -18,7 +18,7 @@
 
 (struct skin-meta (slug english-name chinese-name summary features) #:transparent)
 
-(define-runtime-path render-skin-demo-script "../../../tools/render_skin_demo.py")
+(define-runtime-path render-skin-demo-script "../../../../tools/render_skin_demo.py")
 
 (define (require-executable name who)
   (or (find-executable-path name)

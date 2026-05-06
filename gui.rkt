@@ -1,11 +1,7 @@
 #lang racket/base
 
 (require racket/class
-         racket/file
          racket/gui/base
-         racket/list
-         racket/path
-         racket/runtime-path
          racket/string
          "build.rkt")
 
@@ -13,36 +9,9 @@
 
 (struct option (id name detail) #:transparent)
 
-(define-runtime-path root-dir ".")
-
 (define app-profile-name "rime-config")
 (define mobile-output-name "gui-mobile")
 (define default-schema-ids '("flypy_14"))
-(define default-skin-ids '("flypy_14"))
-
-(define (skin-name-from-file path)
-  (call-with-input-file path
-    (lambda (in)
-      (read-line in)
-      (let loop ([fallback (path->string (path-replace-extension (file-name-from-path path) #""))])
-        (define expr (with-handlers ([exn:fail? (lambda (_) eof)]) (read in)))
-        (cond
-          [(eof-object? expr) fallback]
-          [(and (list? expr) (pair? expr) (eq? (car expr) 'skin))
-           (define meta
-             (for/or ([clause (in-list (cddr expr))])
-               (and (list? clause)
-                    (eq? (car clause) 'meta)
-                    clause)))
-           (define zh-name
-             (and meta
-                  (for/or ([clause (in-list (cdr meta))])
-                    (and (list? clause)
-                         (eq? (car clause) 'name)
-                         (>= (length clause) 3)
-                         (caddr clause)))))
-           (or zh-name fallback)]
-          [else (loop fallback)])))))
 
 (define (schema-options)
   (for/list ([id (in-list (sort generated-config-ids string<?))])
@@ -59,12 +28,6 @@
                           (format "deps: ~a" (string-join deps ", ")))))
        " | "))
     (option id name detail)))
-
-(define (skin-options)
-  (for/list ([path (in-list (sort (directory-list skins-dir #:build? #t) path<?))]
-             #:when (equal? (path-get-extension path) #".rkt"))
-    (define id (path->string (path-replace-extension (file-name-from-path path) #"")))
-    (option id (skin-name-from-file path) "")))
 
 (define (option-label item)
   (define detail (option-detail item))
@@ -96,10 +59,9 @@
     (lambda ()
       (set-buttons-enabled! buttons #t))))
 
-(define (build-mobile-bundle! schemas skins)
+(define (build-mobile-bundle! schemas)
   (define profile
     (hash 'schemas schemas
-          'extra-skins skins
           'desktop? #f))
   (define profile-out (build-path output-dir mobile-output-name))
   (define zip-path (build-path output-dir (string-append app-profile-name "-mobile.zip")))
@@ -107,7 +69,7 @@
   (zip-profile-path! app-profile-name profile-out zip-path)
   (values profile-out zip-path))
 
-(define (run-build! schema-rows skin-rows status buttons)
+(define (run-build! schema-rows status buttons)
   (thread
    (lambda ()
      (with-buttons-disabled
@@ -117,16 +79,15 @@
                          (lambda (exn)
                            (set-status! status (string-append "Build failed: " (exn-message exn))))])
           (define schemas (selected-ids schema-rows))
-          (define skins (selected-ids skin-rows))
           (cond
             [(null? schemas)
              (set-status! status "Select at least one schema.")]
             [else
              (set-status! status "Building mobile bundle...")
-             (define-values (_profile-out zip-path) (build-mobile-bundle! schemas skins))
+             (define-values (_profile-out zip-path) (build-mobile-bundle! schemas))
              (set-status! status (format "Built ZIP: ~a" (path->string zip-path)))])))))))
 
-(define (run-push! schema-rows skin-rows url-field allow-delete include-big-dicts status buttons)
+(define (run-push! schema-rows url-field allow-delete include-big-dicts status buttons)
   (thread
    (lambda ()
      (with-buttons-disabled
@@ -136,7 +97,6 @@
                          (lambda (exn)
                            (set-status! status (string-append "Push failed: " (exn-message exn))))])
           (define schemas (selected-ids schema-rows))
-          (define skins (selected-ids skin-rows))
           (cond
             [(null? schemas)
              (set-status! status "Select at least one schema.")]
@@ -144,7 +104,7 @@
              (define raw-url (string-trim (send url-field get-value)))
              (define base-url (and (not (string=? raw-url "")) raw-url))
              (set-status! status "Building mobile bundle...")
-             (define-values (profile-out _zip-path) (build-mobile-bundle! schemas skins))
+             (define-values (profile-out _zip-path) (build-mobile-bundle! schemas))
              (set-status! status "Pushing to Yuanshu WiFi transfer...")
              (do-upload! profile-out
                          #:base-url base-url
@@ -182,8 +142,6 @@
 
   (define schema-rows
     (make-check-list root "Schemas" (schema-options) default-schema-ids))
-  (define skin-rows
-    (make-check-list root "Skins" (skin-options) default-skin-ids))
 
   (define transfer-group
     (new group-box-panel%
@@ -228,7 +186,7 @@
              [parent actions]
              [callback
               (lambda (_button _event)
-                (run-build! schema-rows skin-rows status (list build-button push-button)))]))
+                (run-build! schema-rows status (list build-button push-button)))]))
   (set! push-button
         (new button%
              [label "Push to iPhone"]
@@ -236,7 +194,6 @@
              [callback
               (lambda (_button _event)
                 (run-push! schema-rows
-                           skin-rows
                            url-field
                            allow-delete
                            include-big-dicts

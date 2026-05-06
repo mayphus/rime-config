@@ -1,15 +1,4 @@
-#lang racket/base
-
-(require "lib/shared.rkt"
-         "lib/core/dsl.rkt")
-
-(provide config-files mobile-only? schema-deps static-dep-files static-dep-dirs chinese-name)
-
-(define chinese-name    "亂序17")
-(define mobile-only?    #t)
-(define schema-deps     '())
-(define static-dep-files '("rime_ice.dict.yaml"))
-(define static-dep-dirs  '("rime_ice_dicts"))
+#lang s-exp "lib/lang.rkt"
 
 (define schema-doc
   (mapping
@@ -104,10 +93,20 @@
    (kv "schema/description"
        "朙月拼音＋亂序17方案。\n使用 rime-ice 詞庫，精簡版，適合移動端匯入")))
 
-(define config-files
-  (bundle
-   (yaml-file "shuffle_17.schema.yaml" schema-doc)
-   (make-mobile-custom-file
-    "shuffle_17.custom.yaml"
-    '("yuanshu_common_patch" "yuanshu_script_patch")
-    custom-doc)))
+(rime-schema shuffle_17
+  (name "亂序17")
+  (mobile-only)
+  (static-files "rime_ice.dict.yaml")
+  (static-dirs "rime_ice_dicts")
+  (schema schema-doc)
+  (custom "shuffle_17.custom.yaml"
+    (includes yuanshu_common_patch yuanshu_script_patch)
+    (patch custom-doc))
+  (mobile-skin shuffle_17
+    (meta
+      (name "Shuffle 17" "亂序十七鍵")
+      (summary "An experimental 17-key Yuanshu skin for the shuffle_17 schema family.")
+      (features
+        "17-key shuffled phone layout"
+        "Custom iPad pages"))
+    (phone-layout shuffle-17)))

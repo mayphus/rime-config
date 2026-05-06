@@ -1,15 +1,4 @@
-#lang racket/base
-
-(require "lib/shared.rkt"
-         "lib/core/dsl.rkt")
-
-(provide config-files mobile-only? schema-deps static-dep-files static-dep-dirs chinese-name)
-
-(define chinese-name    "霧凇")
-(define mobile-only?    #t)
-(define schema-deps     '("cangjie6"))
-(define static-dep-files '("rime_ice.dict.yaml"))
-(define static-dep-dirs  '("rime_ice_dicts"))
+#lang s-exp "lib/lang.rkt"
 
 (define schema-doc
   (mapping
@@ -112,10 +101,14 @@
    (kv "schema/description"
        "朙月拼音＋小鶴雙拼方案。\n使用 rime-ice 詞庫，精簡版，適合移動端匯入")))
 
-(define config-files
-  (bundle
-   (yaml-file "flypy_ice.schema.yaml" schema-doc)
-   (make-mobile-custom-file
-    "flypy_ice.custom.yaml"
-    '("yuanshu_common_patch" "yuanshu_reverse_lookup_patch")
-    custom-doc)))
+(rime-schema flypy_ice
+  (name "霧凇")
+  (mobile-only)
+  (mobile-skins flypy)
+  (deps cangjie6)
+  (static-files "rime_ice.dict.yaml")
+  (static-dirs "rime_ice_dicts")
+  (schema schema-doc)
+  (custom "flypy_ice.custom.yaml"
+    (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
+    (patch custom-doc)))

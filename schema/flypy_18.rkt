@@ -1,15 +1,4 @@
-#lang racket/base
-
-(require "lib/shared.rkt"
-         "lib/core/dsl.rkt")
-
-(provide config-files mobile-only? schema-deps static-dep-files static-dep-dirs chinese-name)
-
-(define chinese-name    "18鍵")
-(define mobile-only?    #t)
-(define schema-deps     '("cangjie6"))
-(define static-dep-files '("rime_ice.dict.yaml"))
-(define static-dep-dirs  '("rime_ice_dicts"))
+#lang s-exp "lib/lang.rkt"
 
 (define schema-doc
   (mapping
@@ -113,10 +102,22 @@
    (kv "schema/description"
        "朙月拼音＋小鶴雙拼 18 鍵方案。\n使用 rime-ice 詞庫，適合 Yuanshu iPhone 18 鍵圖示皮膚。")))
 
-(define config-files
-  (bundle
-   (yaml-file "flypy_18.schema.yaml" schema-doc)
-   (make-mobile-custom-file
-    "flypy_18.custom.yaml"
-    '("yuanshu_common_patch" "yuanshu_reverse_lookup_patch")
-    custom-doc)))
+(rime-schema flypy_18
+  (name "18鍵")
+  (mobile-only)
+  (deps cangjie6)
+  (static-files "rime_ice.dict.yaml")
+  (static-dirs "rime_ice_dicts")
+  (schema schema-doc)
+  (custom "flypy_18.custom.yaml"
+    (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
+    (patch custom-doc))
+  (mobile-skin flypy_18
+    (meta
+      (name "Flypy 18" "小鶴十八鍵")
+      (summary "A compact Yuanshu skin for the Flypy 18-key layout.")
+      (features
+        "18-key phone layout"
+        "Standard iPad pinyin page and secondary pages"))
+    (phone-layout flypy-18)
+    (ipad-layout standard-18)))
