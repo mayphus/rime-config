@@ -3,7 +3,7 @@
 (rime-schema flypy_ice
   (name "霧凇")
   (mobile-only)
-  (mobile-skins flypy)
+  (mobile-skins flypy hybrid)
   (deps cangjie6)
   (static-files "rime_ice.dict.yaml")
   (static-dirs "rime_ice_dicts")
