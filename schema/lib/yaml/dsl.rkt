@@ -1,8 +1,6 @@
 #lang racket/base
 
-(require racket/format
-         racket/hash
-         "yaml.rkt")
+(require "yaml.rkt")
 
 (provide kv
          mapping

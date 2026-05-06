@@ -41,7 +41,7 @@ jobs:
         run: racket -e '(require "k8s.rkt") (check-k8s!)'
 
       - name: Validate generated profiles
-        run: racket -e '(require "build.rkt") (build-profile! "desktop") (build-profile! "yuanshu/all")'
+        run: racket -e '(require "build.rkt") (build-profile! "desktop") (build-profile! "all")'
 
       - name: Create update pull request
         uses: peter-evans/create-pull-request@v8
@@ -54,6 +54,6 @@ jobs:
 
             Validation:
             - `raco test test`
-            - `racket -e '(require "build.rkt") (build-profile! "desktop") (build-profile! "yuanshu/all")'`
+            - `racket -e '(require "build.rkt") (build-profile! "desktop") (build-profile! "all")'`
           add-paths: |
-            data/**
+            rime/**

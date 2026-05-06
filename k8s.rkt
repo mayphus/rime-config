@@ -1,11 +1,9 @@
 #lang racket/base
 
 (require racket/file
-         racket/list
-         racket/path
          racket/runtime-path
          racket/string
-         "schema/lib/core/yaml.rkt")
+         "schema/lib/yaml/yaml.rkt")
 
 (provide k8s-documents
          render-k8s!

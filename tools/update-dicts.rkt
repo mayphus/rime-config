@@ -4,8 +4,6 @@
 
 (require net/url
          racket/file
-         racket/list
-         racket/match
          racket/path
          racket/port
          racket/runtime-path
@@ -15,7 +13,7 @@
 
 (define-runtime-path tools-dir ".")
 (define root-dir (simplify-path (build-path tools-dir "..")))
-(define data-dir (build-path root-dir "data"))
+(define rime-dir (build-path root-dir "rime"))
 
 (struct dict-source (upstream local local-name upstream-name) #:transparent)
 
@@ -45,7 +43,7 @@
   (string-append "https://raw.githubusercontent.com/" (dict-source-upstream source)))
 
 (define (local-path source)
-  (build-path data-dir (dict-source-local source)))
+  (build-path rime-dir (dict-source-local source)))
 
 (define (download-text url)
   (define headers '("User-Agent: mayphus-rime-config-dict-updater"))

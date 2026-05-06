@@ -10,10 +10,8 @@ on:
       - main
     paths:
       - "*.rkt"
-      - "data/**"
-      - "profiles/**"
+      - "rime/**"
       - "schema/**"
-      - "skin/**"
       - "static/**"
       - "tools/**"
       - "Dockerfile"

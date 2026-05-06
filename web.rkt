@@ -43,7 +43,7 @@
      (define name (path->string f))
      (and (regexp-match? #rx"\\.schema\\.yaml$" name)
           (regexp-replace #rx"\\.schema\\.yaml$" name "")))
-   (directory-list data-dir)))
+   (directory-list rime-dir)))
 
 (define precomputed-schema-ids
   (remove-duplicates (append generated-config-ids (list-static-schemas))))

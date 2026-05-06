@@ -15,7 +15,7 @@
          "default-profile.rkt"
          "tools/yuanshu-sync.rkt")
 
-(provide data-dir
+(provide rime-dir
          output-dir
          generated-config-ids
          schema-module-ref
@@ -36,7 +36,7 @@
 
 (define-runtime-path root-dir ".")
 (define schema-dir   (build-path root-dir "schema"))
-(define data-dir     (build-path root-dir "data"))
+(define rime-dir     (build-path root-dir "rime"))
 (define profiles-dir (build-path root-dir "profiles"))
 (define output-dir   (build-path root-dir "output" "rime"))
 (define-runtime-path mobile-lang-path "schema/lib/mobile/lang.rkt")
@@ -164,7 +164,7 @@
 
 (define (read-schema-deps-from-yaml schema)
   (define yaml-path
-    (for/or ([base (list data-dir root-dir)])
+    (for/or ([base (list rime-dir root-dir)])
       (define p (build-path base (string-append schema ".schema.yaml")))
       (and (file-exists? p) p)))
   (if (not yaml-path)
@@ -184,7 +184,7 @@
 
 (define (read-schema-name-from-yaml schema)
   (define yaml-path
-    (for/or ([base (list data-dir root-dir)])
+    (for/or ([base (list rime-dir root-dir)])
       (define p (build-path base (string-append schema ".schema.yaml")))
       (and (file-exists? p) p)))
   (if (not yaml-path)
@@ -217,7 +217,7 @@
      (define name (path->string f))
      (and (regexp-match? #rx"\\.schema\\.yaml$" name)
           (regexp-replace #rx"\\.schema\\.yaml$" name "")))
-   (directory-list data-dir)))
+   (directory-list rime-dir)))
 
 (define (profile-schema-list profile)
   (define raw (hash-ref profile 'schemas '()))
@@ -265,23 +265,23 @@
 
 ;; ---- Compute file lists from schemas ---------------------------------------
 ;; Returns: gen-yaml (built by build-configs!, already in profile-out)
-;;          data-yaml (static files to copy from data-dir)
-;;          data-dirs (static dirs to copy from data-dir)
+;;          rime-yaml (static files to copy from rime-dir)
+;;          rime-dirs (static dirs to copy from rime-dir)
 ;;          skins
 
 (define (compute-assets schemas profile)
-  (define extra-data  (hash-ref profile 'extra-src-files  '()))
+  (define extra-rime  (hash-ref profile 'extra-src-files  '()))
   (define selected-mobile-skins
     (append-map read-schema-mobile-skins (profile-schema-list profile)))
 
   (define gen-yaml  '())
-  (define data-yaml '())
-  (define data-dirs '())
+  (define rime-yaml '())
+  (define rime-dirs '())
   (define skins     '())
 
   (define (add-gen!       f) (set! gen-yaml  (cons f gen-yaml)))
-  (define (add-data-yaml! f) (set! data-yaml (cons f data-yaml)))
-  (define (add-data-dir!  d) (set! data-dirs (cons d data-dirs)))
+  (define (add-rime-yaml! f) (set! rime-yaml (cons f rime-yaml)))
+  (define (add-rime-dir!  d) (set! rime-dirs (cons d rime-dirs)))
   (define (add-skin!      s) (set! skins     (cons s skins)))
 
   ;; Per-schema: schema file + custom file
@@ -289,39 +289,39 @@
     (cond
       [(member schema generated-schema-ids)
        (add-gen! (string-append schema ".schema.yaml"))]
-      [(file-exists? (build-path data-dir (string-append schema ".schema.yaml")))
-       (add-data-yaml! (string-append schema ".schema.yaml"))])
+      [(file-exists? (build-path rime-dir (string-append schema ".schema.yaml")))
+       (add-rime-yaml! (string-append schema ".schema.yaml"))])
     (cond
       [(member schema generated-config-ids)
        (add-gen! (string-append schema ".custom.yaml"))]
-      [(file-exists? (build-path data-dir (string-append schema ".custom.yaml")))
-       (add-data-yaml! (string-append schema ".custom.yaml"))]))
+      [(file-exists? (build-path rime-dir (string-append schema ".custom.yaml")))
+       (add-rime-yaml! (string-append schema ".custom.yaml"))]))
 
   ;; Schema-specific static extras: generated schemas declare their own deps.
   (for ([schema schemas])
-    (for ([f (schema-module-ref schema 'static-dep-files '())]) (add-data-yaml! f))
-    (for ([d (schema-module-ref schema 'static-dep-dirs  '())]) (add-data-dir!  d)))
+    (for ([f (schema-module-ref schema 'static-dep-files '())]) (add-rime-yaml! f))
+    (for ([d (schema-module-ref schema 'static-dep-dirs  '())]) (add-rime-dir!  d)))
 
   ;; Static-only schemas (no .rkt) declare their deps here.
-  (when (member "luna_pinyin"  schemas) (add-data-yaml! "luna_pinyin.dict.yaml")
-                                        (add-data-yaml! "zhuyin.yaml"))
-  (when (member "terra_pinyin" schemas) (add-data-yaml! "terra_pinyin.dict.yaml"))
-  (when (member "bopomofo"     schemas) (add-data-yaml! "terra_pinyin.dict.yaml")
-                                        (add-data-yaml! "zhuyin.yaml"))
+  (when (member "luna_pinyin"  schemas) (add-rime-yaml! "luna_pinyin.dict.yaml")
+                                        (add-rime-yaml! "zhuyin.yaml"))
+  (when (member "terra_pinyin" schemas) (add-rime-yaml! "terra_pinyin.dict.yaml"))
+  (when (member "bopomofo"     schemas) (add-rime-yaml! "terra_pinyin.dict.yaml")
+                                        (add-rime-yaml! "zhuyin.yaml"))
 
   ;; yuanshu_shared is generated by build-configs!
   (add-gen! "yuanshu_shared.yaml")
 
   ;; Extra static files from profile (e.g. squirrel.custom.yaml)
-  (for ([f extra-data]) (add-data-yaml! f))
+  (for ([f extra-rime]) (add-rime-yaml! f))
 
   ;; Mobile skins are schema metadata, so profiles only need schema config.
   (unless (hash-ref profile 'desktop? #f)
     (for ([s selected-mobile-skins]) (add-skin! s)))
 
   (values (remove-duplicates (reverse gen-yaml))
-          (remove-duplicates (reverse data-yaml))
-          (remove-duplicates (reverse data-dirs))
+          (remove-duplicates (reverse rime-yaml))
+          (remove-duplicates (reverse rime-dirs))
           (remove-duplicates (reverse skins))))
 
 ;; ---- Write files from a module's exported hash ----------------------------
@@ -420,18 +420,18 @@
 
   (build-schemas! schemas profile-out)
 
-  (define-values (_gen-yaml data-yaml data-dirs skins)
+  (define-values (_gen-yaml rime-yaml rime-dirs skins)
     (compute-assets schemas profile))
 
-  ;; Copy static YAML files from data-dir
-  (for ([f data-yaml])
-    (define src (build-path data-dir f))
+  ;; Copy static YAML files from rime-dir
+  (for ([f rime-yaml])
+    (define src (build-path rime-dir f))
     (when (file-exists? src)
       (copy-file! src (build-path profile-out f))))
 
-  ;; Copy static directories from data-dir
-  (for ([d data-dirs])
-    (define src (build-path data-dir d))
+  ;; Copy static directories from rime-dir
+  (for ([d rime-dirs])
+    (define src (build-path rime-dir d))
     (when (directory-exists? src)
       (copy-dir! src (build-path profile-out d))))
 

@@ -6,13 +6,15 @@ Standalone Rime Config product, served by one Racket app.
 
 - `web.rkt` serves the public HTML, HTMX partials, metadata, previews, and ZIP builds.
 - `gui.rkt` opens a native Racket GUI for local Yuanshu builds and iPhone pushes.
-- `build.rkt` is the callable build library for schemas, mobile bundles, profiles, and archives.
+- `build.rkt` is the callable build library for schemas, mobile bundles, and archives.
 - `frontend.rkt` renders the server-side UI.
 - `k8s.rkt` generates and checks the Kubernetes YAML.
-- `data/`, `schema/`, and `profiles/` hold the Rime inputs and generators.
+- `rime/` holds native Rime YAML and dictionaries; `schema/` holds this project's DSL source.
+- `schema/lib/lang.rkt` is the public schema DSL language.
+- `schema/lib/yaml/` contains the internal YAML renderer.
 - `schema/lib/mobile/` is the internal Yuanshu mobile compiler used by schema modules.
 - `tools/` contains maintenance scripts.
-- `k8s/` contains generated manifests for k3s on `pb62`.
+- `k8s/` is ignored generated deploy output from `k8s.rkt`.
 
 Generated schema modules use `#lang s-exp "lib/lang.rkt"` and declare their
 mobile skin shape in the schema itself:
@@ -37,7 +39,8 @@ mobile skin shape in the schema itself:
   (custom "flypy_14.custom.yaml"
     (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
     (version "0.1")
-    (description "適合 Yuanshu iPhone 14 鍵圖示皮膚。"))
+    (description "適合 Yuanshu iPhone 14 鍵圖示皮膚。")
+    (patch "recognizer/patterns/reverse_lookup" "`[a-z]*'?$"))
   (mobile-skin flypy_14
     (meta
       (name "Flypy 14" "小鶴十四鍵")
