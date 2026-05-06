@@ -46,7 +46,7 @@
 
 ;; ---- Known generated IDs ---------------------------------------------------
 
-(define generated-schema-ids '("flypy" "flypy_14" "flypy_18" "flypy_ice" "luna_pinyin" "pinyin_14" "shuffle_17"))
+(define generated-schema-ids '("flypy" "flypy_14" "flypy_18" "flypy_ice" "luna_pinyin" "pinyin_14" "shuffle_17" "terra_pinyin"))
 (define generated-custom-ids '("cangjie6" "flypy" "jyut6ping3"))
 (define generated-config-ids (remove-duplicates (append generated-schema-ids generated-custom-ids)))
 (define extra-schema-ids-with-mobile '("bopomofo"))
