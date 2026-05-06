@@ -23,10 +23,6 @@
 (define (skin-demo-path skin-id)
   (build-path output-dir "compiled-skins" skin-id "demo.png"))
 
-(define (skin-preview-spec skin-rkt)
-  (with-handlers ([exn:fail? (lambda (_) #f)])
-    (dynamic-require `(file ,(path->string skin-rkt)) 'skin-preview-spec)))
-
 (define (skin-preview-svgs skin-rkt)
   (with-handlers ([exn:fail? (lambda (_) (hash))])
     (dynamic-require `(file ,(path->string skin-rkt)) 'skin-preview-svgs)))
@@ -34,7 +30,7 @@
 (define (skin-preview-svg skin-id [theme 'light])
   (for/or ([item (in-list skin-items)]
            #:when (equal? skin-id (car item)))
-    (define preview-svgs (car (cddddr item)))
+    (define preview-svgs (cadddr item))
     (hash-ref preview-svgs theme #f)))
 
 (define (list-static-schemas)
@@ -48,7 +44,7 @@
 (define schema-ids
   (remove-duplicates (append generated-config-ids (list-static-schemas))))
 
-;; Precompute skin metadata once at startup. Concrete skins are declared by
+;; Precompute skin data once at startup. Concrete skins are declared by
 ;; schema modules and materialized into temporary modules for the existing
 ;; Yuanshu skin compiler.
 (define skin-items
@@ -59,7 +55,6 @@
     (list skin-id
           (list schema-id)
           (dynamic-require `(file ,(path->string skin-rkt)) 'chinese-name (lambda () ""))
-          (skin-preview-spec skin-rkt)
           (skin-preview-svgs skin-rkt))))
 
 (define schema-items
@@ -117,29 +112,6 @@
       (response/full
        404 #"Not Found" (current-seconds) #"text/plain; charset=utf-8" '()
        (list #"Support QR not found"))))
-
-(define (handle-metadata req)
-  (define skins
-    (map (lambda (item)
-           (define name (car item))
-           (define triggers (cadr item))
-           (define zh-name (caddr item))
-           (define preview (cadddr item))
-           (define preview-svgs (car (cddddr item)))
-           (define demo-path (skin-demo-path name))
-           (hash 'id name
-                 'name (if (string=? zh-name "") name zh-name)
-                 'triggers (if (eq? triggers 'default) "default" triggers)
-                 'preview preview
-                 'preview-svg (hash-ref preview-svgs 'light #f)
-                 'preview-dark-svg (hash-ref preview-svgs 'dark #f)
-                 'preview-image-url (and (file-exists? demo-path)
-                                         (string-append "/skins/" name "/demo.png"))))
-         skin-items))
-
-  (response/full
-   200 #"OK" (current-seconds) #"application/json" '()
-   (list (jsexpr->bytes (hash 'schemas schema-items 'skins skins)))))
 
 (define (handle-skin-demo req skin-id)
   (cond
@@ -215,7 +187,6 @@
    [("ui" "configurator") handle-configurator]
    [("app.css") handle-app-css]
    [("support.svg") handle-support-svg]
-   [("metadata") handle-metadata]
    [("skins" (string-arg) "preview.svg") handle-skin-preview-svg]
    [("skins" (string-arg) "demo.png") handle-skin-demo]
    [("build") #:method "post" handle-build]))

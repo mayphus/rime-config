@@ -4,7 +4,7 @@ Standalone Rime Config product, served by one Racket app.
 
 ## Layout
 
-- `web.rkt` serves the public HTML, HTMX partials, metadata, previews, and ZIP builds.
+- `web.rkt` serves the public HTML, HTMX partials, previews, and ZIP builds.
 - `gui.rkt` opens a native Racket GUI for local Yuanshu builds and iPhone pushes.
 - `build.rkt` is the callable build library for schemas, mobile bundles, and archives.
 - `web-ui.rkt` renders the server-side UI.
