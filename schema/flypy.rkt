@@ -6,10 +6,8 @@
   (static-files "flypy.yaml" "luna_pinyin.dict.yaml")
   (custom "flypy.custom.yaml"
     (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
-    (patch
-     (custom-patch
-      (schema-version "0.1")
-      (schema-description "朙月拼音＋小鶴雙拼方案。\n精簡版，適合移動端匯入"))))
+    (version "0.1")
+    (description "朙月拼音＋小鶴雙拼方案。\n精簡版，適合移動端匯入"))
   (mobile-skin flypy
     (meta
       (name "Flypy" "小鶴雙拼")

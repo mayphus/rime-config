@@ -14,7 +14,8 @@
         (hash 'id "flypy_14"
               'name "小鶴十四鍵"
               'deps '("flypy")
-              'mobile-only? #t)))
+              'mobile-only? #t
+              'mobile-skins '("flypy_14"))))
 
 (define skins
   (list (list "flypy_14" '("flypy_14") "小鶴十四鍵" #f (hash 'light "<svg/>"))))
@@ -51,10 +52,8 @@
            #:method #"POST"
            #:headers (list (header #"Content-Type" #"application/x-www-form-urlencoded"))
            #:bindings (list (binding:form #"desktop?" #"false")
-                            (binding:form #"schemas" #"flypy_14")
-                            (binding:form #"skins" #"flypy_14"))))
+                            (binding:form #"schemas" #"flypy_14"))))
     (check-true (form-request? request))
     (check-equal? (form-profile request)
                   (hash 'schemas '("flypy_14")
-                        'extra-skins '("flypy_14")
                         'desktop? #f))))

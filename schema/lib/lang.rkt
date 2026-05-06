@@ -11,10 +11,18 @@
 ;;     (deps cangjie6)
 ;;     (static-files "rime_ice.dict.yaml")
 ;;     (static-dirs "rime_ice_dicts")
-;;     (schema schema-doc) ; optional for custom-only modules
+;;     (schema
+;;       (version "0.1")
+;;       (authors "dictionary import from iDvel/rime-ice")
+;;       (description "...")
+;;       (switches ...)
+;;       (engine ...)
+;;       (speller ...)
+;;       (translator ...))
 ;;     (custom "flypy_14.custom.yaml"
 ;;       (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
-;;       (patch custom-doc))
+;;       (version "0.1")
+;;       (description "..."))
 ;;     (mobile-skin flypy_14
 ;;       (meta ...)
 ;;       (phone-layout flypy-14)
@@ -27,19 +35,15 @@
 
 (provide (except-out (all-from-out racket/base) #%module-begin)
          #%datum
-         (all-from-out "shared.rkt"
-                       "core/dsl.rkt")
+         (all-from-out "shared.rkt")
          (rename-out [rime-schema-module-begin #%module-begin])
          rime-schema
-         schema-document
-         custom-patch
-         patch-field
-         schema-version
-         schema-description
+         include-ref
          switch
          engine
          speller
          translator
+         section
          reverse-lookup
          recognizer
          preset-section
@@ -68,13 +72,18 @@
   (apply
    mapping
    (kv "schema"
-       (mapping
-        (kv "schema_id" (dsl-name id))
-        (kv "name" name)
-        (kv "version" version)
-        (kv "author" (dsl-sequence authors))
-        (kv "description" description)
-        (kv "dependencies" (dsl-sequence dependencies))))
+       (apply
+        mapping
+        (append
+         (list
+          (kv "schema_id" (dsl-name id))
+          (kv "name" name)
+          (kv "version" version)
+          (kv "author" (dsl-sequence authors))
+          (kv "description" description))
+         (if (null? dependencies)
+             '()
+             (list (kv "dependencies" (dsl-sequence dependencies)))))))
    sections))
 
 (define (custom-patch . entries)
@@ -92,6 +101,9 @@
 
 (define (schema-description value)
   (kv "schema/description" value))
+
+(define (include-ref target)
+  (mapping (kv "__include" target)))
 
 (define (switch name #:reset [reset #f] #:states states)
   (apply
@@ -119,11 +131,22 @@
        (kv "delimiter" delimiter)
        (kv "algebra" (apply sequence algebra)))))
 
-(define (translator #:dictionary dictionary #:prism prism)
-  (kv "translator"
-      (mapping
-       (kv "dictionary" (dsl-name dictionary))
-       (kv "prism" (dsl-name prism)))))
+(define (translator #:dictionary dictionary
+                    #:prism prism
+                    #:preedit-format [preedit-format #f])
+  (apply
+   section
+   'translator
+   (append
+    (list
+     (kv "dictionary" (dsl-name dictionary))
+     (kv "prism" (dsl-name prism)))
+    (if preedit-format
+        (list (kv "preedit_format" preedit-format))
+        '()))))
+
+(define (section name . entries)
+  (kv (dsl-name name) (apply mapping entries)))
 
 (define (reverse-lookup #:dictionary dictionary
                         #:enable-completion [enable-completion #t]
@@ -171,6 +194,13 @@
                               (eq? (syntax-e (car lst)) tag))))
       c))
 
+  (define (clause-tag clause)
+    (define lst (syntax->list clause))
+    (and lst (pair? lst) (syntax-e (car lst))))
+
+  (define (drop-clause-tags clauses tags)
+    (filter (lambda (clause) (not (memq (clause-tag clause) tags))) clauses))
+
   (define (id-or-string->string stx)
     (define v (syntax-e stx))
     (cond
@@ -194,16 +224,62 @@
            (define clauses (syntax->list #'(clause ...)))
            (define includes-cl (find-clause clauses 'includes))
            (define patch-cl (find-clause clauses 'patch))
-           (unless patch-cl
-             (raise-syntax-error 'custom "missing (patch ...)" custom-cl))
            (define includes (clause-items->strings includes-cl))
-           (define patch-expr (cadr (syntax->list patch-cl)))
+           (define patch-expr
+             (if patch-cl
+                 (cadr (syntax->list patch-cl))
+                 (let* ([version-cl (find-clause clauses 'version)]
+                        [description-cl (find-clause clauses 'description)]
+                        [field-clauses (filter (lambda (clause)
+                                                 (eq? (clause-tag clause) 'field))
+                                               clauses)])
+                   #`(custom-patch
+                      #,@(if version-cl
+                             (list #`(schema-version #,(cadr (syntax->list version-cl))))
+                             '())
+                      #,@(if description-cl
+                             (list #`(schema-description #,(cadr (syntax->list description-cl))))
+                             '())
+                      #,@(for/list ([field-cl (in-list field-clauses)])
+                           (define parts (syntax->list field-cl))
+                           (unless (= (length parts) 3)
+                             (raise-syntax-error 'field "expected (field key value)" field-cl))
+                           #`(patch-field #,(cadr parts) #,(caddr parts)))))))
 	           #`(make-mobile-custom-file
 	              filename
 	              (list #,@(for/list ([include includes])
 	                         (string-expr custom-cl include)))
 	              #,patch-expr)])
         #'(hash)))
+
+  (define (schema-clause-expr stx schema-id schema-name deps schema-cl)
+    (if schema-cl
+        (let* ([items (syntax->list schema-cl)]
+               [body (cdr items)])
+          (if (and (= (length body) 1)
+                   (not (and (syntax->list (car body))
+                             (pair? (syntax->list (car body))))))
+              (car body)
+              (let* ([version-cl (find-clause body 'version)]
+                     [authors-cl (find-clause body 'authors)]
+                     [description-cl (find-clause body 'description)]
+                     [sections (drop-clause-tags body '(version authors description))])
+                (unless version-cl
+                  (raise-syntax-error 'schema "missing (version ...)" schema-cl))
+                (unless authors-cl
+                  (raise-syntax-error 'schema "missing (authors ...)" schema-cl))
+                (unless description-cl
+                  (raise-syntax-error 'schema "missing (description ...)" schema-cl))
+                #`(schema-document
+                   #:id '#,schema-id
+                   #:name #,schema-name
+                   #:version #,(cadr (syntax->list version-cl))
+                   #:authors (list #,@(cdr (syntax->list authors-cl)))
+                   #:description #,(cadr (syntax->list description-cl))
+                   #:dependencies (list #,@(for/list ([dep deps])
+                                             (string-expr schema-cl dep)))
+                   #,@sections))))
+        #'#f))
 
   (define (mobile-skin-clause? clause)
     (define lst (syntax->list clause))
@@ -214,6 +290,12 @@
     (unless (>= (length items) 2)
       (raise-syntax-error 'mobile-skin "missing skin id" skin-cl))
     (id-or-string->string (cadr items)))
+
+  (define (mobile-skin-def skin-cl)
+    (define items (syntax->list skin-cl))
+    (define skin-id (id-or-string->string (cadr items)))
+    (define body (map syntax->datum (cddr items)))
+    #`(cons #,(string-expr skin-cl skin-id) '#,body))
 
 )
 
@@ -240,7 +322,6 @@
        (raise-syntax-error 'rime-schema "missing (schema ...), (custom ...), or (mobile-skin ...)" stx))
 
      (define schema-name (cadr (syntax->list name-cl)))
-     (define schema-doc (and schema-cl (cadr (syntax->list schema-cl))))
      (define mobile-only?
        (and mobile-only-cl
             (let ([items (cdr (syntax->list mobile-only-cl))])
@@ -251,6 +332,8 @@
             (clause-items->strings mobile-skins-cl)))
      (define embedded-mobile-skins
        (map mobile-skin-id mobile-skin-clauses))
+     (define embedded-mobile-skin-defs
+       (map mobile-skin-def mobile-skin-clauses))
      (define mobile-skins
        (if explicit-mobile-skins
            explicit-mobile-skins
@@ -259,6 +342,7 @@
      (define static-files (clause-items->strings files-cl))
      (define static-dirs (clause-items->strings dirs-cl))
      (define custom-expr (custom-clause-expr custom-cl))
+     (define schema-doc (schema-clause-expr stx #'schema-id schema-name deps schema-cl))
 	     (define schema-expr
 	       (if schema-cl
 	           #`(yaml-file #,(string-expr stx (string-append (symbol->string (syntax-e #'schema-id)) ".schema.yaml"))
@@ -270,6 +354,8 @@
 	         (define mobile-only? #,(or mobile-only? #'#f))
 	         (define mobile-skins (list #,@(for/list ([skin mobile-skins])
 	                                         (string-expr stx skin))))
+         (define mobile-skin-defs
+           (list #,@embedded-mobile-skin-defs))
 	         (define schema-deps (list #,@(for/list ([dep deps])
 	                                        (string-expr stx dep))))
 	         (define static-dep-files (list #,@(for/list ([file static-files])
@@ -283,6 +369,7 @@
          (provide config-files
                   mobile-only?
                   mobile-skins
+                  mobile-skin-defs
                   schema-deps
                   static-dep-files
                   static-dep-dirs

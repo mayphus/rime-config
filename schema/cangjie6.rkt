@@ -6,15 +6,13 @@
   (static-files "cangjie6.dict.yaml")
   (custom "cangjie6.custom.yaml"
     (includes yuanshu_common_patch)
-    (patch
-     (custom-patch
-      (schema-description "第六代蒼頡檢字法\n精簡版，適合移動端匯入")
-      (patch-field "translator/dictionary" 'cangjie6)
-      (patch-field "flypy_reverse_lookup/dictionary" 'cangjie6)
-      (patch-field "engine/filters" '("simplifier@simplify"
-                                      "reverse_lookup_filter@flypy_reverse_lookup"
-                                      "uniquifier"))
-      (patch-field "recognizer/patterns/reverse_lookup" "`[a-z]*;?$"))))
+    (description "第六代蒼頡檢字法\n精簡版，適合移動端匯入")
+    (field "translator/dictionary" 'cangjie6)
+    (field "flypy_reverse_lookup/dictionary" 'cangjie6)
+    (field "engine/filters" '("simplifier@simplify"
+                              "reverse_lookup_filter@flypy_reverse_lookup"
+                              "uniquifier"))
+    (field "recognizer/patterns/reverse_lookup" "`[a-z]*;?$"))
   (mobile-skin cangjie6
     (meta
       (name "Cangjie 6" "倉頡六代")

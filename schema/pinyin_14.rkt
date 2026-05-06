@@ -1,88 +1,53 @@
 #lang s-exp "lib/lang.rkt"
 
-(define schema-doc
-  (mapping
-   (kv "schema"
-       (mapping
-        (kv "schema_id" "pinyin_14")
-        (kv "name" "全拼14鍵")
-        (kv "version" "0.1")
-        (kv "author"
-            (sequence "14-key adjacent QWERTY merge layout adapted in this workspace"
-                      "dictionary import from iDvel/rime-ice"))
-        (kv "description"
-            "朙月拼音全拼 14 鍵方案，使用 rime-ice 詞庫。\niPhone 佈局按相鄰 QWERTY 分組：\nQW / ER / TY / UI / OP\nAS / DF / GH / JK / L\nZX / CV / BN / M")
-        (kv "dependencies" (sequence "cangjie6"))))
-   (kv "switches"
-       (sequence
-        (mapping (kv "name" "ascii_mode")
-                 (kv "reset" 0)
-                 (kv "states" (sequence "全拼14" "A")))
-        (mapping (kv "name" "simplification")
-                 (kv "states" (sequence "漢字" "汉字")))
-        (mapping (kv "name" "full_shape")
-                 (kv "states" (sequence "半角" "全角")))
-        (mapping (kv "name" "ascii_punct")
-                 (kv "states" (sequence "。，" "．，")))))
-   (kv "engine"
-       (mapping
-        (kv "processors" common-schema-processors)
-        (kv "segmentors" common-schema-segmentors)
-        (kv "translators"
-            (sequence "punct_translator"
-                      "reverse_lookup_translator"
-                      "script_translator"))
-        (kv "filters" common-schema-filters)))
-   (kv "speller"
-       (mapping
-        (kv "alphabet" "qetuoadgjlzcbm")
-        (kv "delimiter" " '")
-        (kv "algebra"
-            (sequence
-             "erase/^xx$/"
-             "derive/^([jqxy])u/$1v/"
-             "derive/^([nl])v/$1u/"
-             "xlit/qwertyuiopasdfghjklzxcvbnm/qqeettuuooaaddggjjlzzccbbm/"))))
-   (kv "translator"
-       (mapping
-        (kv "dictionary" "rime_ice")
-        (kv "prism" "pinyin_14")))
-   (kv "reverse_lookup"
-       (mapping
-        (kv "dictionary" "cangjie6")
-        (kv "enable_completion" #t)
-        (kv "prefix" "`")
-        (kv "suffix" "'")
-        (kv "tips" "〔蒼頡〕")
-        (kv "preedit_format"
-            (sequence "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"))
-        (kv "comment_format"
-            (sequence "xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"))))
-   (kv "punctuator" (mapping (kv "import_preset" "default")))
-   (kv "key_binder" (mapping (kv "import_preset" "default")))
-   (kv "recognizer"
-       (mapping
-        (kv "import_preset" "default")
-        (kv "patterns"
-            (mapping
-             (kv "reverse_lookup" "`[a-z]*'?$")))))))
-
-(define custom-doc
-  (mapping
-   (kv "schema/version" "0.1")
-   (kv "schema/description"
-       "朙月拼音全拼 14 鍵方案。\n使用 rime-ice 詞庫，適合 Yuanshu iPhone 14 鍵圖示皮膚。")))
-
 (rime-schema pinyin_14
   (name "全拼14鍵")
   (mobile-only)
   (deps cangjie6)
   (static-files "rime_ice.dict.yaml")
   (static-dirs "rime_ice_dicts")
-  (schema schema-doc)
+  (schema
+   (version "0.1")
+   (authors
+    "14-key adjacent QWERTY merge layout adapted in this workspace"
+    "dictionary import from iDvel/rime-ice")
+   (description
+    "朙月拼音全拼 14 鍵方案，使用 rime-ice 詞庫。\niPhone 佈局按相鄰 QWERTY 分組：\nQW / ER / TY / UI / OP\nAS / DF / GH / JK / L\nZX / CV / BN / M")
+   (switches
+    (switch 'ascii_mode #:reset 0 #:states '("全拼14" "A"))
+    (switch 'simplification #:states '("漢字" "汉字"))
+    (switch 'full_shape #:states '("半角" "全角"))
+    (switch 'ascii_punct #:states '("。，" "．，")))
+   (engine
+    #:translators '(punct_translator reverse_lookup_translator script_translator))
+   (speller
+    #:alphabet "qetuoadgjlzcbm"
+    #:delimiter " '"
+    #:algebra
+    '("erase/^xx$/"
+      "derive/^([jqxy])u/$1v/"
+      "derive/^([nl])v/$1u/"
+      "xlit/qwertyuiopasdfghjklzxcvbnm/qqeettuuooaaddggjjlzzccbbm/"))
+   (translator #:dictionary 'rime_ice #:prism 'pinyin_14)
+   (reverse-lookup
+    #:dictionary 'cangjie6
+    #:prefix "`"
+    #:suffix "'"
+    #:tips "〔蒼頡〕"
+    #:preedit-format
+    '("xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|")
+    #:comment-format
+    '("xlit|abcdefghijklmnopqrstuvwxyz|日月金木水火土的戈十大中一弓人心手口尸廿山女田止卜片|"))
+   (preset-section 'punctuator)
+   (preset-section 'key_binder)
+   (recognizer
+    #:patterns
+    (list (pattern 'reverse_lookup "`[a-z]*'?$"))))
   (custom "pinyin_14.custom.yaml"
     (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
-    (patch custom-doc))
+    (version "0.1")
+    (description
+     "朙月拼音全拼 14 鍵方案。\n使用 rime-ice 詞庫，適合 Yuanshu iPhone 14 鍵圖示皮膚。"))
   (mobile-skin pinyin_14
     (meta
       (name "Pinyin 14" "全拼十四鍵")

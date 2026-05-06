@@ -1,17 +1,19 @@
 #lang s-exp "lib/lang.rkt"
 
-(define schema-doc
-  (schema-document
-   #:id 'flypy_14
-   #:name "14鍵"
-   #:version "0.1"
-   #:authors
-   '("double pinyin layout by 鶴"
-     "14-key adjacent QWERTY merge layout adapted in this workspace"
-     "dictionary import from iDvel/rime-ice")
-   #:description
-   "朙月拼音＋小鶴雙拼 14 鍵方案，使用 rime-ice 詞庫。\niPhone 佈局按相鄰 QWERTY 分組：\nQW / ER / TY / UI / OP\nAS / DF / GH / JK / L\nZX / CV / BN / M"
-   #:dependencies '(cangjie6)
+(rime-schema flypy_14
+  (name "14鍵")
+  (mobile-only)
+  (deps cangjie6)
+  (static-files "rime_ice.dict.yaml")
+  (static-dirs "rime_ice_dicts")
+  (schema
+   (version "0.1")
+   (authors
+    "double pinyin layout by 鶴"
+    "14-key adjacent QWERTY merge layout adapted in this workspace"
+    "dictionary import from iDvel/rime-ice")
+   (description
+    "朙月拼音＋小鶴雙拼 14 鍵方案，使用 rime-ice 詞庫。\niPhone 佈局按相鄰 QWERTY 分組：\nQW / ER / TY / UI / OP\nAS / DF / GH / JK / L\nZX / CV / BN / M")
    (switches
     (switch 'ascii_mode #:reset 0 #:states '("14鍵" "A"))
     (switch 'simplification #:states '("漢字" "汉字"))
@@ -69,24 +71,12 @@
    (preset-section 'key_binder)
    (recognizer
     #:patterns
-    (list (pattern 'reverse_lookup "`[a-z]*'?$")))))
-
-(define custom-doc
-  (custom-patch
-   (schema-version "0.1")
-   (schema-description
-    "朙月拼音＋小鶴雙拼 14 鍵方案。\n使用 rime-ice 詞庫，適合 Yuanshu iPhone 14 鍵圖示皮膚。")))
-
-(rime-schema flypy_14
-  (name "14鍵")
-  (mobile-only)
-  (deps cangjie6)
-  (static-files "rime_ice.dict.yaml")
-  (static-dirs "rime_ice_dicts")
-  (schema schema-doc)
+    (list (pattern 'reverse_lookup "`[a-z]*'?$"))))
   (custom "flypy_14.custom.yaml"
     (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
-    (patch custom-doc))
+    (version "0.1")
+    (description
+     "朙月拼音＋小鶴雙拼 14 鍵方案。\n使用 rime-ice 詞庫，適合 Yuanshu iPhone 14 鍵圖示皮膚。"))
   (mobile-skin flypy_14
     (meta
       (name "Flypy 14" "小鶴十四鍵")
