@@ -4,6 +4,7 @@
          racket/string
          (prefix-in flypy: "../schema/flypy.rkt")
          (prefix-in flypy_14: "../schema/flypy_14.rkt")
+         (prefix-in luna_pinyin: "../schema/luna_pinyin.rkt")
          (prefix-in jyut6ping3: "../schema/jyut6ping3.rkt"))
 
 (define (generated-file files path)
@@ -25,6 +26,13 @@
     (check-not-false (string-contains? yaml "name: \"霧凇\""))
     (check-not-false (string-contains? yaml "dictionary: rime_ice"))
     (check-not-false (string-contains? yaml "prism: flypy_ice")))
+
+  (test-case "luna pinyin emits desktop schema YAML"
+    (define yaml (generated-file luna_pinyin:config-files "luna_pinyin.schema.yaml"))
+    (check-not-false (string-contains? yaml "schema_id: luna_pinyin"))
+    (check-not-false (string-contains? yaml "name: \"朙月拼音\""))
+    (check-not-false (string-contains? yaml "dictionary: luna_pinyin"))
+    (check-not-false (string-contains? yaml "prism: luna_pinyin")))
 
   (test-case "flypy_14 schema DSL emits stable schema YAML"
     (define yaml (generated-file flypy_14:config-files "flypy_14.schema.yaml"))
