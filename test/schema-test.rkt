@@ -33,14 +33,16 @@
     (check-not-false (string-contains? yaml "schema_id: luna_pinyin"))
     (check-not-false (string-contains? yaml "name: \"朙月拼音\""))
     (check-not-false (string-contains? yaml "dictionary: luna_pinyin"))
-    (check-not-false (string-contains? yaml "prism: luna_pinyin")))
+    (check-not-false (string-contains? yaml "prism: luna_pinyin"))
+    (check-equal? luna_pinyin:mobile-skins '("luna_pinyin")))
 
   (test-case "terra pinyin emits desktop schema YAML"
     (define yaml (generated-file terra_pinyin:config-files "terra_pinyin.schema.yaml"))
     (check-not-false (string-contains? yaml "schema_id: terra_pinyin"))
     (check-not-false (string-contains? yaml "name: \"地球拼音\""))
     (check-not-false (string-contains? yaml "dictionary: terra_pinyin"))
-    (check-not-false (string-contains? yaml "prism: terra_pinyin")))
+    (check-not-false (string-contains? yaml "prism: terra_pinyin"))
+    (check-equal? terra_pinyin:mobile-skins '("terra_pinyin")))
 
   (test-case "flypy_14 schema DSL emits stable schema YAML"
     (define yaml (generated-file flypy_14:config-files "flypy_14.schema.yaml"))

@@ -29,4 +29,15 @@
    (preset-section 'key_binder)
    (recognizer
     #:patterns
-    (list (pattern 'punct "^/([0-9]0?|[A-Za-z]+)$")))))
+    (list (pattern 'punct "^/([0-9]0?|[A-Za-z]+)$"))))
+  (mobile-skin terra_pinyin
+    (meta
+      (name "Terra Pinyin" "地球拼音")
+      (summary "A Yuanshu skin for Terra Pinyin with tone-number input.")
+      (features
+        "Standard QWERTY pinyin phone layout"
+        "Standard iPad pinyin, numeric, and symbolic pages"))
+    (phone-layout
+      (layers abc)
+      (fonts [abc 14 #:weight bold]))
+    (ipad-layout standard-18)))

@@ -27,4 +27,15 @@
    (preset-section 'key_binder)
    (recognizer
     #:patterns
-    (list (pattern 'punct "^/([0-9]0?|[A-Za-z]+)$")))))
+    (list (pattern 'punct "^/([0-9]0?|[A-Za-z]+)$"))))
+  (mobile-skin luna_pinyin
+    (meta
+      (name "Luna Pinyin" "朙月拼音")
+      (summary "A Yuanshu skin for standard full-pinyin typing.")
+      (features
+        "Standard QWERTY pinyin phone layout"
+        "Standard iPad pinyin, numeric, and symbolic pages"))
+    (phone-layout
+      (layers abc)
+      (fonts [abc 14 #:weight bold]))
+    (ipad-layout standard-18)))
