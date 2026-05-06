@@ -4,7 +4,7 @@
          net/url
          racket/promise
          web-server/http
-         "../frontend.rkt")
+         "../web-ui.rkt")
 
 (define schemas
   (list (hash 'id "flypy"

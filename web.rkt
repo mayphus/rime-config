@@ -7,10 +7,10 @@
          racket/list
          racket/runtime-path
          json
-         "frontend.rkt"
+         "web-ui.rkt"
          "build.rkt")
 
-(provide precomputed-skin-items list-static-schemas)
+(provide skin-items list-static-schemas)
 
 ;; ---- Helpers ---------------------------------------------------------------
 
@@ -32,7 +32,7 @@
     (dynamic-require `(file ,(path->string skin-rkt)) 'skin-preview-svgs)))
 
 (define (skin-preview-svg skin-id [theme 'light])
-  (for/or ([item (in-list precomputed-skin-items)]
+  (for/or ([item (in-list skin-items)]
            #:when (equal? skin-id (car item)))
     (define preview-svgs (car (cddddr item)))
     (hash-ref preview-svgs theme #f)))
@@ -45,14 +45,14 @@
           (regexp-replace #rx"\\.schema\\.yaml$" name "")))
    (directory-list rime-dir)))
 
-(define precomputed-schema-ids
+(define schema-ids
   (remove-duplicates (append generated-config-ids (list-static-schemas))))
 
 ;; Precompute skin metadata once at startup. Concrete skins are declared by
 ;; schema modules and materialized into temporary modules for the existing
 ;; Yuanshu skin compiler.
-(define precomputed-skin-items
-  (for/list ([item (in-list (list-mobile-skin-items precomputed-schema-ids))])
+(define skin-items
+  (for/list ([item (in-list (list-mobile-skin-items schema-ids))])
     (define schema-id (car item))
     (define skin-id (cadr item))
     (define skin-rkt (caddr item))
@@ -62,8 +62,8 @@
           (skin-preview-spec skin-rkt)
           (skin-preview-svgs skin-rkt))))
 
-(define precomputed-schema-items
-  (for/list ([s (in-list precomputed-schema-ids)])
+(define schema-items
+  (for/list ([s (in-list schema-ids)])
     (define mo? (schema-module-ref s 'mobile-only? #f))
     (define deps (read-schema-deps s))
     (define mobile-skins (read-schema-mobile-skins s))
@@ -93,10 +93,10 @@
    (list (string->bytes/utf-8 svg))))
 
 (define (handle-page req route)
-  (html-response (render-page req precomputed-schema-items precomputed-skin-items #:route route)))
+  (html-response (render-page req schema-items skin-items #:route route)))
 
 (define (handle-configurator req)
-  (html-response (render-configurator req precomputed-schema-items precomputed-skin-items)))
+  (html-response (render-configurator req schema-items skin-items)))
 
 (define (handle-app-css req)
   (if (file-exists? app-css-path)
@@ -135,11 +135,11 @@
                  'preview-dark-svg (hash-ref preview-svgs 'dark #f)
                  'preview-image-url (and (file-exists? demo-path)
                                          (string-append "/skins/" name "/demo.png"))))
-         precomputed-skin-items))
+         skin-items))
 
   (response/full
    200 #"OK" (current-seconds) #"application/json" '()
-   (list (jsexpr->bytes (hash 'schemas precomputed-schema-items 'skins skins)))))
+   (list (jsexpr->bytes (hash 'schemas schema-items 'skins skins)))))
 
 (define (handle-skin-demo req skin-id)
   (cond
@@ -218,11 +218,7 @@
    [("metadata") handle-metadata]
    [("skins" (string-arg) "preview.svg") handle-skin-preview-svg]
    [("skins" (string-arg) "demo.png") handle-skin-demo]
-   [("build") #:method "post" handle-build]
-   [("api" "rime-config" "metadata") handle-metadata]
-   [("api" "rime-config" "skins" (string-arg) "preview.svg") handle-skin-preview-svg]
-   [("api" "rime-config" "skins" (string-arg) "demo.png") handle-skin-demo]
-   [("api" "rime-config" "build") #:method "post" handle-build]))
+   [("build") #:method "post" handle-build]))
 
 (define (start)
   (define port      (let ([p (getenv "PORT")])      (if p (string->number p) 5001)))

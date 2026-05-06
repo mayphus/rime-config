@@ -162,38 +162,8 @@ input {
   justify-content: center;
 }
 
-.rime-tool-head {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.rime-landing-notes {
-  display: flex;
-  max-width: 44rem;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.rime-mode-nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.7rem;
-}
-
-.rime-nav-link {
-  color: var(--accent);
-  font-size: 0.86rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
 .rime-summary-kicker,
-.rime-summary-label,
-.keyboard-preview-label {
+.rime-summary-label {
   margin: 0;
   font-size: 0.74rem;
   font-weight: 700;
@@ -318,33 +288,18 @@ input {
   gap: 0.75rem;
 }
 
-.rime-platform-button,
 .rime-option-card,
-.rime-build-button,
-.rime-option-preview {
+.rime-build-button {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   color: var(--ink);
 }
 
-.rime-platform-button,
-.rime-build-button,
-.rime-option-preview {
+.rime-build-button {
   appearance: none;
   background: transparent;
 }
 
-.rime-platform-button {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35rem;
-  padding: 0.95rem 1rem;
-  cursor: pointer;
-  background: transparent;
-}
-
-.rime-platform-button.is-active,
 .rime-option-card.is-selected,
 .rime-option-card.is-previewing {
   border-color: var(--selected-line);
@@ -367,18 +322,6 @@ input {
 
 .rime-option-card .rime-option-copy {
   gap: 0.3rem;
-}
-
-.rime-option-preview {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-  width: 100%;
-  padding: 0.8rem 0.9rem;
-  text-align: left;
-  cursor: pointer;
-  background: var(--surface);
 }
 
 .rime-skin-row,
@@ -470,8 +413,7 @@ input {
   color: var(--accent);
 }
 
-.rime-summary-label,
-.keyboard-preview-label {
+.rime-summary-label {
   color: var(--muted);
 }
 
@@ -508,13 +450,6 @@ input {
   opacity: 0.5;
 }
 
-.rime-build-note {
-  margin: -0.1rem 0 0;
-  color: var(--accent);
-  font-size: 0.82rem;
-  line-height: 1.45;
-}
-
 .rime-help-block {
   display: flex;
   flex-direction: column;
@@ -529,19 +464,6 @@ input {
 
 .rime-help-list li + li {
   margin-top: 0.25rem;
-}
-
-.rime-help-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
-
-.rime-help-link {
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 0.86rem;
-  font-weight: 700;
 }
 
 .rime-support-block {
@@ -589,36 +511,6 @@ input {
   background: var(--surface);
 }
 
-.keyboard-preview-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
-
-.keyboard-preview,
-.keyboard-preview-shell {
-  width: 100%;
-}
-
-.keyboard-preview-themes,
-.keyboard-preview-theme {
-  width: 100%;
-}
-
-.keyboard-preview-theme.is-dark {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  .keyboard-preview-theme.is-light {
-    display: none;
-  }
-
-  .keyboard-preview-theme.is-dark {
-    display: block;
-  }
-}
-
 .keyboard-preview {
   width: min(100%, 32rem);
   margin: 0;
@@ -632,109 +524,6 @@ input {
 
 .keyboard-preview-svg-wrap {
   width: min(100%, 32rem);
-}
-
-.keyboard-preview-grid.is-rich {
-  height: 100%;
-  width: 100%;
-  gap: clamp(0.32rem, 1.3vw, 0.55rem);
-}
-
-.keyboard-preview-row,
-.keyboard-preview-space-row {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.keyboard-preview-row.is-rich {
-  flex: 1 1 0;
-  width: 100%;
-  gap: clamp(0.28rem, 1.1vw, 0.48rem);
-}
-
-.keyboard-preview-key,
-.keyboard-preview-space {
-  display: grid;
-  place-items: center;
-  min-width: 2.1rem;
-  height: 2.3rem;
-  padding: 0 0.45rem;
-  border: 1px solid var(--line);
-  border-radius: 0.7rem;
-  background: var(--surface-strong);
-  font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 0.82rem;
-}
-
-.keyboard-preview-shell {
-  display: block;
-  padding: clamp(0.55rem, 1.6vw, 0.8rem);
-  border: 0;
-  border-radius: clamp(1.1rem, 4vw, 1.65rem);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
-}
-
-.keyboard-preview-key.is-rich {
-  position: relative;
-  min-width: 0;
-  height: 100%;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: clamp(0.55rem, 2.2vw, 0.95rem);
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.06),
-    0 0.04rem 0.12rem rgba(0, 0, 0, 0.1);
-}
-
-.keyboard-preview-key.is-rich.is-special {
-  background: var(--keyboard-special-bg);
-}
-
-.keyboard-preview-key.is-rich.is-space {
-  min-width: 7rem;
-}
-
-.keyboard-preview-layer,
-.keyboard-preview-fallback-label {
-  position: absolute;
-  font-family: "Avenir Next", "SF Pro Display", "Segoe UI", "Noto Sans", "PingFang TC", sans-serif;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.keyboard-preview-fallback-label {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(0.98rem, 4.1vw, 1.32rem);
-  font-weight: 500;
-  color: var(--preview-fallback-color, var(--ink));
-  text-transform: lowercase;
-}
-
-.keyboard-preview-key.is-space .keyboard-preview-fallback-label {
-  width: 1.8rem;
-  height: 0.72rem;
-  border-right: 0.14rem solid currentColor;
-  border-bottom: 0.14rem solid currentColor;
-  border-left: 0.14rem solid currentColor;
-  font-size: 0;
-}
-
-.keyboard-preview-key.is-wide {
-  min-width: 3.2rem;
-}
-
-.keyboard-preview-key.is-blank {
-  background: transparent;
-  border-color: transparent;
-}
-
-.keyboard-preview-space {
-  width: 8.4rem;
 }
 
 .rime-error-text {
@@ -765,7 +554,6 @@ input {
     min-height: calc(100vh - 3.85rem);
   }
 
-  .rime-landing-choices,
   .rime-entry-grid,
   .rime-platform-grid,
   .rime-option-grid,
@@ -807,46 +595,6 @@ input {
 
   .keyboard-preview {
     max-width: none;
-  }
-
-  .keyboard-preview-shell {
-    padding: 0.5rem;
-  }
-
-  .keyboard-preview-grid,
-  .keyboard-preview-grid.is-rich {
-    gap: 0.34rem;
-  }
-
-  .keyboard-preview-row,
-  .keyboard-preview-space-row,
-  .keyboard-preview-row.is-rich {
-    gap: 0.28rem;
-  }
-
-  .keyboard-preview-key,
-  .keyboard-preview-space {
-    min-width: 1.7rem;
-    height: 1.95rem;
-    padding: 0 0.25rem;
-    border-radius: 0.58rem;
-    font-size: 0.74rem;
-  }
-
-  .keyboard-preview-key.is-rich {
-    height: 100%;
-  }
-
-  .keyboard-preview-key.is-rich.is-space {
-    min-width: 5.4rem;
-  }
-
-  .keyboard-preview-space {
-    width: 6.4rem;
-  }
-
-  .keyboard-preview-fallback-label {
-    font-size: 1.02rem;
   }
 
   .rime-skin-row,

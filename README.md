@@ -7,7 +7,7 @@ Standalone Rime Config product, served by one Racket app.
 - `web.rkt` serves the public HTML, HTMX partials, metadata, previews, and ZIP builds.
 - `gui.rkt` opens a native Racket GUI for local Yuanshu builds and iPhone pushes.
 - `build.rkt` is the callable build library for schemas, mobile bundles, and archives.
-- `frontend.rkt` renders the server-side UI.
+- `web-ui.rkt` renders the server-side UI.
 - `k8s.rkt` generates and checks the Kubernetes YAML.
 - `rime/` holds native Rime YAML and dictionaries; `schema/` holds this project's DSL source.
 - `schema/lib/lang.rkt` is the public schema DSL language.
@@ -83,7 +83,7 @@ racket k8s.rkt
 
 ## Deployment
 
-This repo deploys the public frontend and build API together as one Racket app
+This repo deploys the public web UI and build API together as one Racket app
 on k3s on `pb62`. `k8s.rkt` owns the Kubernetes objects; the YAML files in
 `k8s/` are generated for Kustomize.
 
@@ -112,13 +112,13 @@ Deployment notes:
 - The ingress manifest assumes `rime.mayphus.org` and
   `rime-config.mayphus.org` terminate in the cluster.
 - Cloudflare should route those hostnames to the k3s ingress. The old Worker
-  frontend is no longer part of this repo.
+  web UI is no longer part of this repo.
 - The cert-manager issuer name is currently `letsencrypt`.
 - If your k3s ingress class or cert-manager setup differs, adjust `k8s.rkt` and
   regenerate with `racket k8s.rkt`.
 
 ## Current shape
 
-The old ClojureScript/React/Bun/Wrangler frontend path has been removed. Racket
+The old ClojureScript/React/Bun/Wrangler web path has been removed. Racket
 renders the pages, HTMX handles small form refreshes, and the same Racket process
 builds the downloadable ZIP archives.
