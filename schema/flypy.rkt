@@ -1,13 +1,15 @@
-#lang s-exp "lib/lang.rkt"
+#lang racket/base
 
-(rime-schema flypy
-  (name "小鶴雙拼")
-  (deps cangjie6)
-  (static-files "flypy.yaml" "luna_pinyin.dict.yaml")
-  (custom "flypy.custom.yaml"
-    (includes yuanshu_common_patch yuanshu_reverse_lookup_patch)
-    (version "0.1")
-    (description "朙月拼音＋小鶴雙拼方案。\n精簡版，適合移動端匯入"))
+(require "lib/flypy.rkt")
+
+(flypy-family
+  (dictionary luna_pinyin)
+
+  (variant flypy_ice
+    (dictionary ice)
+    (mobile-only)
+    (mobile-skins flypy hybrid))
+
   (mobile-skin flypy
     (meta
       (name "Flypy" "小鶴雙拼")
@@ -28,6 +30,7 @@
         [abc          11   #:secondary]
         [flypy-single 18.5 #:weight bold]
         [flypy-double 13   #:weight bold])))
+
   (mobile-skin hybrid
     (meta
       (name "QuadHarmonic Keyboard" "四合一鍵盤")

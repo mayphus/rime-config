@@ -2,6 +2,7 @@
 
 (require rackunit
          racket/string
+         (prefix-in flypy: "../schema/flypy.rkt")
          (prefix-in flypy_14: "../schema/flypy_14.rkt")
          (prefix-in jyut6ping3: "../schema/jyut6ping3.rkt"))
 
@@ -9,6 +10,22 @@
   (hash-ref files path (lambda () (error 'generated-file "missing ~a" path))))
 
 (module+ test
+  (test-case "flypy shared config emits desktop schema YAML"
+    (define yaml (generated-file flypy:config-files "flypy.schema.yaml"))
+    (check-not-false (string-contains? yaml "schema_id: flypy"))
+    (check-not-false (string-contains? yaml "name: \"小鶴雙拼\""))
+    (check-not-false (string-contains? yaml "dictionary: luna_pinyin"))
+    (check-not-false (string-contains? yaml "prism: flypy"))
+    (check-equal? flypy:mobile-skins '("flypy" "hybrid")))
+
+  (test-case "flypy ice is a dictionary variant in flypy config"
+    (define ice-files (hash-ref flypy:schema-config-files "flypy_ice"))
+    (define yaml (generated-file ice-files "flypy_ice.schema.yaml"))
+    (check-not-false (string-contains? yaml "schema_id: flypy_ice"))
+    (check-not-false (string-contains? yaml "name: \"霧凇\""))
+    (check-not-false (string-contains? yaml "dictionary: rime_ice"))
+    (check-not-false (string-contains? yaml "prism: flypy_ice")))
+
   (test-case "flypy_14 schema DSL emits stable schema YAML"
     (define yaml (generated-file flypy_14:config-files "flypy_14.schema.yaml"))
     (check-not-false (string-contains? yaml "schema_id: flypy_14"))

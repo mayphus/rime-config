@@ -46,19 +46,33 @@
 
 ;; ---- Known generated IDs ---------------------------------------------------
 
-(define generated-schema-ids '("flypy_14" "flypy_18" "flypy_ice" "pinyin_14" "shuffle_17"))
+(define generated-schema-ids '("flypy" "flypy_14" "flypy_18" "flypy_ice" "pinyin_14" "shuffle_17"))
 (define generated-custom-ids '("cangjie6" "flypy" "jyut6ping3"))
-(define generated-config-ids (append generated-schema-ids generated-custom-ids))
+(define generated-config-ids (remove-duplicates (append generated-schema-ids generated-custom-ids)))
 (define extra-schema-ids-with-mobile '("bopomofo"))
+(define generated-schema-sources
+  (hash "flypy_ice" "flypy"))
 
 ;; ---- Schema module helpers -------------------------------------------------
 
 ;; Safely dynamic-require a binding from a generated schema module.
 ;; Returns default if the module does not exist or does not export the binding.
+(define (schema-source-id schema)
+  (hash-ref generated-schema-sources schema schema))
+
+(define (schema-module-path schema)
+  (build-path schema-dir (string-append (schema-source-id schema) ".rkt")))
+
 (define (schema-module-ref schema prop [default #f])
-  (define rkt (build-path schema-dir (string-append schema ".rkt")))
+  (define source (schema-source-id schema))
+  (define rkt (schema-module-path schema))
   (if (file-exists? rkt)
-      (dynamic-require rkt prop (lambda () default))
+      (if (equal? source schema)
+          (dynamic-require rkt prop (lambda () default))
+          (let ([meta (dynamic-require rkt 'schema-meta (lambda () #f))])
+            (if (hash? meta)
+                (hash-ref (hash-ref meta schema (hash)) prop default)
+                default)))
       default))
 
 (define (schema-mobile-skin-body schema skin)
@@ -369,7 +383,7 @@
   (define needed
     (list->set
      (cons "yuanshu_shared.rkt"
-           (map (lambda (s) (string-append s ".rkt")) schemas))))
+           (map (lambda (s) (string-append (schema-source-id s) ".rkt")) schemas))))
   (define entrypoints
     (sort
      (filter (lambda (p)
@@ -377,7 +391,33 @@
              (directory-list schema-dir #:build? #t))
      path<?))
   (for ([f entrypoints])
-    (write-module-files! f profile-out 'config-files)))
+    (define schema-config-files
+      (dynamic-require f 'schema-config-files (lambda () #f)))
+    (if (hash? schema-config-files)
+        (for ([schema (in-list schemas)]
+              #:when (equal? (path->string (file-name-from-path f))
+                             (string-append (schema-source-id schema) ".rkt")))
+          (define files
+            (hash-ref schema-config-files schema
+                      (lambda ()
+                        (error 'build-schemas!
+                               "~a: missing generated config for ~a"
+                               f
+                               schema))))
+          (for ([(rel-path content) (in-hash files)])
+            (define target (build-path profile-out (string->path rel-path)))
+            (make-directory* (path-only target))
+            (call-with-output-file target #:exists 'truncate/replace
+              (lambda (out)
+                (cond
+                  [(string? content) (display content out)]
+                  [(bytes? content) (write-bytes content out)]
+                  [else (error 'build-schemas!
+                               "~a: expected string or bytes for ~a, got ~v"
+                               f
+                               rel-path
+                               content)])))))
+        (write-module-files! f profile-out 'config-files))))
 
 ;; ---- Build skins -----------------------------------------------------------
 
